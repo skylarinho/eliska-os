@@ -1,4 +1,4 @@
-import { useState, useEffect, type FC } from 'react'
+import { useState, type FC } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { TIMELINE_EPOCHS, type TimelineEpoch } from '../../data/lessonsData'
 import { useProfileStore } from '../../store/useProfileStore'
@@ -11,9 +11,11 @@ interface TimelineLessonProps {
   onBack: () => void
 }
 
+const shuffledTimelineEpochs = () => [...TIMELINE_EPOCHS].sort(() => Math.random() - 0.5)
+
 export const TimelineLesson: FC<TimelineLessonProps> = ({ onBack }) => {
   // Pool of unplaced epochs
-  const [availableEpochs, setAvailableEpochs] = useState<TimelineEpoch[]>([])
+  const [availableEpochs, setAvailableEpochs] = useState<TimelineEpoch[]>(shuffledTimelineEpochs)
   // Slots on the timeline [0..4]
   const [placedEpochs, setPlacedEpochs] = useState<(TimelineEpoch | null)[]>([null, null, null, null, null])
   // Validation status
@@ -35,14 +37,8 @@ export const TimelineLesson: FC<TimelineLessonProps> = ({ onBack }) => {
 
   const { addXp, completeLesson } = useProfileStore()
 
-  // Shuffle available epochs initially
-  useEffect(() => {
-    resetTimeline()
-  }, [])
-
   const resetTimeline = () => {
-    const shuffled = [...TIMELINE_EPOCHS].sort(() => Math.random() - 0.5)
-    setAvailableEpochs(shuffled)
+    setAvailableEpochs(shuffledTimelineEpochs())
     setPlacedEpochs([null, null, null, null, null])
     setIsEvaluated(false)
     setIsCompleted(false)

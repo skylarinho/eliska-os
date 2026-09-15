@@ -38,15 +38,17 @@ export const HardwareLesson: FC<HardwareLessonProps> = ({ onBack }) => {
   const activeProfile = useProfileStore((state) => state.getActiveProfile())
   const currentItem: HardwareItem = HARDWARE_ITEMS[currentIndex]
 
-  // Generate 3 choices (1 correct + 2 distractors) for the current item
+  // Generate 3 stable choices (1 correct + 2 distractors) for the current item.
   const choices = useMemo(() => {
-    if (!currentItem) return []
-    const otherItems = HARDWARE_ITEMS.filter((item) => item.id !== currentItem.id)
-    const shuffledOthers = [...otherItems].sort(() => Math.random() - 0.5)
+    const item = HARDWARE_ITEMS[currentIndex]
+    if (!item) return []
+    const otherItems = HARDWARE_ITEMS.filter((candidate) => candidate.id !== item.id)
+    const offset = currentIndex % otherItems.length
+    const shuffledOthers = [...otherItems.slice(offset), ...otherItems.slice(0, offset)]
     const distractors = shuffledOthers.slice(0, 2)
-    const allThree = [currentItem, ...distractors]
-    return allThree.sort(() => Math.random() - 0.5)
-  }, [currentIndex, currentItem])
+    const allThree = [item, ...distractors]
+    return currentIndex % 2 === 0 ? allThree : [distractors[0], item, distractors[1]]
+  }, [currentIndex])
 
   const handleSelectChoice = (selectedItem: HardwareItem) => {
     const isCorrect = selectedItem.id === currentItem.id
