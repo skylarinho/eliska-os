@@ -1,0 +1,63 @@
+import type { DecompositionStep, MultiplicationDuel } from '../types/learning'
+
+export const DECOMPOSITION_EXERCISES: DecompositionStep[] = [
+  {
+    id: 'dec-1',
+    numA: 48,
+    numB: 35,
+    tensA: 40,
+    tensB: 30,
+    onesA: 8,
+    onesB: 5,
+    sumTens: 70,
+    sumOnes: 13,
+    total: 83,
+  },
+  {
+    id: 'dec-2',
+    numA: 36,
+    numB: 48,
+    tensA: 30,
+    tensB: 40,
+    onesA: 6,
+    onesB: 8,
+    sumTens: 70,
+    sumOnes: 14,
+    total: 84,
+  },
+  {
+    id: 'dec-3',
+    numA: 57,
+    numB: 26,
+    tensA: 50,
+    tensB: 20,
+    onesA: 7,
+    onesB: 6,
+    sumTens: 70,
+    sumOnes: 13,
+    total: 83,
+  },
+  {
+    id: 'dec-4',
+    numA: 64,
+    numB: 29,
+    tensA: 60,
+    tensB: 20,
+    onesA: 4,
+    onesB: 9,
+    sumTens: 80,
+    sumOnes: 13,
+    total: 93,
+  },
+]
+
+export const MULTIPLICATION_DUELS: MultiplicationDuel[] = [
+  { id: 'mult-1', factorA: 4, factorB: 6, product: 24, options: [20, 24, 28] },
+  { id: 'mult-2', factorA: 3, factorB: 7, product: 21, options: [18, 21, 24] },
+  { id: 'mult-3', factorA: 5, factorB: 8, product: 40, options: [35, 40, 45] },
+  { id: 'mult-4', factorA: 6, factorB: 7, product: 42, options: [36, 42, 48] },
+  { id: 'mult-5', factorA: 8, factorB: 4, product: 32, options: [28, 32, 36] },
+  { id: 'mult-6', factorA: 7, factorB: 9, product: 63, options: [56, 63, 72] },
+  { id: 'mult-7', factorA: 9, factorB: 5, product: 45, options: [40, 45, 50] },
+  { id: 'mult-8', factorA: 8, factorB: 8, product: 64, options: [56, 64, 72] },
+]

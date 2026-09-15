@@ -1,0 +1,191 @@
+import type { CzechExercise, LetterGroup } from '../types/learning'
+
+export const CZECH_LETTERS: { group: LetterGroup; label: string; icon: string }[] = [
+  { group: 'B', label: 'Slova po B', icon: '🐝' },
+  { group: 'L', label: 'Slova po L', icon: '🦁' },
+  { group: 'M', label: 'Slova po M', icon: '🐻' },
+  { group: 'P', label: 'Slova po P', icon: '🐧' },
+  { group: 'S', label: 'Slova po S', icon: '🦉' },
+  { group: 'V', label: 'Slova po V', icon: '🐺' },
+  { group: 'Z', label: 'Slova po Z', icon: '🦓' },
+]
+
+export const CZECH_EXERCISES: CzechExercise[] = [
+  // B
+  {
+    id: 'cz-b-1',
+    letterGroup: 'B',
+    sentence: 'Na louce kvetla léčivá b__linka.',
+    missingWord: 'bylinka',
+    correctAnswer: 'y',
+    rootWord: 'bylina',
+    explanation: 'Píšeme tvrdé Y! Slovo bylinka je příbuzné k vyjmenovanému slovu BYLINA.',
+  },
+  {
+    id: 'cz-b-2',
+    letterGroup: 'B',
+    sentence: 'Na stole ležela tlustá pohádková b__chle.',
+    missingWord: 'bichle',
+    correctAnswer: 'i',
+    rootWord: 'bichle',
+    isCatchWord: true,
+    explanation: 'Pozor, chyták! Slovo BICHLE (tlustá kniha) NENÍ vyjmenované ani příbuzné slovo. Píšeme měkké I.',
+  },
+  {
+    id: 'cz-b-3',
+    letterGroup: 'B',
+    sentence: 'Musíme b__t v divadle potichu.',
+    missingWord: 'být',
+    correctAnswer: 'ý',
+    rootWord: 'být',
+    isCatchWord: true,
+    explanation: 'BÝT (existovat, nacházet se) je vyjmenované slovo, proto píšeme tvrdé Ý! Chyták: bít (tlouct pěstí či odbíjet na věži) píšeme s měkkým Í.',
+  },
+  {
+    id: 'cz-b-4',
+    letterGroup: 'B',
+    sentence: 'Hodiny na věži začaly b__t poledne.',
+    missingWord: 'bít',
+    correctAnswer: 'í',
+    rootWord: 'bít',
+    isCatchWord: true,
+    explanation: 'BÍT (tlouct kladívkem, odbíjet na věži) píšeme s měkkým Í! Nejde o vyjmenované slovo být (existovat).',
+  },
+
+  // L
+  {
+    id: 'cz-l-1',
+    letterGroup: 'L',
+    sentence: 'Vombatímu mláděti se po běhu unavilo l__tko.',
+    missingWord: 'lýtko',
+    correctAnswer: 'ý',
+    rootWord: 'lýtko',
+    explanation: 'Píšeme tvrdé Ý! LÝTKO je vyjmenované slovo (slyšet, mlýn, blýskat se, polykat, plynout, plýtvat, vzlykat, lysý, lýtko, lýko, lyže...).',
+  },
+  {
+    id: 'cz-l-2',
+    letterGroup: 'L',
+    sentence: 'V lese za Lošticemi tiše běží zrzavá l__ška.',
+    missingWord: 'liška',
+    correctAnswer: 'i',
+    rootWord: 'liška',
+    isCatchWord: true,
+    explanation: 'Pozor na chyták! LIŠKA NENÍ vyjmenované slovo po L, proto píšeme měkké I.',
+  },
+
+  // M
+  {
+    id: 'cz-m-1',
+    letterGroup: 'M',
+    sentence: 'Před obědem si musíme m__t ruce mýdlem.',
+    missingWord: 'mýt',
+    correctAnswer: 'ý',
+    rootWord: 'mýt',
+    isCatchWord: true,
+    explanation: 'MÝT (čistit vodou) je vyjmenované slovo, proto píšeme tvrdé Ý! Chyták: mít (vlastnit panenku) píšeme s měkkým Í.',
+  },
+  {
+    id: 'cz-m-2',
+    letterGroup: 'M',
+    sentence: 'Chtěla bych m__t doma živého vombata.',
+    missingWord: 'mít',
+    correctAnswer: 'í',
+    rootWord: 'mít',
+    isCatchWord: true,
+    explanation: 'MÍT (vlastnit, mít rád) píšeme s měkkým Í! Není to vyjmenované slovo mýt (vodou).',
+  },
+
+  // P
+  {
+    id: 'cz-p-1',
+    letterGroup: 'P',
+    sentence: 'Královský páv byl velmi p__šný na svůj chvost.',
+    missingWord: 'pyšný',
+    correctAnswer: 'y',
+    rootWord: 'pýcha',
+    explanation: 'Píšeme tvrdé Y! Slovo PYŠNÝ je odvozené od vyjmenovaného slova PÝCHA.',
+  },
+  {
+    id: 'cz-p-2',
+    letterGroup: 'P',
+    sentence: 'Malý ptáček ztratil jemné p__rko.',
+    missingWord: 'pírko',
+    correctAnswer: 'í',
+    rootWord: 'peří',
+    isCatchWord: true,
+    explanation: 'PÍRKO píšeme s měkkým Í (od slova peří). Není to vyjmenované slovo!',
+  },
+
+  // S
+  {
+    id: 'cz-s-1',
+    letterGroup: 'S',
+    sentence: 'V trávě se mihnul beznohý ještěr slep__š.',
+    missingWord: 'slepýš',
+    correctAnswer: 'ý',
+    rootWord: 'slepýš',
+    isCatchWord: true,
+    explanation: 'SLEPÝŠ (beznohá ještěrka) je vyjmenované slovo po S, proto píšeme tvrdé Ý! Chyták: slepíš (papír lepidlem) je od lepit.',
+  },
+  {
+    id: 'cz-s-2',
+    letterGroup: 'S',
+    sentence: 'Roztržený obrázek snadno slep__š lepidlem.',
+    missingWord: 'slepíš',
+    correctAnswer: 'í',
+    rootWord: 'lepit',
+    isCatchWord: true,
+    explanation: 'SLEPÍŠ je od slova lepit (lepidlo), proto píšeme měkké Í! Nejde o ještěrku slepýše.',
+  },
+
+  // V
+  {
+    id: 'cz-v-1',
+    letterGroup: 'V',
+    sentence: 'Na hradě Karlštejn stojí v__soká kamenná věž.',
+    missingWord: 'vysoká',
+    correctAnswer: 'y',
+    rootWord: 'vysoký',
+    explanation: 'Píšeme tvrdé Y! Slovo VYSOKÁ je příbuzné k vyjmenovanému slovu VYSOKÝ.',
+  },
+  {
+    id: 'cz-v-2',
+    letterGroup: 'V',
+    sentence: 'Hladový vlk začal v noci strašidelně v__t.',
+    missingWord: 'výt',
+    correctAnswer: 'ý',
+    rootWord: 'výt',
+    isCatchWord: true,
+    explanation: 'VÝT (vydávat táhlý vlčí hlas) je vyjmenované slovo, píšeme tvrdé Ý! Chyták: vít (věneček z pampelišek) píšeme s měkkým Í.',
+  },
+  {
+    id: 'cz-v-3',
+    letterGroup: 'V',
+    sentence: 'Děvčata šla na louku v__t pampeliškové věnce.',
+    missingWord: 'vít',
+    correctAnswer: 'í',
+    rootWord: 'vít',
+    isCatchWord: true,
+    explanation: 'VÍT (plést věnečky ze stonků květin) píšeme s měkkým Í. Není to vlčí vytí!',
+  },
+
+  // Z
+  {
+    id: 'cz-z-1',
+    letterGroup: 'Z',
+    sentence: 'Ráno vstáváme velmi brz__ do školy.',
+    missingWord: 'brzy',
+    correctAnswer: 'y',
+    rootWord: 'brzy',
+    explanation: 'Píšeme tvrdé Y! Slovo BRZY je vyjmenované slovo po Z (brzy, jazyk, nazývat, Ruzyně).',
+  },
+  {
+    id: 'cz-z-2',
+    letterGroup: 'Z',
+    sentence: 'Mlsný vombat vyplázl růžový jaz__k.',
+    missingWord: 'jazyk',
+    correctAnswer: 'y',
+    rootWord: 'jazyk',
+    explanation: 'Píšeme tvrdé Y! Slovo JAZYK je vyjmenované slovo po Z.',
+  },
+]
