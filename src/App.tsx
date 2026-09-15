@@ -5,13 +5,11 @@ import { LessonSelector } from './components/lessons/LessonSelector'
 import { HardwareLesson } from './components/lessons/HardwareLesson'
 import { TimelineLesson } from './components/lessons/TimelineLesson'
 import { ArtifactsLesson } from './components/lessons/ArtifactsLesson'
-import { WombatBurrow } from './components/nora/WombatBurrow'
 import { ShopGame } from './components/games/shop/ShopGame'
 import { MathLab } from './components/games/math/MathLab'
 import { CzechGame } from './components/games/czech/CzechGame'
 import { EnglishGame } from './components/games/english/EnglishGame'
 import { ProfileSelectorModal } from './components/profile/ProfileSelectorModal'
-import { LeaderboardModal } from './components/leaderboard/LeaderboardModal'
 import { useProfileStore } from './store/useProfileStore'
 import { Smartphone, Monitor } from 'lucide-react'
 
@@ -20,7 +18,6 @@ type AppView =
   | 'lesson-hw'
   | 'lesson-timeline'
   | 'lesson-artifacts'
-  | 'lesson-burrow'
   | 'game-shop'
   | 'game-math'
   | 'game-czech'
@@ -29,7 +26,6 @@ type AppView =
 export function App() {
   const [currentView, setCurrentView] = useState<AppView>('dashboard')
   const [isProfileModalOpen, setIsProfileModalOpen] = useState(false)
-  const [isLeaderboardModalOpen, setIsLeaderboardModalOpen] = useState(false)
 
   // Desktop helper: preview as iPhone 12 mini (375x812) or responsive width
   const [isPhoneFrame, setIsPhoneFrame] = useState(false)
@@ -80,7 +76,25 @@ export function App() {
         {/* Header */}
         <Header
           onOpenProfile={() => setIsProfileModalOpen(true)}
-          onOpenLeaderboard={() => setIsLeaderboardModalOpen(true)}
+          currentView={currentView}
+          onBackToDashboard={() => setCurrentView('dashboard')}
+          viewProgress={
+            currentView === 'lesson-hw'
+              ? 'Hardware'
+              : currentView === 'lesson-timeline'
+              ? 'Časová osa'
+              : currentView === 'lesson-artifacts'
+              ? 'Artefakty'
+              : currentView === 'game-shop'
+              ? 'Obchůdek'
+              : currentView === 'game-math'
+              ? 'Matematika'
+              : currentView === 'game-czech'
+              ? 'Čeština'
+              : currentView === 'game-english'
+              ? 'Angličtina'
+              : undefined
+          }
         />
 
         {/* View Routing */}
@@ -100,13 +114,6 @@ export function App() {
 
           {currentView === 'lesson-artifacts' && (
             <ArtifactsLesson onBack={() => setCurrentView('dashboard')} />
-          )}
-
-          {currentView === 'lesson-burrow' && (
-            <WombatBurrow
-              onBack={() => setCurrentView('dashboard')}
-              onGoToLessons={() => setCurrentView('dashboard')}
-            />
           )}
 
           {/* 2. Etapa: Hravá doučovací zóna */}
@@ -136,10 +143,6 @@ export function App() {
           onClose={() => setIsProfileModalOpen(false)}
         />
 
-        <LeaderboardModal
-          isOpen={isLeaderboardModalOpen}
-          onClose={() => setIsLeaderboardModalOpen(false)}
-        />
       </div>
     </div>
   )

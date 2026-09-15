@@ -1,6 +1,6 @@
 import type { FC } from 'react'
 import { useProfileStore, type AvatarType } from '../../store/useProfileStore'
-import { Volume2, VolumeX, ArrowLeft, Sparkles } from 'lucide-react'
+import { Volume2, VolumeX, ArrowLeft } from 'lucide-react'
 import { playClickSound } from '../../utils/audio'
 
 interface HeaderProps {
@@ -79,14 +79,8 @@ export const Header: FC<HeaderProps> = ({
           </div>
         )}
 
-        {/* RIGHT SECTION: XP badge & Sound */}
+        {/* RIGHT SECTION: Sound */}
         <div className="flex items-center gap-1.5">
-          {/* XP Badge */}
-          <div className="flex items-center gap-1 bg-emerald-50 border border-emerald-200 px-2.5 py-1 rounded-xl text-xs font-black text-emerald-800 min-h-[38px]">
-            <Sparkles className="w-3.5 h-3.5 text-emerald-600" />
-            <span>{activeProfile?.xp || 0} XP</span>
-          </div>
-
           {/* Sound Toggle */}
           <button
             onClick={handleSoundClick}
