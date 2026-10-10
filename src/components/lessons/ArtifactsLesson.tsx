@@ -1,17 +1,18 @@
-import { useState, type FC } from 'react'
+import { useState, useEffect, type FC } from 'react'
 import { motion } from 'framer-motion'
 import { HISTORY_ARTIFACTS, TIMELINE_EPOCHS, type HistoryArtifact } from '../../data/lessonsData'
-import { useProfileStore } from '../../store/useProfileStore'
+import { useProfileStore, getVocativeName } from '../../store/useProfileStore'
 import { playCorrectSound, playWrongSound, playFanfareSound, playClickSound } from '../../utils/audio'
 import { FeedbackModal } from '../common/FeedbackModal'
-import { ArrowLeft, RotateCcw, CheckCircle, ChevronRight } from 'lucide-react'
+import { RotateCcw, CheckCircle, ChevronRight } from 'lucide-react'
 import confetti from 'canvas-confetti'
 
 interface ArtifactsLessonProps {
   onBack: () => void
+  onProgressChange?: (progress: string) => void
 }
 
-export const ArtifactsLesson: FC<ArtifactsLessonProps> = ({ onBack }) => {
+export const ArtifactsLesson: FC<ArtifactsLessonProps> = ({ onBack, onProgressChange }) => {
   const [currentIndex, setCurrentIndex] = useState(0)
   const [feedback, setFeedback] = useState<{
     isOpen: boolean
@@ -35,10 +36,15 @@ export const ArtifactsLesson: FC<ArtifactsLessonProps> = ({ onBack }) => {
   const activeProfile = useProfileStore((state) => state.getActiveProfile())
   const currentArtifact: HistoryArtifact = HISTORY_ARTIFACTS[currentIndex]
 
+  useEffect(() => {
+    onProgressChange?.(`Artefakt ${currentIndex + 1}/${HISTORY_ARTIFACTS.length}`)
+  }, [currentIndex, onProgressChange])
+
   const handleSelectEpoch = (epochId: string) => {
     const isCorrect =
       currentArtifact.correctEpochId === epochId ||
-      (currentArtifact.id === 'art-candle' && (epochId === 'stredovek' || epochId === 'novovek'))
+      (currentArtifact.id === 'art-candle' &&
+        (epochId === 'starovek' || epochId === 'stredovek' || epochId === 'novovek'))
 
     const xp = isCorrect ? 20 : 0
 
@@ -53,10 +59,12 @@ export const ArtifactsLesson: FC<ArtifactsLessonProps> = ({ onBack }) => {
     setFeedback({
       isOpen: true,
       isCorrect,
-      title: isCorrect ? '✅ SPRÁVNĚ! VÝBORNĚ!' : '❌ TĚSNĚ VEDLE! NEVADÍ!',
+      title: isCorrect
+        ? `✅ SPRÁVNĚ! JE TO ${currentArtifact.epochName.toUpperCase()}!`
+        : `❌ TĚSNĚ VEDLE! NEVADÍ!`,
       explanation: isCorrect
-        ? `Správně! ${currentArtifact.didacticExplanation}`
-        : `Pozor! Tento předmět patří do: ${currentArtifact.epochName}. ${currentArtifact.didacticExplanation}`,
+        ? `Výborně! ${currentArtifact.didacticExplanation}`
+        : `${currentArtifact.name} patří do období: ${currentArtifact.epochName}. ${currentArtifact.didacticExplanation}`,
       hint: currentArtifact.hint,
       xpEarned: xp,
     })
@@ -67,9 +75,10 @@ export const ArtifactsLesson: FC<ArtifactsLessonProps> = ({ onBack }) => {
     if (currentIndex + 1 < HISTORY_ARTIFACTS.length) {
       setCurrentIndex((prev) => prev + 1)
     } else {
+      // Completed lesson!
       setLessonFinished(true)
       playFanfareSound()
-      confetti({ particleCount: 90, spread: 75, origin: { y: 0.6 } })
+      confetti({ particleCount: 80, spread: 70, origin: { y: 0.6 } })
       completeLesson('lesson-artifacts', 60)
     }
   }
@@ -82,73 +91,50 @@ export const ArtifactsLesson: FC<ArtifactsLessonProps> = ({ onBack }) => {
   }
 
   return (
-    <div className="w-full max-w-md mx-auto px-3.5 py-4 min-h-[calc(100dvh-130px)] flex flex-col justify-between">
-      {/* Header bar */}
-      <div className="space-y-2">
-        <div className="flex items-center justify-between">
-          <button
-            onClick={() => {
-              playClickSound()
-              onBack()
-            }}
-            className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-[#ebdccb]/80 hover:bg-[#ebdccb] text-xs font-bold text-[#7a5c43] touch-target"
-          >
-            <ArrowLeft className="w-4 h-4" />
-            <span>Zpět</span>
-          </button>
-          <div className="text-right">
-            <span className="text-xs font-extrabold text-[#7a5c43] block">Artefakt</span>
-            <span className="text-xs font-bold text-[#3e2723]">
-              {Math.min(currentIndex + 1, HISTORY_ARTIFACTS.length)} / {HISTORY_ARTIFACTS.length}
-            </span>
-          </div>
-        </div>
-
-        {/* Progress bar */}
-        <div className="w-full bg-[#ebdccb] h-2.5 rounded-full overflow-hidden">
-          <motion.div
-            className="bg-[#059669] h-full rounded-full"
-            initial={{ width: 0 }}
-            animate={{ width: `${(currentIndex / HISTORY_ARTIFACTS.length) * 100}%` }}
-            transition={{ duration: 0.3 }}
-          />
-        </div>
+    <div className="w-full max-w-md mx-auto px-3.5 py-3 min-h-[calc(100dvh-130px)] flex flex-col justify-between">
+      {/* Sleek top progress bar */}
+      <div className="w-full bg-[#ebdccb] h-2 rounded-full overflow-hidden mb-1">
+        <motion.div
+          className="bg-[#059669] h-full rounded-full"
+          initial={{ width: 0 }}
+          animate={{ width: `${((currentIndex + 1) / HISTORY_ARTIFACTS.length) * 100}%` }}
+          transition={{ duration: 0.3 }}
+        />
       </div>
 
       {!lessonFinished ? (
-        <div className="my-auto py-2 space-y-3">
-          {/* Question Exhibit Card (Distinct calm container) */}
+        <div className="my-auto py-1 space-y-3">
+          {/* Question Exhibit Card */}
           <motion.div
             key={currentArtifact.id}
-            initial={{ opacity: 0, scale: 0.94, y: 10 }}
+            initial={{ opacity: 0, scale: 0.94, y: 8 }}
             animate={{ opacity: 1, scale: 1, y: 0 }}
             transition={{ duration: 0.25 }}
-            className="bg-[#fcfaf6] rounded-3xl p-5 border-2 border-[#ebdccb] shadow-xs text-center"
+            className="bg-amber-50/40 rounded-3xl p-4 border-2 border-[#ebdccb] shadow-xs text-center"
           >
-            <span className="inline-block text-[11px] font-black uppercase tracking-wider px-3 py-1 rounded-full bg-[#ebdccb]/80 text-[#7a5c43] mb-2.5">
-              Historický artefakt pro {activeProfile?.name || 'Elišku'} 🏛️
-            </span>
-
-            <div className="inline-flex items-center justify-center w-24 h-24 bg-white rounded-3xl mb-2 text-6xl shadow-inner border-2 border-[#ebdccb]/60">
+            <div className="inline-flex items-center justify-center w-20 h-20 bg-white rounded-3xl mb-2 text-5xl shadow-inner border-2 border-[#ebdccb]">
               {currentArtifact.icon}
             </div>
             <h2 className="text-xl sm:text-2xl font-black text-[#3e2723] tracking-tight">
               {currentArtifact.name}
             </h2>
-            <p className="text-xs sm:text-sm text-[#7a5c43] font-semibold mt-1">
-              Do kterého z těchto 5 období patří?
+            <p className="text-xs sm:text-sm text-[#7a5c43] font-semibold mt-0.5">
+              Do kterého období patří?
             </p>
           </motion.div>
 
-          {/* Epoch Action Buttons (Tactile chunky buttons with 3D bottom border) */}
+          {/* Epoch Action Buttons */}
           <div className="space-y-2 pt-1">
+            <span className="text-[11px] font-black uppercase tracking-wider text-[#7a5c43] px-1 flex items-center gap-1">
+              👇 Zvol správné období dějin:
+            </span>
             {TIMELINE_EPOCHS.map((epoch) => (
               <motion.button
                 key={epoch.id}
                 whileHover={{ scale: 1.01 }}
                 whileTap={{ scale: 0.98 }}
                 onClick={() => handleSelectEpoch(epoch.id)}
-                className="w-full min-h-[52px] p-2.5 px-3.5 rounded-2xl bg-white hover:bg-amber-50/40 border-2 border-[#d8c3ad] border-b-[4px] border-b-[#7a5c43] active:border-b-2 active:translate-y-[2px] shadow-xs flex items-center justify-between text-left transition-all touch-target cursor-pointer group"
+                className="w-full min-h-[52px] p-2.5 px-3.5 rounded-2xl bg-white hover:bg-amber-50/50 border-2 border-[#d8c3ad] border-b-[4px] border-b-[#7a5c43] active:border-b-2 active:translate-y-[2px] shadow-xs flex items-center justify-between text-left transition-all touch-target cursor-pointer group"
               >
                 <div className="flex items-center gap-3">
                   <span className="w-7 h-7 rounded-xl bg-[#ebdccb] group-hover:bg-[#d8c3ad] text-[#3e2723] font-black text-xs flex items-center justify-center shrink-0">
@@ -165,9 +151,7 @@ export const ArtifactsLesson: FC<ArtifactsLessonProps> = ({ onBack }) => {
                   </div>
                 </div>
 
-                <div className="w-7 h-7 rounded-lg bg-[#f7f5f0] group-hover:bg-[#ebdccb]/60 flex items-center justify-center shrink-0 text-[#7a5c43]">
-                  <ChevronRight className="w-3.5 h-3.5" />
-                </div>
+                <ChevronRight className="w-4 h-4 text-[#b08968]" />
               </motion.button>
             ))}
           </div>
@@ -184,7 +168,7 @@ export const ArtifactsLesson: FC<ArtifactsLessonProps> = ({ onBack }) => {
           </div>
           <h2 className="text-2xl font-black text-[#3e2723]">Lekce splněna! 🪓</h2>
           <p className="text-sm text-[#7a5c43] font-medium">
-            Milá {activeProfile?.name || 'Eliško'}, správně jsi určila <strong className="text-emerald-700 font-extrabold">{correctCount}</strong> z{' '}
+            {getVocativeName(activeProfile?.name)}, správně jsi určila <strong className="text-emerald-700 font-extrabold">{correctCount}</strong> z{' '}
             {HISTORY_ARTIFACTS.length} historických artefaktů. Získáváš <strong className="text-amber-600">+60 XP</strong>!
           </p>
 

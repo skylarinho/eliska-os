@@ -1,19 +1,20 @@
-import { useState, type FC } from 'react'
+import { useState, useEffect, type FC } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { TIMELINE_EPOCHS, type TimelineEpoch } from '../../data/lessonsData'
 import { useProfileStore } from '../../store/useProfileStore'
 import { playCorrectSound, playWrongSound, playFanfareSound, playClickSound } from '../../utils/audio'
 import { FeedbackModal } from '../common/FeedbackModal'
-import { ArrowLeft, RotateCcw, Undo2, Check } from 'lucide-react'
+import { RotateCcw, Undo2, Check } from 'lucide-react'
 import confetti from 'canvas-confetti'
 
 interface TimelineLessonProps {
   onBack: () => void
+  onProgressChange?: (progress: string) => void
 }
 
 const shuffledTimelineEpochs = () => [...TIMELINE_EPOCHS].sort(() => Math.random() - 0.5)
 
-export const TimelineLesson: FC<TimelineLessonProps> = ({ onBack }) => {
+export const TimelineLesson: FC<TimelineLessonProps> = ({ onBack, onProgressChange }) => {
   // Pool of unplaced epochs
   const [availableEpochs, setAvailableEpochs] = useState<TimelineEpoch[]>(shuffledTimelineEpochs)
   // Slots on the timeline [0..4]
@@ -36,6 +37,11 @@ export const TimelineLesson: FC<TimelineLessonProps> = ({ onBack }) => {
   const [isCompleted, setIsCompleted] = useState(false)
 
   const { addXp, completeLesson } = useProfileStore()
+  const placedCount = placedEpochs.filter(Boolean).length
+
+  useEffect(() => {
+    onProgressChange?.(placedCount === 5 ? '5/5 k ověření' : `Epochy ${placedCount}/5`)
+  }, [placedCount, onProgressChange])
 
   const resetTimeline = () => {
     setAvailableEpochs(shuffledTimelineEpochs())
@@ -57,7 +63,7 @@ export const TimelineLesson: FC<TimelineLessonProps> = ({ onBack }) => {
     }
   }
 
-  // Return specific epoch back to drawer with ↩️
+  // Return epoch back to available pool
   const handleReturnEpoch = (index: number) => {
     playClickSound()
     setIsEvaluated(false)
@@ -70,11 +76,8 @@ export const TimelineLesson: FC<TimelineLessonProps> = ({ onBack }) => {
     }
   }
 
-  // Undo the last placed epoch
+  // Undo last placed epoch
   const handleUndoLast = () => {
-    playClickSound()
-    setIsEvaluated(false)
-    // Find last non-null index
     let lastIndex = -1
     for (let i = placedEpochs.length - 1; i >= 0; i--) {
       if (placedEpochs[i] !== null) {
@@ -109,7 +112,7 @@ export const TimelineLesson: FC<TimelineLessonProps> = ({ onBack }) => {
         isOpen: true,
         isCorrect: true,
         explanation:
-          'Fantastické! Poskládal(a) jsi celou historii přesně: 1. Pravěk ➔ 2. Starověk ➔ 3. Středověk ➔ 4. Novověk ➔ 5. Moderní doba. Vombat tě chválí!',
+          'Fantastické! Poskládala jsi celou historii přesně: 1. Pravěk ➔ 2. Starověk ➔ 3. Středověk ➔ 4. Novovek ➔ 5. Moderní doba. Vombat tě chválí!',
         hint: '',
         xpEarned: 50,
       })
@@ -119,7 +122,7 @@ export const TimelineLesson: FC<TimelineLessonProps> = ({ onBack }) => {
         isOpen: true,
         isCorrect: false,
         explanation:
-          'Některé epochy se nám trochu pomíchaly! Pamatuj na správné pořadí: Nejstarší je Pravěk (lovci mamutů), pak Starověk (Egypt & pyramidy), Středověk (rytíři), Novověk (páry & motory) a nakonec Moderní doba (dnešek). Klikni na ↩️ u chybných kartiček a zkus to napravit!',
+          'Některé epochy se nám trochu pomíchaly! Pamatuj na správné pořadí: Nejstarší je Pravěk (lovci mamutů), pak Starověk (Egypt & pyramidy), Středověk (rytíři), Novovek (páry & motory) a nakonec Moderní doba (dnešek). Klikni na ↩️ u chybných kartiček a zkus to napravit!',
         hint: 'Klikni na tlačítko ↩️ u kartičky a vrať ji zpátky do nabídky.',
         xpEarned: 0,
       })
@@ -130,26 +133,19 @@ export const TimelineLesson: FC<TimelineLessonProps> = ({ onBack }) => {
   const anyPlaced = placedEpochs.some((slot) => slot !== null)
 
   return (
-    <div className="w-full max-w-md mx-auto px-3.5 py-4 min-h-[calc(100dvh-130px)] flex flex-col justify-between">
-      {/* Header Bar */}
-      <div className="space-y-2">
-        <div className="flex items-center justify-between">
-          <button
-            onClick={() => {
-              playClickSound()
-              onBack()
-            }}
-            className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-[#ebdccb]/80 hover:bg-[#ebdccb] text-xs font-bold text-[#7a5c43] touch-target"
-          >
-            <ArrowLeft className="w-4 h-4" />
-            <span>Zpět</span>
-          </button>
+    <div className="w-full max-w-md mx-auto px-3.5 py-3 min-h-[calc(100dvh-130px)] flex flex-col justify-between">
+      {/* Action Toolbar */}
+      <div className="space-y-1.5">
+        <div className="flex items-center justify-between px-1">
+          <span className="text-xs font-black text-[#7a5c43]">
+            Seřaď 5 velkých epoch lidstva:
+          </span>
 
           <div className="flex items-center gap-1.5">
             {anyPlaced && !isCompleted && (
               <button
                 onClick={handleUndoLast}
-                className="flex items-center gap-1 px-2.5 py-1.5 rounded-xl bg-amber-50 hover:bg-amber-100 text-xs font-bold text-amber-800 border border-amber-200 touch-target"
+                className="flex items-center gap-1 px-2.5 py-1 rounded-xl bg-amber-50 hover:bg-amber-100 text-xs font-bold text-amber-800 border border-amber-200 touch-target"
                 title="Vrátit poslední krok"
               >
                 <Undo2 className="w-3.5 h-3.5" />
@@ -161,7 +157,7 @@ export const TimelineLesson: FC<TimelineLessonProps> = ({ onBack }) => {
                 playClickSound()
                 resetTimeline()
               }}
-              className="p-1.5 rounded-xl bg-[#ebdccb]/60 hover:bg-[#ebdccb] text-[#7a5c43] touch-target"
+              className="p-1 rounded-xl bg-[#ebdccb]/60 hover:bg-[#ebdccb] text-[#7a5c43] touch-target"
               title="Začít znovu"
             >
               <RotateCcw className="w-4 h-4" />

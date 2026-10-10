@@ -27,7 +27,6 @@ export interface TimelineEpoch {
   icon: string
   color: string
   summary: string
-  depthLevel: number // Nora level: 0 = Povrch, 1 = Novověk, 2 = Středověk, 3 = Pravěk
 }
 
 export interface HistoryArtifact {
@@ -38,18 +37,6 @@ export interface HistoryArtifact {
   epochName: string
   didacticExplanation: string
   hint: string
-}
-
-export interface BurrowLayer {
-  level: number
-  depthMeters: string
-  title: string
-  epochId: string
-  soilColor: string
-  borderColor: string
-  artifacts: { name: string; icon: string; detail: string }[]
-  description: string
-  archaeologyFact: string
 }
 
 export interface LessonMeta {
@@ -206,7 +193,6 @@ export const TIMELINE_EPOCHS: TimelineEpoch[] = [
     icon: '🪨',
     color: '#8b5a2b',
     summary: 'Lovci mamutů, pazourky, jeskynní malby a vynález ohně.',
-    depthLevel: 3,
   },
   {
     id: 'starovek',
@@ -216,7 +202,6 @@ export const TIMELINE_EPOCHS: TimelineEpoch[] = [
     icon: '🏺',
     color: '#b8860b',
     summary: 'Pyramidy, první města, písmo, hliněné amfory a římští filosofové.',
-    depthLevel: 2,
   },
   {
     id: 'stredovek',
@@ -226,7 +211,6 @@ export const TIMELINE_EPOCHS: TimelineEpoch[] = [
     icon: '🏰',
     color: '#556b2f',
     summary: 'Kamenné hrady, udatní rytíři v brnění, husité a psaní brkem.',
-    depthLevel: 2,
   },
   {
     id: 'novovek',
@@ -236,7 +220,6 @@ export const TIMELINE_EPOCHS: TimelineEpoch[] = [
     icon: '⚙️',
     color: '#4682b4',
     summary: 'Zámořské plavby, knihtisk, parní stroj a průmyslová revoluce.',
-    depthLevel: 1,
   },
   {
     id: 'moderni',
@@ -246,7 +229,6 @@ export const TIMELINE_EPOCHS: TimelineEpoch[] = [
     icon: '🚀',
     color: '#059669',
     summary: 'Lety do vesmíru, chytré telefony, internet a robotika.',
-    depthLevel: 0,
   },
 ]
 
@@ -324,66 +306,3 @@ export const HISTORY_ARTIFACTS: HistoryArtifact[] = [
   },
 ]
 
-// 5. VOMBATÍ NORA ČASU (ARCHEOLOGICKÁ PATRA)
-export const BURROW_LAYERS: BurrowLayer[] = [
-  {
-    level: 0,
-    depthMeters: '0 metrů (Povrch)',
-    title: 'Dnešní svět – Moderní doba',
-    epochId: 'moderni',
-    soilColor: '#e2f0d9',
-    borderColor: '#4ade80',
-    description: 'Tady vombat vykukuje na sluníčko. Kolem jsou antény, vysílače 5G, auta a solární panely.',
-    archaeologyFact: 'Na povrchu země zanecháváme plasty, beton a elektroniku, které budoucí badatelé najdou jako nejmladší vrstvu.',
-    artifacts: [
-      { name: 'Smartphone', icon: '📱', detail: 'Kapesní superpočítač' },
-      { name: 'Wifi router', icon: '📡', detail: 'Posílá vzduchem data k vombatovi' },
-      { name: 'Dron s kamerou', icon: '🚁', detail: 'Létá nad norou' },
-    ],
-  },
-  {
-    level: 1,
-    depthMeters: '– 5 metrů pod zemí',
-    title: '1. patro: Novověk & Pára',
-    epochId: 'novovek',
-    soilColor: '#e6d5b8',
-    borderColor: '#b08968',
-    description: 'Vombat narazil na vrstvu průmyslové revoluce plnou železných součástek a starého papíru.',
-    archaeologyFact: 'Průmyslová města rychle rostla a staré dlažby a továrny byly postupně překryty novějšími stavbami.',
-    artifacts: [
-      { name: 'Ozubené kolo', icon: '⚙️', detail: 'Z prvních textilních strojů' },
-      { name: 'Parní píšťala', icon: '🚂', detail: 'Hvízdala na nádraží v 19. století' },
-      { name: 'Stará kniha s rytinami', icon: '📖', detail: 'Vytištěná na prvním tiskařském lisu' },
-    ],
-  },
-  {
-    level: 2,
-    depthMeters: '– 15 metrů pod zemí',
-    title: '2. patro: Středověk & Hrady',
-    epochId: 'stredovek',
-    soilColor: '#c4a482',
-    borderColor: '#7a5c43',
-    description: 'Kamenitá vrstva se zbytky starého zdiva, podkovami a úlomky keramiky.',
-    archaeologyFact: 'Mnoho středověkých měst vzniklo na sutinách po požárech – nová ulice se jednoduše postavila o metr výš!',
-    artifacts: [
-      { name: 'Podkova válečného oře', icon: '🧲', detail: 'Ztratil ji rytíř na cestě na hrad' },
-      { name: 'Rytířský štít', icon: '🛡️', detail: 'Se znakem lva a chocholatého ptáčka' },
-      { name: 'Středověký klíč', icon: '🗝️', detail: 'Otvíral těžkou dubovou bránu' },
-    ],
-  },
-  {
-    level: 3,
-    depthMeters: '– 30 metrů (Nejhlubší jeskyně)',
-    title: '3. patro: Pravěk – Doba kamenná',
-    epochId: 'pravek',
-    soilColor: '#8a5a36',
-    borderColor: '#3e2723',
-    description: 'Nejhlubší vrstva, kde se země ještě neprohnula pod tíhou měst. Tady spí prastará historie.',
-    archaeologyFact: 'Zákon superpozice říká: V klidném souvrství leží ty nejstarší sedimenty a zkameněliny vždy nejhlouběji v zemi!',
-    artifacts: [
-      { name: 'Pěstní klín a pazourek', icon: '🪓', detail: 'Ostrý kámen svázaný pevnou kůží' },
-      { name: 'Mamutí stolička', icon: '🦣', detail: 'Pozůstatek z doby ledové' },
-      { name: 'Jeskynní kresba', icon: '🎨', detail: 'Vykreslená uhlem a červenou hlinkou' },
-    ],
-  },
-]

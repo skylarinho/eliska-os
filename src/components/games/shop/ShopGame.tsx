@@ -1,8 +1,8 @@
-import { useState, type FC } from 'react'
+import { useState, useEffect, type FC } from 'react'
 import { motion } from 'framer-motion'
 import { SHOP_ITEMS, SHOP_MISSIONS } from '../../../data/shopData'
 import type { ShopItem, ShopMission, CoinValue } from '../../../types/learning'
-import { useProfileStore } from '../../../store/useProfileStore'
+import { useProfileStore, getVocativeName } from '../../../store/useProfileStore'
 import {
   playClickSound,
   playCoinSound,
@@ -11,7 +11,6 @@ import {
 } from '../../../utils/audio'
 import { FeedbackModal } from '../../common/FeedbackModal'
 import {
-  ArrowLeft,
   ShoppingBag,
   RotateCcw,
   CheckCircle2,
@@ -21,15 +20,15 @@ import {
   Check,
   Undo2,
 } from 'lucide-react'
-import confetti from 'canvas-confetti'
 
 interface ShopGameProps {
   onBack: () => void
+  onProgressChange?: (progress: string) => void
 }
 
 const COIN_VALUES: CoinValue[] = [50, 20, 10, 5, 2, 1]
 
-export const ShopGame: FC<ShopGameProps> = ({ onBack }) => {
+export const ShopGame: FC<ShopGameProps> = ({ onBack, onProgressChange }) => {
   const [missionIndex, setMissionIndex] = useState(0)
   const [phase, setPhase] = useState<'cart' | 'checkout' | 'completed'>('cart')
   const [cart, setCart] = useState<{ [itemId: string]: number }>({})
@@ -53,6 +52,10 @@ export const ShopGame: FC<ShopGameProps> = ({ onBack }) => {
   const { addXp } = useProfileStore()
   const activeProfile = useProfileStore((state) => state.getActiveProfile())
   const currentMission: ShopMission = SHOP_MISSIONS[missionIndex]
+
+  useEffect(() => {
+    onProgressChange?.(`Nákup ${missionIndex + 1}/${SHOP_MISSIONS.length}`)
+  }, [missionIndex, onProgressChange])
 
   // Calculate current cart total
   const cartTotal = Object.entries(cart).reduce((sum, [itemId, count]) => {
@@ -101,29 +104,31 @@ export const ShopGame: FC<ShopGameProps> = ({ onBack }) => {
     setReturnedCoins((prev) => [...prev, coin])
   }
 
-  const handleUndoCoin = () => {
+  const handleRemoveLastCoin = () => {
+    if (returnedCoins.length === 0) return
     playClickSound()
     setReturnedCoins((prev) => prev.slice(0, -1))
   }
 
   const handleProceedToCheckout = () => {
+    if (!isCartComplete) return
     playClickSound()
     setPhase('checkout')
   }
 
-  const handleVerifyChange = () => {
-    const isCorrect = returnedTotal === expectedChange
+  const handleVerifyCheckout = () => {
+    const isExactChange = returnedTotal === expectedChange
 
-    if (isCorrect) {
+    if (isExactChange) {
       playCashRegisterSound()
-      confetti({ particleCount: 80, spread: 70, origin: { y: 0.6 } })
+      playCoinSound()
       addXp(currentMission.xpReward)
 
       setFeedback({
         isOpen: true,
         isCorrect: true,
         title: '✅ POKLADNA CINKLA! PŘESNĚ!',
-        explanation: `Výborně, milá ${activeProfile?.name || 'Eliško'}! Nákup stál ${targetTotal} Kč, zákazník platil bankovkou ${currentMission.paidWithBanknote} Kč. Vrátila jsi přesně ${expectedChange} Kč (${currentMission.paidWithBanknote} – ${targetTotal} = ${expectedChange} Kč).`,
+        explanation: `Výborně, ${getVocativeName(activeProfile?.name)}! Nákup stál ${targetTotal} Kč, zákazník platil bankovkou ${currentMission.paidWithBanknote} Kč. Vrátila jsi přesně ${expectedChange} Kč (${currentMission.paidWithBanknote} – ${targetTotal} = ${expectedChange} Kč).`,
         hint: '',
         xpEarned: currentMission.xpReward,
       })
@@ -165,31 +170,9 @@ export const ShopGame: FC<ShopGameProps> = ({ onBack }) => {
   }
 
   return (
-    <div className="w-full max-w-md mx-auto px-3.5 py-4 min-h-[calc(100dvh-130px)] flex flex-col justify-between">
-      {/* Header bar */}
-      <div className="space-y-2">
-        <div className="flex items-center justify-between">
-          <button
-            onClick={() => {
-              playClickSound()
-              onBack()
-            }}
-            className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-[#ebdccb]/80 hover:bg-[#ebdccb] text-xs font-bold text-[#7a5c43] touch-target"
-          >
-            <ArrowLeft className="w-4 h-4" />
-            <span>Zpět</span>
-          </button>
-
-          <div className="flex items-center gap-1.5">
-            <span className="text-xs font-extrabold text-[#7a5c43]">Nákup</span>
-            <span className="text-xs font-black text-[#3e2723] bg-amber-100 px-2.5 py-0.5 rounded-full border border-amber-300">
-              {missionIndex + 1} / {SHOP_MISSIONS.length}
-            </span>
-          </div>
-        </div>
-
-        {/* Phase progress indicator */}
-        <div className="grid grid-cols-2 gap-2 text-center text-xs font-black">
+    <div className="w-full max-w-md mx-auto px-3.5 py-3 min-h-[calc(100dvh-130px)] flex flex-col justify-between">
+      {/* Phase progress indicator */}
+      <div className="grid grid-cols-2 gap-2 text-center text-xs font-black">
           <div
             className={`py-1 rounded-xl border ${
               phase === 'cart'
@@ -209,7 +192,6 @@ export const ShopGame: FC<ShopGameProps> = ({ onBack }) => {
             2. Pokladna & Vrácení 💰
           </div>
         </div>
-      </div>
 
       {/* PHASE 1: FILLING THE CART */}
       {phase === 'cart' && (
@@ -388,7 +370,7 @@ export const ShopGame: FC<ShopGameProps> = ({ onBack }) => {
                 </span>
                 {returnedCoins.length > 0 && (
                   <button
-                    onClick={handleUndoCoin}
+                    onClick={handleRemoveLastCoin}
                     className="p-1 px-2 rounded-lg bg-stone-100 hover:bg-stone-200 text-xs font-bold text-[#7a5c43] flex items-center gap-1 touch-target"
                     title="Vrátit minci zpět"
                   >
@@ -443,7 +425,7 @@ export const ShopGame: FC<ShopGameProps> = ({ onBack }) => {
           {/* Verify Change Button */}
           <div className="pt-2">
             <button
-              onClick={handleVerifyChange}
+              onClick={handleVerifyCheckout}
               className="w-full min-h-[50px] py-3 rounded-2xl bg-[#059669] hover:bg-[#047857] text-white font-black text-base flex items-center justify-center gap-2 shadow-md active:scale-98 transition-transform touch-target shadow-emerald-700/25"
             >
               <CheckCircle2 className="w-5 h-5" />
@@ -467,7 +449,7 @@ export const ShopGame: FC<ShopGameProps> = ({ onBack }) => {
             Všechny nákupy spočítány! 🎉
           </h2>
           <p className="text-sm text-[#7a5c43] font-medium">
-            Milá {activeProfile?.name || 'Eliško'}, jsi fantastická pokladní! Všechny nákupy i
+            {getVocativeName(activeProfile?.name)}, jsi fantastická pokladní! Všechny nákupy i
             vrácené peníze jsi spočítala na jedničku.
           </p>
 

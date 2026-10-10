@@ -74,7 +74,7 @@ export const Header: FC<HeaderProps> = ({
 
         {/* CENTER SECTION: Game progress indicator */}
         {isGameActive && viewProgress && (
-          <div className="bg-amber-100/90 text-amber-950 border border-amber-300 px-3 py-1 rounded-full text-xs font-black shadow-2xs">
+          <div className="bg-[#fef3c7] text-[#78350f] border-2 border-amber-300/80 px-3.5 py-1 rounded-full text-xs sm:text-sm font-black shadow-2xs tracking-wide">
             {viewProgress}
           </div>
         )}

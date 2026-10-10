@@ -1,20 +1,21 @@
-import { useState, useMemo, type FC } from 'react'
+import { useState, useEffect, useMemo, type FC } from 'react'
 import { motion } from 'framer-motion'
 import { HARDWARE_ITEMS, type HardwareItem } from '../../data/lessonsData'
-import { useProfileStore } from '../../store/useProfileStore'
+import { useProfileStore, getVocativeName } from '../../store/useProfileStore'
 import { playCorrectSound, playWrongSound, playFanfareSound, playClickSound } from '../../utils/audio'
 import { FeedbackModal } from '../common/FeedbackModal'
 import { HardwareIcon } from './HardwareIcon'
-import { ArrowLeft, RotateCcw, CheckCircle, ChevronRight } from 'lucide-react'
+import { RotateCcw, CheckCircle, ChevronRight } from 'lucide-react'
 import confetti from 'canvas-confetti'
 
 interface HardwareLessonProps {
   onBack: () => void
+  onProgressChange?: (progress: string) => void
 }
 
 const OPTION_LETTERS = ['A', 'B', 'C']
 
-export const HardwareLesson: FC<HardwareLessonProps> = ({ onBack }) => {
+export const HardwareLesson: FC<HardwareLessonProps> = ({ onBack, onProgressChange }) => {
   const [currentIndex, setCurrentIndex] = useState(0)
   const [feedback, setFeedback] = useState<{
     isOpen: boolean
@@ -37,6 +38,10 @@ export const HardwareLesson: FC<HardwareLessonProps> = ({ onBack }) => {
   const { addXp, completeLesson } = useProfileStore()
   const activeProfile = useProfileStore((state) => state.getActiveProfile())
   const currentItem: HardwareItem = HARDWARE_ITEMS[currentIndex]
+
+  useEffect(() => {
+    onProgressChange?.(`Otázka ${currentIndex + 1}/${HARDWARE_ITEMS.length}`)
+  }, [currentIndex, onProgressChange])
 
   // Generate 3 stable choices (1 correct + 2 distractors) for the current item.
   const choices = useMemo(() => {
@@ -97,97 +102,75 @@ export const HardwareLesson: FC<HardwareLessonProps> = ({ onBack }) => {
   }
 
   return (
-    <div className="w-full max-w-md mx-auto px-3.5 py-4 min-h-[calc(100dvh-130px)] flex flex-col justify-between">
-      {/* Header bar */}
-      <div className="space-y-2">
-        <div className="flex items-center justify-between">
-          <button
-            onClick={() => {
-              playClickSound()
-              onBack()
-            }}
-            className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-[#ebdccb]/80 hover:bg-[#ebdccb] text-xs font-bold text-[#7a5c43] touch-target"
-          >
-            <ArrowLeft className="w-4 h-4" />
-            <span>Zpět</span>
-          </button>
-          <div className="text-right">
-            <span className="text-xs font-extrabold text-[#7a5c43] block">Otázka</span>
-            <span className="text-xs font-bold text-[#3e2723]">
-              {Math.min(currentIndex + 1, HARDWARE_ITEMS.length)} / {HARDWARE_ITEMS.length}
-            </span>
-          </div>
-        </div>
-
-        {/* Progress bar */}
-        <div className="w-full bg-[#ebdccb] h-2.5 rounded-full overflow-hidden">
-          <motion.div
-            className="bg-[#059669] h-full rounded-full"
-            initial={{ width: 0 }}
-            animate={{ width: `${(currentIndex / HARDWARE_ITEMS.length) * 100}%` }}
-            transition={{ duration: 0.3 }}
-          />
-        </div>
+    <div className="w-full max-w-md mx-auto px-3.5 py-3 min-h-[calc(100dvh-130px)] flex flex-col justify-between">
+      {/* Sleek top progress bar */}
+      <div className="w-full bg-[#ebdccb] h-2 rounded-full overflow-hidden mb-1">
+        <motion.div
+          className="bg-[#059669] h-full rounded-full"
+          initial={{ width: 0 }}
+          animate={{ width: `${((currentIndex + 1) / HARDWARE_ITEMS.length) * 100}%` }}
+          transition={{ duration: 0.3 }}
+        />
       </div>
 
       {!lessonFinished ? (
-        <div className="my-auto py-2 space-y-4">
-          {/* Question Exhibit Card (Distinct calm container) */}
+        <div className="my-auto py-1 space-y-3">
+          {/* Question Exhibit Card */}
           <motion.div
             key={currentItem.id}
-            initial={{ opacity: 0, scale: 0.95, y: 10 }}
+            initial={{ opacity: 0, scale: 0.96, y: 8 }}
             animate={{ opacity: 1, scale: 1, y: 0 }}
             transition={{ duration: 0.25 }}
-            className="bg-[#fcfaf6] rounded-3xl p-5 border-2 border-[#ebdccb] shadow-xs text-center relative overflow-hidden"
+            className="bg-amber-50/40 rounded-3xl p-4 border-2 border-[#ebdccb] shadow-xs text-center relative overflow-hidden"
           >
-            {/* Question Label */}
-            <span className="inline-block text-[11px] font-black uppercase tracking-wider px-3 py-1 rounded-full bg-[#ebdccb]/80 text-[#7a5c43] mb-3">
-              Úkol pro školačku {activeProfile?.name || 'Elišku'} 🔍
-            </span>
-
-            {/* Exhibit Box with HardwareIcon */}
-            <div className="inline-flex items-center justify-center w-28 h-28 bg-white rounded-3xl mb-3 shadow-inner border-2 border-[#ebdccb]/60">
+            <div className="inline-flex items-center justify-center w-24 h-24 bg-white rounded-3xl mb-2 shadow-inner border-2 border-[#ebdccb]/80">
               <HardwareIcon itemId={currentItem.id} emojiFallback={currentItem.icon} size="lg" />
             </div>
 
             <h2 className="text-xl sm:text-2xl font-black text-[#3e2723] tracking-tight">
               Poznáš, co je na obrázku? 🤔
             </h2>
-            <p className="text-xs sm:text-sm text-[#7a5c43] font-semibold mt-1">
-              Vyber správné tlačítko ze tří možností dole:
-            </p>
           </motion.div>
 
-          {/* Answer Action Buttons (Tactile chunky buttons with 3D bottom border) */}
-          <div className="space-y-3 pt-1">
-            {choices.map((choice, idx) => (
-              <motion.button
-                key={choice.id}
-                whileHover={{ scale: 1.01 }}
-                whileTap={{ scale: 0.97 }}
-                onClick={() => handleSelectChoice(choice)}
-                className="w-full min-h-[62px] p-3.5 rounded-2xl bg-white hover:bg-amber-50/40 border-2 border-[#d8c3ad] border-b-[5px] border-b-[#7a5c43] active:border-b-2 active:translate-y-[3px] shadow-sm flex items-center justify-between text-left transition-all touch-target cursor-pointer group"
-              >
-                <div className="flex items-center gap-3 min-w-0">
-                  {/* Badge A, B, C */}
-                  <span className="w-8 h-8 rounded-xl bg-[#ebdccb] group-hover:bg-[#d8c3ad] text-[#3e2723] font-black text-sm flex items-center justify-center shrink-0 shadow-2xs transition-colors">
-                    {OPTION_LETTERS[idx]}
-                  </span>
+          {/* Answer Action Buttons */}
+          <div className="space-y-2.5 pt-1">
+            <span className="text-[11px] font-black uppercase tracking-wider text-[#7a5c43] px-1 flex items-center gap-1">
+              👇 Klepni na správnou odpověď:
+            </span>
+            {choices.map((choice, idx) => {
+              const badgeStyles = [
+                'bg-sky-100 text-sky-800 border-sky-300',
+                'bg-amber-100 text-amber-900 border-amber-300',
+                'bg-emerald-100 text-emerald-900 border-emerald-300',
+              ]
 
-                  {/* Icon & Name */}
-                  <div className="flex items-center gap-2.5 min-w-0">
-                    <HardwareIcon itemId={choice.id} emojiFallback={choice.icon} size="sm" />
-                    <span className="font-black text-[#3e2723] text-base sm:text-lg truncate">
-                      {choice.name}
+              return (
+                <motion.button
+                  key={choice.id}
+                  whileHover={{ scale: 1.01 }}
+                  whileTap={{ scale: 0.97 }}
+                  onClick={() => handleSelectChoice(choice)}
+                  className="w-full min-h-[58px] p-3 rounded-2xl bg-white hover:bg-amber-50/50 border-2 border-[#d8c3ad] border-b-[5px] border-b-[#7a5c43] active:border-b-2 active:translate-y-[3px] shadow-sm flex items-center justify-between text-left transition-all touch-target cursor-pointer group"
+                >
+                  <div className="flex items-center gap-3 min-w-0">
+                    <span className={`w-8 h-8 rounded-xl font-black text-sm flex items-center justify-center shrink-0 border shadow-2xs ${badgeStyles[idx % 3]}`}>
+                      {OPTION_LETTERS[idx]}
                     </span>
-                  </div>
-                </div>
 
-                <div className="w-8 h-8 rounded-xl bg-[#f7f5f0] group-hover:bg-[#ebdccb]/60 flex items-center justify-center shrink-0 text-[#7a5c43] ml-2">
-                  <ChevronRight className="w-4 h-4" />
-                </div>
-              </motion.button>
-            ))}
+                    <div className="flex items-center gap-2.5 min-w-0">
+                      <HardwareIcon itemId={choice.id} emojiFallback={choice.icon} size="sm" />
+                      <span className="font-black text-[#3e2723] text-base sm:text-lg truncate">
+                        {choice.name}
+                      </span>
+                    </div>
+                  </div>
+
+                  <div className="w-7 h-7 rounded-xl bg-[#f7f5f0] group-hover:bg-[#ebdccb] flex items-center justify-center shrink-0 text-[#7a5c43] ml-2">
+                    <ChevronRight className="w-4 h-4" />
+                  </div>
+                </motion.button>
+              )
+            })}
           </div>
         </div>
       ) : (
@@ -202,7 +185,7 @@ export const HardwareLesson: FC<HardwareLessonProps> = ({ onBack }) => {
           </div>
           <h2 className="text-2xl font-black text-[#3e2723]">Všechny součástky poznány! 🎉</h2>
           <p className="text-sm text-[#7a5c43] font-medium">
-            Milá {activeProfile?.name || 'Eliško'}, správně jsi poznala <strong className="text-emerald-700 font-extrabold">{correctCount}</strong> z{' '}
+            {getVocativeName(activeProfile?.name)}, správně jsi poznala <strong className="text-emerald-700 font-extrabold">{correctCount}</strong> z{' '}
             {HARDWARE_ITEMS.length} počítačových pomocníků. Získáváš bonusových <strong className="text-amber-600">+50 XP</strong>!
           </p>
 

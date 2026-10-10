@@ -1,19 +1,19 @@
-import { useState, useMemo, type FC } from 'react'
+import { useState, useEffect, useMemo, type FC } from 'react'
 import { motion } from 'framer-motion'
 import { CZECH_LETTERS, CZECH_EXERCISES } from '../../../data/czechData'
 import type { CzechExercise, LetterGroup } from '../../../types/learning'
-import { useProfileStore } from '../../../store/useProfileStore'
+import { useProfileStore, getVocativeName } from '../../../store/useProfileStore'
 import { playClickSound, playCorrectSound, playWrongSound } from '../../../utils/audio'
 import { FeedbackModal } from '../../common/FeedbackModal'
-import { ArrowLeft } from 'lucide-react'
 
 interface CzechGameProps {
   onBack: () => void
+  onProgressChange?: (progress: string) => void
 }
 
 const VOWEL_OPTIONS: ('i' | 'í' | 'y' | 'ý')[] = ['i', 'í', 'y', 'ý']
 
-export const CzechGame: FC<CzechGameProps> = ({ onBack }) => {
+export const CzechGame: FC<CzechGameProps> = ({ onProgressChange }) => {
   const [selectedLetter, setSelectedLetter] = useState<LetterGroup>('B')
   const [exerciseIndex, setExerciseIndex] = useState(0)
 
@@ -45,6 +45,10 @@ export const CzechGame: FC<CzechGameProps> = ({ onBack }) => {
   const currentExercise: CzechExercise =
     currentLetterExercises[exerciseIndex] || currentLetterExercises[0]
 
+  useEffect(() => {
+    onProgressChange?.(`Písmeno ${selectedLetter} (${exerciseIndex + 1}/${currentLetterExercises.length})`)
+  }, [selectedLetter, exerciseIndex, currentLetterExercises.length, onProgressChange])
+
   const handleSelectVowel = (vowel: 'i' | 'í' | 'y' | 'ý') => {
     const isCorrect = vowel === currentExercise.correctAnswer
     const xp = isCorrect ? 20 : 0
@@ -61,7 +65,7 @@ export const CzechGame: FC<CzechGameProps> = ({ onBack }) => {
       isCorrect,
       title: isCorrect ? '✅ SPRÁVNĚ! SKVĚLÁ ČEŠTINÁŘKA!' : '❌ POZOR NA CHYTÁK!',
       explanation: isCorrect
-        ? `Výborně, milá ${activeProfile?.name || 'Eliško'}! Správně je „${currentExercise.missingWord}“. ${currentExercise.explanation}`
+        ? `Výborně, ${getVocativeName(activeProfile?.name)}! Správně je „${currentExercise.missingWord}“. ${currentExercise.explanation}`
         : `Do věty patří „${currentExercise.missingWord}“ s písmenem ${currentExercise.correctAnswer.toUpperCase()}. ${currentExercise.explanation}`,
       hint: `Kořenové slovo: ${currentExercise.rootWord}.`,
       xpEarned: xp,
@@ -78,28 +82,9 @@ export const CzechGame: FC<CzechGameProps> = ({ onBack }) => {
   }
 
   return (
-    <div className="w-full max-w-md mx-auto px-3.5 py-4 min-h-[calc(100dvh-130px)] flex flex-col justify-between">
-      {/* Top Header */}
-      <div className="space-y-2">
-        <div className="flex items-center justify-between">
-          <button
-            onClick={() => {
-              playClickSound()
-              onBack()
-            }}
-            className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-[#ebdccb]/80 hover:bg-[#ebdccb] text-xs font-bold text-[#7a5c43] touch-target"
-          >
-            <ArrowLeft className="w-4 h-4" />
-            <span>Zpět</span>
-          </button>
-
-          <span className="text-xs font-black text-[#3e2723] bg-amber-100 px-3 py-1 rounded-full border border-amber-300">
-            Vyjmenovaná slova ✍️
-          </span>
-        </div>
-
-        {/* Letter Group Selector Tabs (B, L, M, P, S, V, Z) */}
-        <div>
+    <div className="w-full max-w-md mx-auto px-3.5 py-3 min-h-[calc(100dvh-130px)] flex flex-col justify-between">
+      {/* Letter Group Selector Tabs (B, L, M, P, S, V, Z) */}
+      <div className="space-y-1">
           <span className="text-[10px] font-black uppercase tracking-wider text-[#7a5c43] block mb-1 px-1">
             Zvol si písmeno ze školy:
           </span>
@@ -124,7 +109,6 @@ export const CzechGame: FC<CzechGameProps> = ({ onBack }) => {
             ))}
           </div>
         </div>
-      </div>
 
       {/* Main Sentence Card */}
       {currentExercise && (

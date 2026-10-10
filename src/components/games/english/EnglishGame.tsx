@@ -1,17 +1,18 @@
-import { useState, useMemo, type FC } from 'react'
+import { useState, useEffect, useMemo, type FC } from 'react'
 import { motion } from 'framer-motion'
 import { ENGLISH_CATEGORIES, ENGLISH_PHRASES } from '../../../data/englishData'
 import type { EnglishPhrase, EnglishCategory } from '../../../types/learning'
-import { useProfileStore } from '../../../store/useProfileStore'
+import { useProfileStore, getVocativeName } from '../../../store/useProfileStore'
 import { playClickSound, playCorrectSound, playWrongSound } from '../../../utils/audio'
 import { FeedbackModal } from '../../common/FeedbackModal'
-import { ArrowLeft, Volume2, ChevronRight } from 'lucide-react'
+import { Volume2, ChevronRight } from 'lucide-react'
 
 interface EnglishGameProps {
   onBack: () => void
+  onProgressChange?: (progress: string) => void
 }
 
-export const EnglishGame: FC<EnglishGameProps> = ({ onBack }) => {
+export const EnglishGame: FC<EnglishGameProps> = ({ onProgressChange }) => {
   const [selectedCategory, setSelectedCategory] = useState<EnglishCategory>('greetings')
   const [phraseIndex, setPhraseIndex] = useState(0)
 
@@ -42,6 +43,10 @@ export const EnglishGame: FC<EnglishGameProps> = ({ onBack }) => {
 
   const currentPhrase: EnglishPhrase = categoryPhrases[phraseIndex] || categoryPhrases[0]
 
+  useEffect(() => {
+    onProgressChange?.(`Slovíčka ${phraseIndex + 1}/${categoryPhrases.length}`)
+  }, [phraseIndex, categoryPhrases.length, onProgressChange])
+
   // Native Web Speech API speech synthesis
   const speakEnglish = (text: string) => {
     if (typeof window !== 'undefined' && 'speechSynthesis' in window) {
@@ -70,7 +75,7 @@ export const EnglishGame: FC<EnglishGameProps> = ({ onBack }) => {
       isCorrect,
       title: isCorrect ? '✅ EXCELLENT! SKVĚLÁ ANGLIČTINÁŘKA!' : '❌ ZKUSÍME TO ZNOVU!',
       explanation: isCorrect
-        ? `Výborně, milá ${activeProfile?.name || 'Eliško'}! „${currentPhrase.english}“ znamená „${currentPhrase.czech}“. Čteme česky: ${currentPhrase.phonetic}.`
+        ? `Výborně, ${getVocativeName(activeProfile?.name)}! „${currentPhrase.english}“ znamená „${currentPhrase.czech}“. Čteme česky: ${currentPhrase.phonetic}.`
         : `Správný překlad slova „${currentPhrase.english}“ je „${currentPhrase.czech}“. Výslovnost: ${currentPhrase.phonetic}.`,
       hint: `Poslechni si výslovnost: ${currentPhrase.phonetic}.`,
       xpEarned: xp,
@@ -87,31 +92,12 @@ export const EnglishGame: FC<EnglishGameProps> = ({ onBack }) => {
   }
 
   return (
-    <div className="w-full max-w-md mx-auto px-3.5 py-4 min-h-[calc(100dvh-130px)] flex flex-col justify-between">
-      {/* Top Header */}
-      <div className="space-y-2">
-        <div className="flex items-center justify-between">
-          <button
-            onClick={() => {
-              playClickSound()
-              onBack()
-            }}
-            className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-[#ebdccb]/80 hover:bg-[#ebdccb] text-xs font-bold text-[#7a5c43] touch-target"
-          >
-            <ArrowLeft className="w-4 h-4" />
-            <span>Zpět</span>
-          </button>
-
-          <span className="text-xs font-black text-[#3e2723] bg-amber-100 px-3 py-1 rounded-full border border-amber-300">
-            Angličtina pro radost 🇬🇧
-          </span>
-        </div>
-
-        {/* Category Tabs */}
-        <div>
-          <span className="text-[10px] font-black uppercase tracking-wider text-[#7a5c43] block mb-1 px-1">
-            Vyber si téma slovíček:
-          </span>
+    <div className="w-full max-w-md mx-auto px-3.5 py-3 min-h-[calc(100dvh-130px)] flex flex-col justify-between">
+      {/* Category Tabs */}
+      <div className="space-y-1">
+        <span className="text-[10px] font-black uppercase tracking-wider text-[#7a5c43] block mb-1 px-1">
+          Vyber si téma slovíček:
+        </span>
           <div className="flex items-center gap-1.5 overflow-x-auto pb-1">
             {ENGLISH_CATEGORIES.map((cat) => (
               <button
@@ -133,7 +119,6 @@ export const EnglishGame: FC<EnglishGameProps> = ({ onBack }) => {
             ))}
           </div>
         </div>
-      </div>
 
       {/* Main Flashcard with Native Speech Voice */}
       {currentPhrase && (

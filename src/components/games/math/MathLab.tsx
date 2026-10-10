@@ -1,8 +1,8 @@
-import { useState, type FC } from 'react'
+import { useState, useEffect, type FC } from 'react'
 import { motion } from 'framer-motion'
 import { DECOMPOSITION_EXERCISES, MULTIPLICATION_DUELS } from '../../../data/mathData'
 import type { DecompositionStep, MultiplicationDuel } from '../../../types/learning'
-import { useProfileStore } from '../../../store/useProfileStore'
+import { useProfileStore, getVocativeName } from '../../../store/useProfileStore'
 import {
   playClickSound,
   playCorrectSound,
@@ -10,14 +10,15 @@ import {
   playFanfareSound,
 } from '../../../utils/audio'
 import { FeedbackModal } from '../../common/FeedbackModal'
-import { ArrowLeft, Check } from 'lucide-react'
+import { Check } from 'lucide-react'
 import confetti from 'canvas-confetti'
 
 interface MathLabProps {
   onBack: () => void
+  onProgressChange?: (progress: string) => void
 }
 
-export const MathLab: FC<MathLabProps> = ({ onBack }) => {
+export const MathLab: FC<MathLabProps> = ({ onProgressChange }) => {
   const [activeTab, setActiveTab] = useState<'decomp' | 'mult'>('decomp')
 
   // Decomposition state
@@ -52,6 +53,14 @@ export const MathLab: FC<MathLabProps> = ({ onBack }) => {
   const currentDecomp: DecompositionStep = DECOMPOSITION_EXERCISES[decompIndex]
   const currentMult: MultiplicationDuel = MULTIPLICATION_DUELS[multIndex]
 
+  useEffect(() => {
+    if (activeTab === 'decomp') {
+      onProgressChange?.(`Rozklad ${decompIndex + 1}/${DECOMPOSITION_EXERCISES.length}`)
+    } else {
+      onProgressChange?.(`Násobilka ${multIndex + 1}/${MULTIPLICATION_DUELS.length}`)
+    }
+  }, [activeTab, decompIndex, multIndex, onProgressChange])
+
   // Verify Decomposition step
   const handleVerifyDecomp = () => {
     const isTensOk = parseInt(userSumTens, 10) === currentDecomp.sumTens
@@ -67,7 +76,7 @@ export const MathLab: FC<MathLabProps> = ({ onBack }) => {
         isOpen: true,
         isCorrect: true,
         title: '✅ VÝBORNĚ! ROZKLAD ZVLÁDNUT!',
-        explanation: `Skvělá práce, milá ${activeProfile?.name || 'Eliško'}! ${currentDecomp.numA} + ${currentDecomp.numB} = (${currentDecomp.tensA} + ${currentDecomp.tensB}) + (${currentDecomp.onesA} + ${currentDecomp.onesB}) = ${currentDecomp.sumTens} + ${currentDecomp.sumOnes} = ${currentDecomp.total}.`,
+        explanation: `Skvělá práce, ${getVocativeName(activeProfile?.name)}! ${currentDecomp.numA} + ${currentDecomp.numB} = (${currentDecomp.tensA} + ${currentDecomp.tensB}) + (${currentDecomp.onesA} + ${currentDecomp.onesB}) = ${currentDecomp.sumTens} + ${currentDecomp.sumOnes} = ${currentDecomp.total}.`,
         hint: '',
         xpEarned: 25,
       })
@@ -138,28 +147,9 @@ export const MathLab: FC<MathLabProps> = ({ onBack }) => {
   }
 
   return (
-    <div className="w-full max-w-md mx-auto px-3.5 py-4 min-h-[calc(100dvh-130px)] flex flex-col justify-between">
-      {/* Header bar */}
-      <div className="space-y-2">
-        <div className="flex items-center justify-between">
-          <button
-            onClick={() => {
-              playClickSound()
-              onBack()
-            }}
-            className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-[#ebdccb]/80 hover:bg-[#ebdccb] text-xs font-bold text-[#7a5c43] touch-target"
-          >
-            <ArrowLeft className="w-4 h-4" />
-            <span>Zpět</span>
-          </button>
-
-          <span className="text-xs font-black text-[#3e2723] bg-amber-100 px-3 py-1 rounded-full border border-amber-300">
-            Matematická laboratoř 🧪
-          </span>
-        </div>
-
-        {/* Tab switch */}
-        <div className="grid grid-cols-2 gap-2">
+    <div className="w-full max-w-md mx-auto px-3.5 py-3 min-h-[calc(100dvh-130px)] flex flex-col justify-between">
+      {/* Tab switch */}
+      <div className="grid grid-cols-2 gap-2">
           <button
             onClick={() => {
               playClickSound()
@@ -187,7 +177,6 @@ export const MathLab: FC<MathLabProps> = ({ onBack }) => {
             2. Násobilková stezka ✖️
           </button>
         </div>
-      </div>
 
       {/* TAB 1: DECOMPOSITION */}
       {activeTab === 'decomp' && (
