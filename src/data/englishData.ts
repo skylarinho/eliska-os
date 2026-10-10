@@ -1,13 +1,4 @@
-import type { EnglishPhrase, EnglishCategory } from '../types/learning'
-
-export const ENGLISH_CATEGORIES: { id: EnglishCategory; label: string; icon: string }[] = [
-  { id: 'greetings', label: 'Pozdravy & Fráze', icon: '👋' },
-  { id: 'animals', label: 'Zvířátka', icon: '🐾' },
-  { id: 'food', label: 'Jídlo & Ovoce', icon: '🍎' },
-  { id: 'school', label: 'Školní pomůcky', icon: '🎒' },
-  { id: 'colors', label: 'Barvičky', icon: '🎨' },
-  { id: 'numbers', label: 'Čísla 1–10', icon: '🔢' },
-]
+import type { EnglishPhrase } from '../types/learning'
 
 export const ENGLISH_PHRASES: EnglishPhrase[] = [
   // Greetings

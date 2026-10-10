@@ -1,46 +1,15 @@
-import { useState } from 'react'
-import { X } from 'lucide-react'
+import { useEffect, useState } from 'react'
 import { Sesit } from './components/Sesit'
+import { vykresliLekci } from './lekce/registr'
 import { Prehled } from './screens/Prehled'
-import { HardwareLesson } from './components/lessons/HardwareLesson'
-import { TimelineLesson } from './components/lessons/TimelineLesson'
-import { ArtifactsLesson } from './components/lessons/ArtifactsLesson'
-import { ShopGame } from './components/games/shop/ShopGame'
-import { MathLab } from './components/games/math/MathLab'
-import { Vyjmenovana } from './lekce/cestina/Vyjmenovana'
-import { EnglishGame } from './components/games/english/EnglishGame'
 
 export function App() {
   const [lekceId, setLekceId] = useState<string | null>(null)
   const domu = () => setLekceId(null)
+  useEffect(() => window.scrollTo(0, 0), [lekceId])
+  const lekce = lekceId === null ? null : vykresliLekci(lekceId, domu)
 
-  return (
-    <Sesit>
-      {lekceId === null ? (
-        <Prehled onStart={setLekceId} />
-      ) : lekceId.startsWith('cestina-vyjmenovana-') ? (
-        <Vyjmenovana lekceId={lekceId} onZavrit={domu} />
-      ) : (
-        <div className="pr-5 pt-12 pb-20 min-[700px]:pr-12 min-[700px]:pt-10">
-          {/* Dočasná lišta, než vznikne společná kostra lekce (krok 5). */}
-          <button
-            type="button"
-            onClick={domu}
-            aria-label="Ukončit lekci"
-            className="mb-6 grid h-12 w-12 place-items-center rounded-full border-2 border-inkoust-3 bg-papir"
-          >
-            <X className="h-[18px] w-[18px]" strokeWidth={2.6} aria-hidden="true" />
-          </button>
-          {lekceId === 'lesson-hw' && <HardwareLesson onBack={domu} />}
-          {lekceId === 'lesson-timeline' && <TimelineLesson onBack={domu} />}
-          {lekceId === 'lesson-artifacts' && <ArtifactsLesson onBack={domu} />}
-          {lekceId === 'game-shop' && <ShopGame onBack={domu} />}
-          {lekceId === 'game-math' && <MathLab onBack={domu} />}
-          {lekceId === 'game-english' && <EnglishGame onBack={domu} />}
-        </div>
-      )}
-    </Sesit>
-  )
+  return <Sesit>{lekce ?? <Prehled onStart={setLekceId} />}</Sesit>
 }
 
 export default App

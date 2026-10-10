@@ -18,20 +18,23 @@ export const PREDMETY: { id: Predmet; nazev: string }[] = [
 ]
 
 /**
- * Lekce, které appka právě umí. Id odpovídají starým obrazovkám;
- * při převodu cvičení (krok 6) se nahradí lekcemi z obsahu.
+ * Lekce, které appka právě umí. Po zavedení obsahu z markdownu (krok 6b) se k nim přidají lekce z obsah/otazky.
  */
 export const KATALOG: Lekce[] = [
   { id: 'cestina-vyjmenovana-b', nazev: 'Vyjmenovaná slova po B', popis: '4 věty', predmet: 'cestina', meta: '4 věty, asi 3 minuty' },
   { id: 'cestina-vyjmenovana-l-m', nazev: 'Vyjmenovaná slova po L a M', popis: '4 věty', predmet: 'cestina', meta: '4 věty, asi 3 minuty' },
   { id: 'cestina-vyjmenovana-p-s', nazev: 'Vyjmenovaná slova po P a S', popis: '4 věty', predmet: 'cestina', meta: '4 věty, asi 3 minuty' },
   { id: 'cestina-vyjmenovana-v-z', nazev: 'Vyjmenovaná slova po V a Z', popis: '5 vět', predmet: 'cestina', meta: '5 vět, asi 4 minuty' },
-  { id: 'game-shop', nazev: 'Obchůdek', popis: 'Nákup a vracení peněz', predmet: 'matematika', meta: 'Nákupní lístek a mince' },
-  { id: 'game-math', nazev: 'Rozklad a násobilka', popis: 'Desítky, jednotky, výsledky', predmet: 'matematika', meta: 'Počítání s čísly' },
-  { id: 'game-english', nazev: 'Slovíčka s poslechem', popis: 'Pozdravy, zvířátka, jídlo a další', predmet: 'anglictina', meta: 'Poslech a výběr překladu' },
-  { id: 'lesson-timeline', nazev: 'Časová osa dějin', popis: 'Seřaď 5 epoch', predmet: 'vlastiveda', meta: 'Seřazení epoch' },
-  { id: 'lesson-artifacts', nazev: 'Předměty a epochy', popis: 'Kam patří pěstní klín?', predmet: 'vlastiveda', meta: 'Přiřazování k epoše' },
-  { id: 'lesson-hw', nazev: 'Co je na obrázku?', popis: 'Části počítače', predmet: 'informatika', meta: 'Poznávání částí počítače' },
+  { id: 'matematika-obchudek', nazev: 'Obchůdek', popis: 'Nákup a vracení peněz', predmet: 'matematika', meta: '4 nákupy, asi 8 minut' },
+  { id: 'matematika-rozklad', nazev: 'Rozklad na desítky', popis: 'Sčítání do 100', predmet: 'matematika', meta: '4 příklady, asi 4 minuty' },
+  { id: 'matematika-nasobilka', nazev: 'Násobilka', popis: 'Vyber správný výsledek', predmet: 'matematika', meta: '8 příkladů, asi 4 minuty' },
+  { id: 'anglictina-pozdravy', nazev: 'Slovíčka: pozdravy', popis: 'Hello, thank you a další', predmet: 'anglictina', meta: '4 slovíčka, asi 3 minuty' },
+  { id: 'anglictina-zviratka', nazev: 'Slovíčka: zvířátka', popis: 'Pes, kočka, liška', predmet: 'anglictina', meta: '4 slovíčka, asi 3 minuty' },
+  { id: 'anglictina-jidlo-skola', nazev: 'Slovíčka: jídlo a škola', popis: 'Jablko, mléko, tužka', predmet: 'anglictina', meta: '6 slovíček, asi 4 minuty' },
+  { id: 'anglictina-barvy-cisla', nazev: 'Slovíčka: barvy a čísla', popis: 'Red, green, ten', predmet: 'anglictina', meta: '5 slovíček, asi 4 minuty' },
+  { id: 'vlastiveda-casova-osa', nazev: 'Časová osa dějin', popis: 'Seřaď 5 epoch', predmet: 'vlastiveda', meta: 'Seřazení 5 epoch, asi 2 minuty' },
+  { id: 'vlastiveda-epochy', nazev: 'Předměty a epochy', popis: 'Kam patří pěstní klín?', predmet: 'vlastiveda', meta: '7 předmětů, asi 5 minut' },
+  { id: 'informatika-hardware', nazev: 'Co je na obrázku?', popis: 'Části počítače', predmet: 'informatika', meta: '8 zařízení, asi 5 minut' },
 ]
 
 export const lekcePodleId = (id: string): Lekce | undefined => KATALOG.find((l) => l.id === id)

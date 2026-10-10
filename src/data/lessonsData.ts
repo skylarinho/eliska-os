@@ -1,13 +1,4 @@
-// Didactic data model for 4th Grade Primary School (Informatika & Vlastivěda)
-
-export interface StudyCard {
-  id: string
-  title: string
-  icon: string
-  subtitle: string
-  content: string
-  funFact: string
-}
+// Informatika a vlastivěda: části počítače, epochy, předměty v čase
 
 export interface HardwareItem {
   id: string
@@ -39,75 +30,7 @@ export interface HistoryArtifact {
   hint: string
 }
 
-export interface LessonMeta {
-  id: string
-  title: string
-  shortTitle: string
-  subject: 'Informatika' | 'Vlastivěda'
-  icon: string
-  description: string
-  color: string
-  rewardXp: number
-}
-
-export const LESSONS_META: LessonMeta[] = [
-  {
-    id: 'lesson-hw',
-    title: 'Informatika: Co je na obrázku?',
-    shortTitle: 'Poznáváme hardware',
-    subject: 'Informatika',
-    icon: '💻',
-    description: 'Poznej klávesnici, myš, monitor i tiskárnu a zjisti, kudy data proudí!',
-    color: 'from-[#ebdccb] to-[#f7f5f0]',
-    rewardXp: 50,
-  },
-  {
-    id: 'lesson-timeline',
-    title: 'Časová osa: 5 velkých epoch lidstva',
-    shortTitle: 'Časová osa dějin',
-    subject: 'Vlastivěda',
-    icon: '⏳',
-    description: 'Poskládej epochy od nejstaršího Pravěku až po dnešní Moderní dobu!',
-    color: 'from-[#fef3c7] to-[#f7f5f0]',
-    rewardXp: 50,
-  },
-  {
-    id: 'lesson-artifacts',
-    title: 'Kde žil pěstní klín a parní stroj?',
-    shortTitle: 'Přiřazování předmětů',
-    subject: 'Vlastivěda',
-    icon: '🪓',
-    description: 'Přiřaď kamennou sekeru, rytířský meč i smartphone do správného období!',
-    color: 'from-[#d1fae5] to-[#f7f5f0]',
-    rewardXp: 60,
-  },
-]
-
 // LEKCE 1: INFORMATIKA
-export const HARDWARE_CATEGORIES = [
-  {
-    id: 'input',
-    name: 'Vstupní zařízení',
-    badge: '📥 Dovnitř',
-    description: 'Posílají data a naše příkazy dovnitř do počítače.',
-    color: 'bg-amber-100 text-amber-900 border-amber-300',
-  },
-  {
-    id: 'output',
-    name: 'Výstupní zařízení',
-    badge: '📤 Ven k nám',
-    description: 'Posílají data ven z počítače k našim očím a uším.',
-    color: 'bg-emerald-100 text-emerald-900 border-emerald-300',
-  },
-  {
-    id: 'core',
-    name: 'Srdce a paměť PC',
-    badge: '🧠 Mozek & Úkryt',
-    description: 'Tady se všechno počítá, řídí a bezpečně ukládá.',
-    color: 'bg-stone-200 text-stone-900 border-stone-400',
-  },
-] as const
-
 export const HARDWARE_ITEMS: HardwareItem[] = [
   {
     id: 'kb',
@@ -115,7 +38,7 @@ export const HARDWARE_ITEMS: HardwareItem[] = [
     icon: '⌨️',
     category: 'input',
     categoryName: 'Vstupní zařízení',
-    explanation: 'Je to Klávesnice! Patří mezi VSTUPNÍ zařízení (📥), protože když na ní píšeš, posíláš písmenka a čísla DOVNITŘ do počítače.',
+    explanation: 'Je to Klávesnice. Patří mezi vstupní zařízení, protože když na ní píšeš, posíláš písmenka a čísla dovnitř do počítače.',
     hint: 'Má na sobě spoustu tlačítek s písmenky a číslicemi.',
   },
   {
@@ -124,7 +47,7 @@ export const HARDWARE_ITEMS: HardwareItem[] = [
     icon: '🖱️',
     category: 'input',
     categoryName: 'Vstupní zařízení',
-    explanation: 'Přesně tak, je to Počítačová myš! Je to VSTUPNÍ zařízení (📥) – držíš ji v ruce a klikáním posíláš povely DOVNITŘ.',
+    explanation: 'Přesně tak, je to Počítačová myš. Je to vstupní zařízení – držíš ji v ruce a klikáním posíláš povely dovnitř.',
     hint: 'Jezdí po podložce, má dvě tlačítka a kolečko.',
   },
   {
@@ -133,7 +56,7 @@ export const HARDWARE_ITEMS: HardwareItem[] = [
     icon: '🎙️',
     category: 'input',
     categoryName: 'Vstupní zařízení',
-    explanation: 'Správně, je to Mikrofon! Je to VSTUPNÍ zařízení (📥) – zachytí tvůj hlas a pošle zvuk DOVNITŘ do počítače.',
+    explanation: 'Správně, je to Mikrofon. Je to vstupní zařízení – zachytí tvůj hlas a pošle zvuk dovnitř do počítače.',
     hint: 'Mluvíš nebo zpíváš do něj při volání nebo nahrávání.',
   },
   {
@@ -142,7 +65,7 @@ export const HARDWARE_ITEMS: HardwareItem[] = [
     icon: '🖥️',
     category: 'output',
     categoryName: 'Výstupní zařízení',
-    explanation: 'Výborně, je to Monitor! Patří mezi VÝSTUPNÍ zařízení (📤) – ukazuje obraz a pohádky VEN z počítače pro tvé oči.',
+    explanation: 'Výborně, je to Monitor. Patří mezi výstupní zařízení – ukazuje obraz a pohádky ven z počítače pro tvé oči.',
     hint: 'Velká obrazovka, na které vidíš plochu, hry i video.',
   },
   {
@@ -151,7 +74,7 @@ export const HARDWARE_ITEMS: HardwareItem[] = [
     icon: '🖨️',
     category: 'output',
     categoryName: 'Výstupní zařízení',
-    explanation: 'Ano, je to Tiskárna! Je to VÝSTUPNÍ zařízení (📤) – vezme digitální obrázek a vytiskne ho VEN na skutečný papír.',
+    explanation: 'Ano, je to Tiskárna. Je to výstupní zařízení – vezme digitální obrázek a vytiskne ho ven na skutečný papír.',
     hint: 'Dáváš do ní čisté papíry a vyjíždí z ní vytištěný obrázek.',
   },
   {
@@ -160,7 +83,7 @@ export const HARDWARE_ITEMS: HardwareItem[] = [
     icon: '🎧',
     category: 'output',
     categoryName: 'Výstupní zařízení',
-    explanation: 'Skvěle, jsou to Sluchátka! Patří mezi VÝSTUPNÍ zařízení (📤) – posílají hudbu a zvuky VEN přímo do tvých uší.',
+    explanation: 'Skvěle, jsou to Sluchátka. Patří mezi výstupní zařízení – posílají hudbu a zvuky ven přímo do tvých uší.',
     hint: 'Nasadíš si je na hlavu na uši, abys slyšel písničky.',
   },
   {
@@ -169,7 +92,7 @@ export const HARDWARE_ITEMS: HardwareItem[] = [
     icon: '🗄️',
     category: 'core',
     categoryName: 'Srdce a mozek PC',
-    explanation: 'Přesně, je to Počítačová skříň! Ukrývá SRDCE a MOZEK celého počítače (procesor, grafiku i větráčky).',
+    explanation: 'Přesně, je to Počítačová skříň. Ukrývá srdce a mozek celého počítače (procesor, grafiku i větráčky).',
     hint: 'Velká bedna stojící pod stolem, ve které to tiše hučí.',
   },
   {
@@ -178,7 +101,7 @@ export const HARDWARE_ITEMS: HardwareItem[] = [
     icon: '⚡',
     category: 'core',
     categoryName: 'Paměť počítače',
-    explanation: 'Správně, je to USB flash disk (oblíbená flashka)! Patří mezi PAMĚŤOVÁ zařízení – uložíš si na ni fotky, pohádky i referát a vezmeš ji v kapse kamkoliv.',
+    explanation: 'Správně, je to USB flash disk (oblíbená flashka). Patří mezi paměťová zařízení – uložíš si na ni fotky, pohádky i referát a vezmeš ji v kapse kamkoliv.',
     hint: 'Malá přenosná klíčenka s kovovým USB konektorem, která se zasouvá do počítače.',
   },
 ]
@@ -241,8 +164,8 @@ export const HISTORY_ARTIFACTS: HistoryArtifact[] = [
     correctEpochId: 'pravek',
     epochName: 'Pravěk (Doba kamenná)',
     didacticExplanation:
-      'Jednoznačně PRAVĚK! Lidé tehdy ještě vůbec neznali výrobu kovů (železa ani bronzu). Sekery a nože osekávali z tvrdých kamenů (nejčastěji pazourků) a připevňovali je kůží s dřevěným topůrkem.',
-    hint: 'Kameny a pazourky se používaly dřív, než lidé objevili kovy!',
+      'Jednoznačně pravěk. Lidé tehdy ještě vůbec neznali výrobu kovů (železa ani bronzu). Sekery a nože osekávali z tvrdých kamenů (nejčastěji pazourků) a připevňovali je kůží s dřevěným topůrkem.',
+    hint: 'Kameny a pazourky se používaly dřív, než lidé objevili kovy.',
   },
   {
     id: 'art-sword',
@@ -251,7 +174,7 @@ export const HISTORY_ARTIFACTS: HistoryArtifact[] = [
     correctEpochId: 'stredovek',
     epochName: 'Středověk',
     didacticExplanation:
-      'STŘEDOVĚK! Doba statečných rytířů, králů na hradech a kovářů, kteří u výhně kovali těžká brnění, přilbice a ostré meče.',
+      'Je to středověk. Doba statečných rytířů, králů na hradech a kovářů, kteří u výhně kovali těžká brnění, přilbice a ostré meče.',
     hint: 'Nosili je rytíři na hradech Karlštejn nebo Bouzov.',
   },
   {
@@ -261,7 +184,7 @@ export const HISTORY_ARTIFACTS: HistoryArtifact[] = [
     correctEpochId: 'stredovek',
     epochName: 'Středověk',
     didacticExplanation:
-      'STŘEDOVĚK! Před vynálezem kuličkového pera i tiskáren mniši v klášterech celé dny ručně opisovali tlusté knihy seříznutým husím brkem namáčeným v inkoustu.',
+      'Je to středověk. Před vynálezem kuličkového pera i tiskáren mniši v klášterech celé dny ručně opisovali tlusté knihy seříznutým husím brkem namáčeným v inkoustu.',
     hint: 'Husí pírko a černý inkoust v hradních komnatách.',
   },
   {
@@ -271,7 +194,7 @@ export const HISTORY_ARTIFACTS: HistoryArtifact[] = [
     correctEpochId: 'novovek',
     epochName: 'Novověk',
     didacticExplanation:
-      'NOVOVĚK! V 18. století James Watt zdokonalil parní stroj. Začala průmyslová revoluce, rozjely se první parní vlaky a stroje v továrnách.',
+      'Je to novověk. V 18. století James Watt zdokonalil parní stroj. Začala průmyslová revoluce, rozjely se první parní vlaky a stroje v továrnách.',
     hint: 'Hustý dým z komína, syčení páry a velká železná kola vlaků.',
   },
   {
@@ -281,7 +204,7 @@ export const HISTORY_ARTIFACTS: HistoryArtifact[] = [
     correctEpochId: 'moderni',
     epochName: 'Moderní doba',
     didacticExplanation:
-      'MODERNÍ DOBA! Malá krabička v kapse, která se spojí s celým světem přes satelity a internet, je symbolem 21. století.',
+      'Je to moderní doba. Malá krabička v kapse, která se spojí s celým světem přes satelity a internet, je symbolem 21. století.',
     hint: 'Máš ho v kapse a díváš se na něm na videa.',
   },
   {
@@ -291,7 +214,7 @@ export const HISTORY_ARTIFACTS: HistoryArtifact[] = [
     correctEpochId: 'starovek',
     epochName: 'Starověk',
     didacticExplanation:
-      'STAROVĚK! Ve starověkém Řecku a Římě uchovávali olivový olej i víno v krásných malovaných amforách a platili prvními raženými mincemi se znaky panovníků.',
+      'Je to starověk. Ve starověkém Řecku a Římě uchovávali olivový olej i víno v krásných malovaných amforách a platili prvními raženými mincemi se znaky panovníků.',
     hint: 'Řecké vázy a amfory z dob starých faraonů a olympijských her.',
   },
   {

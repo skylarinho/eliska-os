@@ -7,6 +7,8 @@ interface OdpovedTlacitkoProps extends Omit<ButtonHTMLAttributes<HTMLButtonEleme
   children: ReactNode
   /** Drobný popisek pod hlavním obsahem („měkké“, „tvrdé“). */
   popisek?: string
+  /** Třída s velikostí písma; výchozí je velké písmeno nebo číslo. */
+  textClass?: string
 }
 
 const stavy: Record<'ok' | 'spatne' | 'zakladni', string> = {
@@ -16,11 +18,11 @@ const stavy: Record<'ok' | 'spatne' | 'zakladni', string> = {
 }
 
 /** Odpověď k zaťukání: výška aspoň 72 px, dole silnější okraj jako „tlačítko“. */
-export const OdpovedTlacitko: FC<OdpovedTlacitkoProps> = ({ stav = null, popisek, children, className = '', ...props }) => (
+export const OdpovedTlacitko: FC<OdpovedTlacitkoProps> = ({ stav = null, popisek, textClass = 'text-[30px]', children, className = '', ...props }) => (
   <button
     type="button"
     {...props}
-    className={`flex min-h-[76px] flex-col items-center justify-center rounded-m border-2 border-b-[5px] text-[30px] leading-none font-semibold enabled:active:translate-y-[3px] enabled:active:border-b-2 ${stavy[stav ?? 'zakladni']} ${className}`}
+    className={`flex min-h-[76px] flex-col items-center justify-center rounded-m border-2 border-b-[5px] leading-none font-semibold enabled:active:translate-y-[3px] enabled:active:border-b-2 ${textClass} ${stavy[stav ?? 'zakladni']} ${className}`}
   >
     {children}
     {popisek && <small className="mt-1.5 text-[14px] font-normal text-inkoust-2">{popisek}</small>}

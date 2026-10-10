@@ -1,14 +1,4 @@
-import type { CzechExercise, LetterGroup } from '../types/learning'
-
-export const CZECH_LETTERS: { group: LetterGroup; label: string; icon: string }[] = [
-  { group: 'B', label: 'Slova po B', icon: '🐝' },
-  { group: 'L', label: 'Slova po L', icon: '🦁' },
-  { group: 'M', label: 'Slova po M', icon: '🐻' },
-  { group: 'P', label: 'Slova po P', icon: '🐧' },
-  { group: 'S', label: 'Slova po S', icon: '🦉' },
-  { group: 'V', label: 'Slova po V', icon: '🐺' },
-  { group: 'Z', label: 'Slova po Z', icon: '🦓' },
-]
+import type { CzechExercise } from '../types/learning'
 
 export const CZECH_EXERCISES: CzechExercise[] = [
   // B

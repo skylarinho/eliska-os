@@ -2,6 +2,7 @@ import { useState, type ReactNode } from 'react'
 import { X } from 'lucide-react'
 import { Progress } from '@/components/arc/progress/progress'
 import { cz } from '../lib/typo'
+import { playCorrectSound, playFanfareSound, playWrongSound } from '../utils/audio'
 import { useProfileStore } from '../store/useProfileStore'
 import { Vysledek } from './Vysledek'
 import { ZpetnaVazba } from './ZpetnaVazba'
@@ -35,7 +36,11 @@ export function Lekce<T>({ id, zadani, polozky, onZavrit, children }: LekceProps
 
   const odpovez = (o: Odpoved) => {
     if (odpoved) return
-    if (!o.spravne) setChyby((c) => c + 1)
+    if (o.spravne) playCorrectSound()
+    else {
+      playWrongSound()
+      setChyby((c) => c + 1)
+    }
     setOdpoved(o)
   }
 
@@ -47,6 +52,7 @@ export function Lekce<T>({ id, zadani, polozky, onZavrit, children }: LekceProps
       return
     }
     setHvezdy(dokonciLekci(id, chyby))
+    playFanfareSound()
   }
 
   const znovu = () => {
