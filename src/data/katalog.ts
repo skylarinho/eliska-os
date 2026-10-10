@@ -22,7 +22,10 @@ export const PREDMETY: { id: Predmet; nazev: string }[] = [
  * při převodu cvičení (krok 6) se nahradí lekcemi z obsahu.
  */
 export const KATALOG: Lekce[] = [
-  { id: 'game-czech', nazev: 'Vyjmenovaná slova', popis: 'B, L, M, P, S, V, Z', predmet: 'cestina', meta: 'Doplň i, í, y nebo ý' },
+  { id: 'cestina-vyjmenovana-b', nazev: 'Vyjmenovaná slova po B', popis: '4 věty', predmet: 'cestina', meta: '4 věty, asi 3 minuty' },
+  { id: 'cestina-vyjmenovana-l-m', nazev: 'Vyjmenovaná slova po L a M', popis: '4 věty', predmet: 'cestina', meta: '4 věty, asi 3 minuty' },
+  { id: 'cestina-vyjmenovana-p-s', nazev: 'Vyjmenovaná slova po P a S', popis: '4 věty', predmet: 'cestina', meta: '4 věty, asi 3 minuty' },
+  { id: 'cestina-vyjmenovana-v-z', nazev: 'Vyjmenovaná slova po V a Z', popis: '5 vět', predmet: 'cestina', meta: '5 vět, asi 4 minuty' },
   { id: 'game-shop', nazev: 'Obchůdek', popis: 'Nákup a vracení peněz', predmet: 'matematika', meta: 'Nákupní lístek a mince' },
   { id: 'game-math', nazev: 'Rozklad a násobilka', popis: 'Desítky, jednotky, výsledky', predmet: 'matematika', meta: 'Počítání s čísly' },
   { id: 'game-english', nazev: 'Slovíčka s poslechem', popis: 'Pozdravy, zvířátka, jídlo a další', predmet: 'anglictina', meta: 'Poslech a výběr překladu' },

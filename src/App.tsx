@@ -7,7 +7,7 @@ import { TimelineLesson } from './components/lessons/TimelineLesson'
 import { ArtifactsLesson } from './components/lessons/ArtifactsLesson'
 import { ShopGame } from './components/games/shop/ShopGame'
 import { MathLab } from './components/games/math/MathLab'
-import { CzechGame } from './components/games/czech/CzechGame'
+import { Vyjmenovana } from './lekce/cestina/Vyjmenovana'
 import { EnglishGame } from './components/games/english/EnglishGame'
 
 export function App() {
@@ -18,6 +18,8 @@ export function App() {
     <Sesit>
       {lekceId === null ? (
         <Prehled onStart={setLekceId} />
+      ) : lekceId.startsWith('cestina-vyjmenovana-') ? (
+        <Vyjmenovana lekceId={lekceId} onZavrit={domu} />
       ) : (
         <div className="pr-5 pt-12 pb-20 min-[700px]:pr-12 min-[700px]:pt-10">
           {/* Dočasná lišta, než vznikne společná kostra lekce (krok 5). */}
@@ -34,7 +36,6 @@ export function App() {
           {lekceId === 'lesson-artifacts' && <ArtifactsLesson onBack={domu} />}
           {lekceId === 'game-shop' && <ShopGame onBack={domu} />}
           {lekceId === 'game-math' && <MathLab onBack={domu} />}
-          {lekceId === 'game-czech' && <CzechGame onBack={domu} />}
           {lekceId === 'game-english' && <EnglishGame onBack={domu} />}
         </div>
       )}

@@ -19,7 +19,7 @@ export const CZECH_EXERCISES: CzechExercise[] = [
     missingWord: 'bylinka',
     correctAnswer: 'y',
     rootWord: 'bylina',
-    explanation: 'Píšeme tvrdé Y! Slovo bylinka je příbuzné k vyjmenovanému slovu BYLINA.',
+    explanation: 'Píšeme tvrdé y. Slovo bylinka je příbuzné k vyjmenovanému slovu bylina.',
   },
   {
     id: 'cz-b-2',
@@ -29,7 +29,7 @@ export const CZECH_EXERCISES: CzechExercise[] = [
     correctAnswer: 'i',
     rootWord: 'bichle',
     isCatchWord: true,
-    explanation: 'Pozor, chyták! Slovo BICHLE (tlustá kniha) NENÍ vyjmenované ani příbuzné slovo. Píšeme měkké I.',
+    explanation: 'Pozor, chyták. Slovo bichle (tlustá kniha) není vyjmenované ani příbuzné slovo. Píšeme měkké i.',
   },
   {
     id: 'cz-b-3',
@@ -39,7 +39,7 @@ export const CZECH_EXERCISES: CzechExercise[] = [
     correctAnswer: 'ý',
     rootWord: 'být',
     isCatchWord: true,
-    explanation: 'BÝT (existovat, nacházet se) je vyjmenované slovo, proto píšeme tvrdé Ý! Chyták: bít (tlouct pěstí či odbíjet na věži) píšeme s měkkým Í.',
+    explanation: 'Být (existovat, nacházet se) je vyjmenované slovo, proto píšeme tvrdé ý. Chyták: bít (tlouct pěstí či odbíjet na věži) píšeme s měkkým í.',
   },
   {
     id: 'cz-b-4',
@@ -49,7 +49,7 @@ export const CZECH_EXERCISES: CzechExercise[] = [
     correctAnswer: 'í',
     rootWord: 'bít',
     isCatchWord: true,
-    explanation: 'BÍT (tlouct kladívkem, odbíjet na věži) píšeme s měkkým Í! Nejde o vyjmenované slovo být (existovat).',
+    explanation: 'Bít (tlouct kladívkem, odbíjet na věži) píšeme s měkkým í. Nejde o vyjmenované slovo být (existovat).',
   },
 
   // L
@@ -60,7 +60,7 @@ export const CZECH_EXERCISES: CzechExercise[] = [
     missingWord: 'lýtko',
     correctAnswer: 'ý',
     rootWord: 'lýtko',
-    explanation: 'Píšeme tvrdé Ý! LÝTKO je vyjmenované slovo (slyšet, mlýn, blýskat se, polykat, plynout, plýtvat, vzlykat, lysý, lýtko, lýko, lyže...).',
+    explanation: 'Píšeme tvrdé ý. Lýtko je vyjmenované slovo (slyšet, mlýn, blýskat se, polykat, plynout, plýtvat, vzlykat, lysý, lýtko, lýko, lyže…).',
   },
   {
     id: 'cz-l-2',
@@ -70,7 +70,7 @@ export const CZECH_EXERCISES: CzechExercise[] = [
     correctAnswer: 'i',
     rootWord: 'liška',
     isCatchWord: true,
-    explanation: 'Pozor na chyták! LIŠKA NENÍ vyjmenované slovo po L, proto píšeme měkké I.',
+    explanation: 'Pozor na chyták. Liška není vyjmenované slovo po L, proto píšeme měkké i.',
   },
 
   // M
@@ -82,7 +82,7 @@ export const CZECH_EXERCISES: CzechExercise[] = [
     correctAnswer: 'ý',
     rootWord: 'mýt',
     isCatchWord: true,
-    explanation: 'MÝT (čistit vodou) je vyjmenované slovo, proto píšeme tvrdé Ý! Chyták: mít (vlastnit panenku) píšeme s měkkým Í.',
+    explanation: 'Mýt (čistit vodou) je vyjmenované slovo, proto píšeme tvrdé ý. Chyták: mít (vlastnit panenku) píšeme s měkkým í.',
   },
   {
     id: 'cz-m-2',
@@ -92,7 +92,7 @@ export const CZECH_EXERCISES: CzechExercise[] = [
     correctAnswer: 'í',
     rootWord: 'mít',
     isCatchWord: true,
-    explanation: 'MÍT (vlastnit, mít rád) píšeme s měkkým Í! Není to vyjmenované slovo mýt (vodou).',
+    explanation: 'Mít (vlastnit, mít rád) píšeme s měkkým í. Není to vyjmenované slovo mýt (vodou).',
   },
 
   // P
@@ -103,7 +103,7 @@ export const CZECH_EXERCISES: CzechExercise[] = [
     missingWord: 'pyšný',
     correctAnswer: 'y',
     rootWord: 'pýcha',
-    explanation: 'Píšeme tvrdé Y! Slovo PYŠNÝ je odvozené od vyjmenovaného slova PÝCHA.',
+    explanation: 'Píšeme tvrdé y. Slovo pyšný je odvozené od vyjmenovaného slova pýcha.',
   },
   {
     id: 'cz-p-2',
@@ -113,7 +113,7 @@ export const CZECH_EXERCISES: CzechExercise[] = [
     correctAnswer: 'í',
     rootWord: 'peří',
     isCatchWord: true,
-    explanation: 'PÍRKO píšeme s měkkým Í (od slova peří). Není to vyjmenované slovo!',
+    explanation: 'Pírko píšeme s měkkým í (od slova peří). Není to vyjmenované slovo.',
   },
 
   // S
@@ -125,7 +125,7 @@ export const CZECH_EXERCISES: CzechExercise[] = [
     correctAnswer: 'ý',
     rootWord: 'slepýš',
     isCatchWord: true,
-    explanation: 'SLEPÝŠ (beznohá ještěrka) je vyjmenované slovo po S, proto píšeme tvrdé Ý! Chyták: slepíš (papír lepidlem) je od lepit.',
+    explanation: 'Slepýš (beznohá ještěrka) je vyjmenované slovo po S, proto píšeme tvrdé ý. Chyták: slepíš (papír lepidlem) je od lepit.',
   },
   {
     id: 'cz-s-2',
@@ -135,7 +135,7 @@ export const CZECH_EXERCISES: CzechExercise[] = [
     correctAnswer: 'í',
     rootWord: 'lepit',
     isCatchWord: true,
-    explanation: 'SLEPÍŠ je od slova lepit (lepidlo), proto píšeme měkké Í! Nejde o ještěrku slepýše.',
+    explanation: 'Slepíš je od slova lepit (lepidlo), proto píšeme měkké í. Nejde o ještěrku slepýše.',
   },
 
   // V
@@ -146,7 +146,7 @@ export const CZECH_EXERCISES: CzechExercise[] = [
     missingWord: 'vysoká',
     correctAnswer: 'y',
     rootWord: 'vysoký',
-    explanation: 'Píšeme tvrdé Y! Slovo VYSOKÁ je příbuzné k vyjmenovanému slovu VYSOKÝ.',
+    explanation: 'Píšeme tvrdé y. Slovo vysoká je příbuzné k vyjmenovanému slovu vysoký.',
   },
   {
     id: 'cz-v-2',
@@ -156,7 +156,7 @@ export const CZECH_EXERCISES: CzechExercise[] = [
     correctAnswer: 'ý',
     rootWord: 'výt',
     isCatchWord: true,
-    explanation: 'VÝT (vydávat táhlý vlčí hlas) je vyjmenované slovo, píšeme tvrdé Ý! Chyták: vít (věneček z pampelišek) píšeme s měkkým Í.',
+    explanation: 'Výt (vydávat táhlý vlčí hlas) je vyjmenované slovo, píšeme tvrdé ý. Chyták: vít (věneček z pampelišek) píšeme s měkkým í.',
   },
   {
     id: 'cz-v-3',
@@ -166,7 +166,7 @@ export const CZECH_EXERCISES: CzechExercise[] = [
     correctAnswer: 'í',
     rootWord: 'vít',
     isCatchWord: true,
-    explanation: 'VÍT (plést věnečky ze stonků květin) píšeme s měkkým Í. Není to vlčí vytí!',
+    explanation: 'Vít (plést věnečky ze stonků květin) píšeme s měkkým í. Není to vlčí vytí.',
   },
 
   // Z
@@ -177,7 +177,7 @@ export const CZECH_EXERCISES: CzechExercise[] = [
     missingWord: 'brzy',
     correctAnswer: 'y',
     rootWord: 'brzy',
-    explanation: 'Píšeme tvrdé Y! Slovo BRZY je vyjmenované slovo po Z (brzy, jazyk, nazývat, Ruzyně).',
+    explanation: 'Píšeme tvrdé y. Slovo brzy je vyjmenované slovo po Z (brzy, jazyk, nazývat, Ruzyně).',
   },
   {
     id: 'cz-z-2',
@@ -186,6 +186,6 @@ export const CZECH_EXERCISES: CzechExercise[] = [
     missingWord: 'jazyk',
     correctAnswer: 'y',
     rootWord: 'jazyk',
-    explanation: 'Píšeme tvrdé Y! Slovo JAZYK je vyjmenované slovo po Z.',
+    explanation: 'Píšeme tvrdé y. Slovo jazyk je vyjmenované slovo po Z.',
   },
 ]

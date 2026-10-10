@@ -137,3 +137,17 @@ button {
     scroll-behavior: auto !important;
   }
 }
+
+/* Zpětná vazba v bottom sheetu */
+.zv-ok { --sheet-linka: var(--spravne); }
+.zv-ok h2 { color: var(--spravne); }
+.zv-spatne { --sheet-linka: var(--oprava); }
+.zv-spatne h2 { color: var(--oprava); }
+
+/* Hvězdy na obrazovce Výsledek naskočí jedna po druhé */
+@keyframes hvezda-zap {
+  from { transform: scale(0.3) rotate(-25deg); opacity: 0; }
+}
+.hvezda-zap { animation: hvezda-zap 0.45s cubic-bezier(0.3, 1.6, 0.5, 1) both; }
+.hvezda-zap:nth-child(2) { animation-delay: 0.18s; }
+.hvezda-zap:nth-child(3) { animation-delay: 0.36s; }
