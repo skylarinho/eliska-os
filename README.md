@@ -19,35 +19,24 @@ npm run preview  # náhled sestavené verze
 
 Při `npm run build` i `npm run dev` skript `scripts/obsah.ts` obsah zkontroluje a převede na JSON. Když je plán nebo otázka neplatná, build spadne s českou chybou (soubor, číslo otázky, co opravit). Samotnou kontrolu spustíš příkazem `npm run obsah`. Otázky s `navrh: ano` skript vypíše jako varování.
 
-Po uložení změny na GitHubu Cloudflare Pages appku sám znovu sestaví a nasadí (zhruba do minuty).
+Po uložení změny na GitHubu Vercel appku sám znovu sestaví a nasadí (zhruba do minuty).
 
-## Nasazení: GitHub → Cloudflare Pages
+## Nasazení: GitHub → Vercel
 
-1. Kód musí být v GitHub repozitáři (větev `main`).
-2. V [Cloudflare dashboardu](https://dash.cloudflare.com) otevři **Workers & Pages → Create → Pages → Connect to Git**, vyber repozitář a povol přístup.
-3. Nastavení sestavení:
-   - Framework preset: **Vite** (nebo None)
-   - Build command: `npm run build`
-   - Build output directory: `dist`
-   - Verzi Node určuje soubor `.node-version` (22), nic dalšího nastavovat nemusíš
-4. **Save and Deploy**. Appka poběží na adrese `<projekt>.pages.dev`.
-5. Každý push do `main` spustí nové nasazení, ostatní větve dostanou náhledovou adresu.
-6. SPA fallback zajišťuje `public/_redirects` (`/*  /index.html  200`), takže přímé odkazy fungují.
+Appka běží na https://e-liska.vercel.app (projekt `e-liska` na Vercelu).
+
+1. Kód je na GitHubu ve větvi `main`; projekt na Vercelu je s repozitářem propojený a každý push do `main` nasadí novou verzi do produkce. Ostatní větve dostanou náhledovou adresu.
+2. Nastavení sestavení je v `vercel.json` (`npm run build`, výstup `dist`), nic dalšího se v dashboardu nastavovat nemusí. Stejný soubor zajišťuje i SPA přesměrování, takže přímé odkazy fungují.
+3. Ruční nasazení z počítače: `vercel deploy --prod` (potřebuje `npm i -g vercel` a přihlášení `vercel login`).
 
 ### Soukromí a vyhledávače
 
-Appka není určená pro vyhledávače: `index.html` má `noindex`, `public/robots.txt` zakazuje procházení a `public/_headers` posílá `X-Robots-Tag: noindex`. Kdo zná adresu, appku otevře, ale Google ji nenabídne. Postup dítěte se ukládá jen v jeho prohlížeči (localStorage), na server nic neodchází.
+Appka není určená pro vyhledávače: `index.html` má `noindex`, `public/robots.txt` zakazuje procházení a `vercel.json` posílá `X-Robots-Tag: noindex`. Kdo zná adresu, appku otevře, ale Google ji nenabídne. Postup dítěte se ukládá jen v jeho prohlížeči (localStorage), na server nic neodchází.
 
 ### Vlastní doména
 
-1. V projektu Pages otevři **Custom domains → Set up a custom domain** a zadej doménu (např. `eliska.example.cz`).
-2. Je-li doména v Cloudflare DNS, záznam se přidá sám. Jinak u registrátora nastav `CNAME` z `eliska` na `<projekt>.pages.dev`.
-3. Počkej na vystavení certifikátu (obvykle pár minut); HTTPS je automaticky.
-
-### Přechod z Vercelu
-
-Až bude nová adresa v provozu, smaž starý projekt na Vercelu, aby nezůstala dostupná stará verze.
+V projektu na Vercelu otevři **Settings → Domains**, přidej doménu a nastav u registrátora záznam, který Vercel ukáže (`CNAME` na `cname.vercel-dns.com`, u kořenové domény `A` záznam).
 
 ## Soukromí
 
-V kódu ani v obsahu nesmí být příjmení, škola, e-mail ani jiné osobní údaje dítěte.
+V kódu ani v obsahu nesmí být příjmení, škola, e-mail ani jiné osobní údaje dítěte. Commity pište s adresou `…@users.noreply.github.com`.

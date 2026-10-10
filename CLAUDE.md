@@ -4,14 +4,14 @@ Výuková appka pro desetiletou školačku. Česky, hlavně na mobilu. Minimalis
 Vzor vzhledu: `mockup/e-liska-mockup.html`. Zadání a rozhodnutí: `docs/brief.md`. Postup: `docs/prompty.md`.
 
 ## Obsah a plán (needitovat ručně v kódu)
-- Týdenní plán: `obsah/plan.json` (tatínek ho mění 1× za 1–2 týdny, i z mobilu přes GitHub web → Cloudflare znovu sestaví).
+- Týdenní plán: `obsah/plan.json` (tatínek ho mění 1× za 1–2 týdny, i z mobilu přes GitHub web → Vercel znovu nasadí).
 - Otázky: `obsah/otazky/*.md` ve formátu z `docs/format-otazek.md`. Skript `scripts/obsah.ts` je při buildu převede do `src/content/generated/*.json`.
 - Build **musí spadnout** s čitelnou českou chybou, když je plán nebo otázka neplatná (neznámé id lekce, žádná/dvě správné odpovědi, chybí vysvětlení).
 
 ## Stack
 - Vite + React + TypeScript + Tailwind + shadcn/ui (zachovat z Lovable/Vercel verze)
 - Stav: Zustand + persist (localStorage). Při změně struktury napiš `migrate` (XP → hvězdy, viz brief).
-- Hosting: GitHub → Cloudflare Pages (build `npm run build`, výstup `dist`), vlastní doména. SPA fallback: `public/_redirects` → `/* /index.html 200`.
+- Hosting: GitHub → Vercel (projekt `e-liska`, https://e-liska.vercel.app; build `npm run build`, výstup `dist`). SPA fallback a hlavičky jsou ve `vercel.json`.
 - Interakční komponenty jen z Arc Library (`npx shadcn@latest add @uiarc/<název>`), **vzhled vždy přebarvit na tokeny níže**. Použít: `button`, `bottom-sheet` (zpětná vazba, profily), `progress`/`stepper` (postup lekce), `number-field` (rozklad), `animated-counter` (hvězdy). Nic dalšího bez důvodu.
 
 ## Design – pravidla

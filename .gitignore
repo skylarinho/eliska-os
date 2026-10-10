@@ -29,3 +29,6 @@ src/content/generated/
 # Nesouvisející nástroje
 .sf/
 .claude/settings.local.json
+
+# Vercel
+.vercel
