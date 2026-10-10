@@ -11,8 +11,8 @@ import type { Odpoved, PolozkaOvladani } from './typy'
 interface LekceProps<T> {
   /** Id lekce v katalogu; pod ním se ukládají hvězdy. */
   id: string
-  /** Zadání nad úlohou („Doplň i, í, y, nebo ý“). */
-  zadani: string
+  /** Zadání nad úlohou („Doplň i, í, y, nebo ý“); může záviset na položce. */
+  zadani: string | ((polozka: T) => string)
   polozky: T[]
   onZavrit: () => void
   /** Úloha pro jednu položku. Po odpovědi zavolá `ovladani.odpovez`. */
@@ -97,7 +97,7 @@ export function Lekce<T>({ id, zadani, polozky, onZavrit, children }: LekceProps
         />
       </div>
 
-      <p className="mb-3.5 text-[16px] text-inkoust-2">{cz(zadani)}</p>
+      <p className="mb-3.5 text-[16px] text-inkoust-2">{cz(typeof zadani === 'function' ? zadani(polozky[index]) : zadani)}</p>
 
       <div key={`${pokus}-${index}`}>{children(polozky[index], { odpovez, odpovezeno: odpoved !== null })}</div>
 

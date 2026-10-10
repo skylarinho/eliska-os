@@ -4,7 +4,8 @@ import { Button } from '@/components/arc/button/button'
 import { Hvezdy } from '../components/Hvezdy'
 import { ProfilSheet } from '../components/ProfilSheet'
 import { Vombat } from '../components/Vombat'
-import { KATALOG, PREDMETY, lekcePodleId } from '../data/katalog'
+import { PREDMETY } from '../data/katalog'
+import { VSECHNY_LEKCE, lekcePodleId } from '../data/lekce'
 import { PLAN } from '../data/plan'
 import { dnesISO } from '../lib/datum'
 import { vyberDnesniUkol } from '../lib/dnesniUkol'
@@ -26,7 +27,7 @@ export const Prehled: FC<PrehledProps> = ({ onStart }) => {
 
   const dnes = dnesISO()
   const hvezdy = profil?.hvezdy ?? {}
-  const ukol = vyberDnesniUkol(PLAN, { hvezdy, dokonceno: profil?.dokonceno ?? {} }, KATALOG, dnes)
+  const ukol = vyberDnesniUkol(PLAN, { hvezdy, dokonceno: profil?.dokonceno ?? {} }, VSECHNY_LEKCE, dnes)
 
   const serie = profil ? aktualniSerie(profil.serie, dnes) : 0
   const celkemHvezd = Object.values(hvezdy).reduce((a, b) => a + b, 0)
@@ -121,7 +122,7 @@ export const Prehled: FC<PrehledProps> = ({ onStart }) => {
       </section>
 
       {PREDMETY.map((predmet) => {
-        const lekce = KATALOG.filter((l) => l.predmet === predmet.id)
+        const lekce = VSECHNY_LEKCE.filter((l) => l.predmet === predmet.id)
         if (lekce.length === 0) return null
         return (
           <section

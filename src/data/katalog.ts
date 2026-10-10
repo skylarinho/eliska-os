@@ -36,5 +36,3 @@ export const KATALOG: Lekce[] = [
   { id: 'vlastiveda-epochy', nazev: 'Předměty a epochy', popis: 'Kam patří pěstní klín?', predmet: 'vlastiveda', meta: '7 předmětů, asi 5 minut' },
   { id: 'informatika-hardware', nazev: 'Co je na obrázku?', popis: 'Části počítače', predmet: 'informatika', meta: '8 zařízení, asi 5 minut' },
 ]
-
-export const lekcePodleId = (id: string): Lekce | undefined => KATALOG.find((l) => l.id === id)

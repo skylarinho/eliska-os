@@ -17,6 +17,8 @@ npm run preview  # náhled sestavené verze
 - Týdenní plán: `obsah/plan.json` (mění se 1× za 1–2 týdny, jde upravit i z mobilu přes web GitHubu).
 - Otázky: `obsah/otazky/*.md`, formát v `docs/format-otazek.md`.
 
+Při `npm run build` i `npm run dev` skript `scripts/obsah.ts` obsah zkontroluje a převede na JSON. Když je plán nebo otázka neplatná, build spadne s českou chybou (soubor, číslo otázky, co opravit). Samotnou kontrolu spustíš příkazem `npm run obsah`. Otázky s `navrh: ano` skript vypíše jako varování.
+
 Po uložení změny na GitHubu Cloudflare Pages appku sám znovu sestaví a nasadí (zhruba do minuty).
 
 ## Nasazení: GitHub → Cloudflare Pages

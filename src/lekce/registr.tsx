@@ -1,4 +1,6 @@
 import type { ReactNode } from 'react'
+import { obsahPodleId } from '../content/obsah'
+import { LekceZObsahu } from './LekceZObsahu'
 import { Vyjmenovana, VYJMENOVANA_SKUPINY } from './cestina/Vyjmenovana'
 import { Slovicka, SLOVICKA_OKRUHY } from './anglictina/Slovicka'
 import { Hardware } from './informatika/Hardware'
@@ -18,5 +20,7 @@ export function vykresliLekci(id: string, onZavrit: () => void): ReactNode | nul
   if (id === 'vlastiveda-casova-osa') return <CasovaOsa lekceId={id} onZavrit={onZavrit} />
   if (id === 'vlastiveda-epochy') return <Epochy lekceId={id} onZavrit={onZavrit} />
   if (id === 'informatika-hardware') return <Hardware lekceId={id} onZavrit={onZavrit} />
+  const zObsahu = obsahPodleId(id)
+  if (zObsahu) return <LekceZObsahu lekce={zObsahu} onZavrit={onZavrit} />
   return null
 }
