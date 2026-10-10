@@ -1,4 +1,4 @@
-import { useState, type FC } from 'react'
+import { useRef, useState, type FC } from 'react'
 import { Flame, Star } from 'lucide-react'
 import { Button } from '@/components/arc/button/button'
 import { Hvezdy } from '../components/Hvezdy'
@@ -24,6 +24,12 @@ const zvyraznene =
 export const Prehled: FC<PrehledProps> = ({ onStart }) => {
   const profil = useProfileStore((s) => s.getActiveProfile())
   const [profilOtevren, setProfilOtevren] = useState(false)
+  const tlacitkoProfilu = useRef<HTMLButtonElement>(null)
+  const zmenProfilSheet = (otevren: boolean) => {
+    setProfilOtevren(otevren)
+    // Po zavření vrátíme fokus na kolečko profilu, ať klávesnice nezačíná od začátku stránky.
+    if (!otevren) requestAnimationFrame(() => tlacitkoProfilu.current?.focus())
+  }
 
   const dnes = dnesISO()
   const hvezdy = profil?.hvezdy ?? {}
@@ -79,6 +85,7 @@ export const Prehled: FC<PrehledProps> = ({ onStart }) => {
           </div>
         </div>
         <button
+          ref={tlacitkoProfilu}
           type="button"
           onClick={() => setProfilOtevren(true)}
           aria-label="Změnit profil"
@@ -156,7 +163,7 @@ export const Prehled: FC<PrehledProps> = ({ onStart }) => {
         )
       })}
 
-      <ProfilSheet open={profilOtevren} onOpenChange={setProfilOtevren} />
+      <ProfilSheet open={profilOtevren} onOpenChange={zmenProfilSheet} />
     </div>
   )
 }

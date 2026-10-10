@@ -80,7 +80,7 @@ export function BottomSheet({ trigger, open: openProp, defaultOpen = false, onOp
   </DialogPrimitive.Root>;
 }
 
-function Sheet({ title, description, detents = [.45, .92], initialDetent = 0, onDetentChange, closeLabel = "Close", className, children, onDismiss }: Omit<BottomSheetProps, "trigger" | "open" | "defaultOpen" | "onOpenChange"> & { onDismiss: () => void }) {
+function Sheet({ title, description, detents = [.45, .92], initialDetent = 0, onDetentChange, closeLabel = "Zavřít", className, children, onDismiss }: Omit<BottomSheetProps, "trigger" | "open" | "defaultOpen" | "onOpenChange"> & { onDismiss: () => void }) {
   const [isPresent, safeToRemove] = usePresence();
   const reduced = useReducedMotion() ?? false;
   const detentKey = detents.join(",");
@@ -132,7 +132,7 @@ function Sheet({ title, description, detents = [.45, .92], initialDetent = 0, on
       detentRef.current = stop;
       setDetent(stop);
       onDetentChange?.(stop);
-      setAnnouncement(stop === top ? "Sheet expanded" : stop === 0 ? "Sheet collapsed" : `Sheet at ${Math.round(stops[stop]! * 100)} percent height`);
+      setAnnouncement(stop === top ? "Panel zvětšen" : stop === 0 ? "Panel zmenšen" : `Panel má ${Math.round(stops[stop]! * 100)} % výšky`);
     }
     // Collapsing takes the content back to its start, so the peek always shows the top of it.
     const body = bodyRef.current;
@@ -362,9 +362,11 @@ function Sheet({ title, description, detents = [.45, .92], initialDetent = 0, on
     >
       <motion.div ref={sheetRef} className={[styles.sheet, className].filter(Boolean).join(" ")} style={style} data-expanded={expanded ? "" : undefined} onKeyDown={sheetKey}>
         <div className={styles.header} onPointerDown={headerDown} onPointerMove={headerMove} onPointerUp={headerUp} onPointerCancel={headerUp}>
-          <button type="button" className={styles.grabber} data-grabber="" aria-label={expanded ? "Collapse sheet" : "Expand sheet"} aria-expanded={expanded} onClick={grabberClick} onKeyDown={grabberKey}>
-            <span className={styles.grabberBar} aria-hidden="true" />
-          </button>
+          {top > 0
+            ? <button type="button" className={styles.grabber} data-grabber="" aria-label={expanded ? "Zmenšit panel" : "Zvětšit panel"} aria-expanded={expanded} onClick={grabberClick} onKeyDown={grabberKey}>
+              <span className={styles.grabberBar} aria-hidden="true" />
+            </button>
+            : <span className={styles.grabber} aria-hidden="true"><span className={styles.grabberBar} /></span>}
           <div className={styles.headRow}>
             <div className={styles.headText}>
               <DialogPrimitive.Title className={styles.title}>{title}</DialogPrimitive.Title>

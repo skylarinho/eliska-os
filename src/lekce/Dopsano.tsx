@@ -19,9 +19,13 @@ export const Dopsano: FC<DopsanoProps> = ({ zvoleno, spravne }) => {
   return (
     <span
       className={`inline-block min-w-[0.95em] border-b-[3px] text-center font-ruka text-[1.35em] leading-[0.9] font-bold ${barva}`}
-      aria-label={stav === 'ceka' ? 'prázdné místo' : undefined}
     >
-      {stav === 'ceka' && ' '}
+      {stav === 'ceka' && (
+        <>
+          {' '}
+          <span className="sr-only">prázdné místo</span>
+        </>
+      )}
       {stav === 'ok' && zvoleno}
       {stav === 'spatne' && (
         <>

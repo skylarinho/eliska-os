@@ -27,7 +27,7 @@ export const SHOP_MISSIONS: ShopMission[] = [
   {
     id: 'mission-1',
     title: 'Snídaně pro celou rodinu',
-    story: 'Maminka poslala Elišku do obchodu: „Kup prosím 2 rohlíky, 1 tvarohový koláč a 1 jablíčko!“',
+    story: '{jmeno} jde nakoupit snídani. Maminka řekla: „Kup prosím 2 rohlíky, 1 tvarohový koláč a 1 jablíčko.“',
     cartTargets: [
       { itemId: 'rohlik', count: 2 },
       { itemId: 'kolac', count: 1 },
@@ -39,7 +39,7 @@ export const SHOP_MISSIONS: ShopMission[] = [
   {
     id: 'mission-2',
     title: 'Vombatí narozeninová oslava',
-    story: 'Vombat chystá oslavu pro kamarády: „Potřebuji 4 ovocná lízátka, 2 jahodová mlíčka a 1 makový závin!“',
+    story: 'Vombat chystá oslavu pro kamarády: „Potřebuji 4 ovocná lízátka, 2 jahodová mlíčka a 1 makový závin.“',
     cartTargets: [
       { itemId: 'lizatko', count: 4 },
       { itemId: 'mlicko', count: 2 },
@@ -51,7 +51,7 @@ export const SHOP_MISSIONS: ShopMission[] = [
   {
     id: 'mission-3',
     title: 'Velký balíček na výlet do lesa',
-    story: 'Před túrou na hrad Bouzov: „Kup 2 housky, 2 jablečné mošty, 2 čokoládové tyčinky a 2 banány!“',
+    story: 'Před túrou na hrad Bouzov: „Kup 2 housky, 2 jablečné mošty, 2 čokoládové tyčinky a 2 banány.“',
     cartTargets: [
       { itemId: 'houska', count: 2 },
       { itemId: 'most', count: 2 },
@@ -64,7 +64,7 @@ export const SHOP_MISSIONS: ShopMission[] = [
   {
     id: 'mission-4',
     title: 'Sladká odměna po vysvědčení',
-    story: 'Školačka Eliška nakupuje dobroty: „Vezmi 1 košíček jahod, 3 lízátka a 2 balíčky žvýkaček!“',
+    story: '{jmeno} nakupuje dobroty po vysvědčení: „Vezmi 1 košíček jahod, 3 lízátka a 2 balíčky žvýkaček.“',
     cartTargets: [
       { itemId: 'jahody', count: 1 },
       { itemId: 'lizatko', count: 3 },

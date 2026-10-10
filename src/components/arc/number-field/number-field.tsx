@@ -219,7 +219,7 @@ function StepButton({ toward, label, disabled, controls, limit, pressed, iconRef
   const Icon = toward > 0 ? Plus : Minus;
   // A limit dims the button but keeps it focusable, so a press there strains the value instead of dropping focus.
   // Mouse presses keep focus where it was: an open draft commits with the step, and the stepper never steals the ring.
-  return <button type="button" className={styles.step} disabled={disabled} aria-controls={controls} aria-label={`${toward > 0 ? "Increase" : "Decrease"} ${label}`} aria-disabled={limit || undefined} data-pressed={pressed || undefined}
+  return <button type="button" className={styles.step} disabled={disabled} aria-controls={controls} aria-label={`${toward > 0 ? "Přidat" : "Ubrat"}: ${label}`} aria-disabled={limit || undefined} data-pressed={pressed || undefined}
     onPointerDown={event => { if (event.button === 0) onPress(); }} onPointerUp={onRelease} onPointerLeave={onRelease} onPointerCancel={onRelease}
     onMouseDown={event => event.preventDefault()} onClick={event => { if (event.detail === 0) onActivate(); }} onContextMenu={event => event.preventDefault()}>
     <span ref={iconRef} className={styles.icon}><Icon size={16} strokeWidth={1.75} aria-hidden="true" /></span>

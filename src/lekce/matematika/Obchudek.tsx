@@ -4,6 +4,7 @@ import { Button } from '@/components/arc/button/button'
 import { SHOP_ITEMS, SHOP_MISSIONS } from '../../data/shopData'
 import type { CoinValue, ShopMission } from '../../types/learning'
 import { cz } from '../../lib/typo'
+import { useProfileStore } from '../../store/useProfileStore'
 import { Dopsano } from '../Dopsano'
 import { Lekce } from '../Lekce'
 import type { PolozkaOvladani } from '../typy'
@@ -23,6 +24,7 @@ const nazevPolozky = (id: string) => SHOP_ITEMS.find((i) => i.id === id)?.name ?
 const kc = (n: number) => `${n} Kč`
 
 const Uloha: FC<{ mise: ShopMission } & PolozkaOvladani> = ({ mise, odpovez, odpovezeno }) => {
+  const jmeno = useProfileStore((st) => st.getActiveProfile()?.name ?? 'Eliška')
   const [faze, setFaze] = useState<'kosik' | 'pokladna'>('kosik')
   const [kosik, setKosik] = useState<Record<string, number>>({})
   const [mince, setMince] = useState<CoinValue[]>([])
@@ -51,15 +53,15 @@ const Uloha: FC<{ mise: ShopMission } & PolozkaOvladani> = ({ mise, odpovez, odp
       spravne,
       nadpis: spravne ? 'Správně' : `Správně je ${kc(spravneVratit)}`,
       text: spravne
-        ? `Nákup stál ${kc(celkemNakup)}, zákazník platil ${kc(mise.paidWithBanknote)}. Vrátila jsi přesně ${kc(spravneVratit)} (${mise.paidWithBanknote} – ${celkemNakup} = ${spravneVratit}).`
-        : `${vraceno < spravneVratit ? `Vrátila jsi ${kc(vraceno)}, chybí ${kc(rozdil)}.` : `Vrátila jsi ${kc(vraceno)}, to je o ${kc(rozdil)} víc.`} Spočítej: ${mise.paidWithBanknote} – ${celkemNakup} = ${spravneVratit}.`,
+        ? `Nákup stál ${kc(celkemNakup)}, zákazník platil ${kc(mise.paidWithBanknote)}. Správně se vrací ${kc(spravneVratit)} (${mise.paidWithBanknote} – ${celkemNakup} = ${spravneVratit}).`
+        : `${vraceno < spravneVratit ? `Vráceno ${kc(vraceno)}, chybí ${kc(rozdil)}.` : `Vráceno ${kc(vraceno)}, to je o ${kc(rozdil)} víc.`} Spočítej: ${mise.paidWithBanknote} – ${celkemNakup} = ${spravneVratit}.`,
     })
   }
 
   return (
     <>
       <h2 className="mb-1 text-[22px] leading-tight font-bold">{cz(mise.title)}</h2>
-      <p className="mb-4 text-[17px] text-inkoust-2">{cz(mise.story)}</p>
+      <p className="mb-4 text-[17px] text-inkoust-2">{cz(mise.story.replaceAll('{jmeno}', jmeno))}</p>
 
       <section className="mb-5 rounded-s border-2 border-inkoust-3 bg-papir px-4 py-3" aria-label="Nákupní lístek">
         <p className="mb-1.5 text-[15px] font-semibold text-inkoust-2">Nákupní lístek</p>
@@ -124,12 +126,12 @@ const Uloha: FC<{ mise: ShopMission } & PolozkaOvladani> = ({ mise, odpovez, odp
           ))}
           <div className="sticky bottom-0 -mr-5 -ml-1 flex items-center gap-3 border-t-2 border-inkoust-3 bg-papir py-3 pr-5 pl-1 min-[700px]:-mr-12 min-[700px]:pr-12">
             <p className="flex-1 text-[15px] text-inkoust-2">
-              V košíku: <b className="text-[17px] text-inkoust">{kc(vKosiku)}</b>
+              V{' '}košíku: <b className="text-[17px] text-inkoust">{kc(vKosiku)}</b>
               <br />
               {kosikPocet} z {cilPocet} kusů
             </p>
             <Button size="lg" disabled={!kosikSedi} onClick={() => setFaze('pokladna')}>
-              K pokladně
+              K{' '}pokladně
             </Button>
           </div>
         </>

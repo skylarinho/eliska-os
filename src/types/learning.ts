@@ -17,6 +17,7 @@ export interface CartTarget {
 export interface ShopMission {
   id: string
   title: string
+  /** Příběh nákupu; `{jmeno}` se nahradí jménem dítěte (1. pád). */
   story: string
   cartTargets: CartTarget[]
   paidWithBanknote: number // e.g. 100 or 200 or 500 Kč

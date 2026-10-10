@@ -8,6 +8,6 @@ interface SesitProps {
 /** List školního sešitu: čtverečkovaný papír, červený okraj, na desktopu max. 620 px na stole. */
 export const Sesit: FC<SesitProps> = ({ children, className = '' }) => (
   <div className="stul min-h-[100dvh] bg-stul">
-    <div className={`sesit ${className}`}>{children}</div>
+    <main className={`sesit ${className}`}>{children}</main>
   </div>
 )

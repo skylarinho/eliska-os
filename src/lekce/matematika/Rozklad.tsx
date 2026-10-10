@@ -46,6 +46,7 @@ const Uloha: FC<{ priklad: DecompositionStep } & PolozkaOvladani> = ({ priklad: 
             onValueChange={f.nastav}
             min={0}
             max={200}
+            limitHint={false}
             disabled={odpovezeno}
           />
         ))}

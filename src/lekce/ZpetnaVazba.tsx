@@ -1,4 +1,4 @@
-import { useRef, type FC } from 'react'
+import { useState, type FC } from 'react'
 import { BottomSheet } from '@/components/arc/bottom-sheet/bottom-sheet'
 import { Button } from '@/components/arc/button/button'
 import { cz } from '../lib/typo'
@@ -13,9 +13,8 @@ interface ZpetnaVazbaProps {
 /** Zpětná vazba po odpovědi: „Správně“ zeleně, „Správně je …“ červeně, vysvětlení a jedno tlačítko. */
 export const ZpetnaVazba: FC<ZpetnaVazbaProps> = ({ odpoved, tlacitko, onDalsi }) => {
   // Při zavírání sheet ještě chvíli doznívá, obsah proto držíme z poslední odpovědi.
-  const posledni = useRef<Odpoved | null>(null)
-  if (odpoved) posledni.current = odpoved
-  const zobrazena = posledni.current
+  const [zobrazena, setZobrazena] = useState<Odpoved | null>(odpoved)
+  if (odpoved && odpoved !== zobrazena) setZobrazena(odpoved)
 
   return (
     <BottomSheet

@@ -38,7 +38,7 @@
 .header::after { position: absolute; right: 0; bottom: 0; left: 0; height: 1px; background: var(--border); content: ""; opacity: 0; transition: opacity var(--duration-fast) var(--ease-standard); }
 .sheet[data-scrolled] .header::after { opacity: 1; }
 
-.grabber { display: flex; width: 3.5rem; height: 1.25rem; align-items: center; justify-content: center; margin: 0 auto var(--space-1); padding: 0; border: 0; border-radius: var(--radius-pill); background: transparent; cursor: inherit; -webkit-tap-highlight-color: transparent; }
+.grabber { display: flex; width: 3.5rem; height: 3rem; align-items: center; justify-content: center; margin: -0.875rem auto -0.75rem; padding: 0; border: 0; border-radius: var(--radius-pill); background: transparent; cursor: inherit; -webkit-tap-highlight-color: transparent; }
 .grabberBar { width: 2.25rem; height: 5px; border-radius: var(--radius-pill); background: var(--border-strong); transition: background-color var(--duration-fast) var(--ease-standard); }
 @media (hover: hover) and (pointer: fine) { .grabber:hover .grabberBar { background: var(--text-muted); } }
 .sheet[data-dragging] .grabberBar { background: var(--text-muted); }

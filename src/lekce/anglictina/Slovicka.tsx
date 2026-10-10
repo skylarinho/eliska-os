@@ -2,20 +2,13 @@ import { useMemo, useState, type FC } from 'react'
 import { Volume2 } from 'lucide-react'
 import { Button } from '@/components/arc/button/button'
 import { ENGLISH_PHRASES } from '../../data/englishData'
-import type { EnglishCategory, EnglishPhrase } from '../../types/learning'
+import type { EnglishPhrase } from '../../types/learning'
 import { michej } from '../../lib/michej'
 import { cz } from '../../lib/typo'
 import { Lekce } from '../Lekce'
+import { SLOVICKA_OKRUHY } from '../skupiny'
 import { OdpovedTlacitko } from '../OdpovedTlacitko'
 import type { PolozkaOvladani } from '../typy'
-
-/** Které okruhy slovíček patří do které lekce. */
-export const SLOVICKA_OKRUHY: Record<string, EnglishCategory[]> = {
-  'anglictina-pozdravy': ['greetings'],
-  'anglictina-zviratka': ['animals'],
-  'anglictina-jidlo-skola': ['food', 'school'],
-  'anglictina-barvy-cisla': ['colors', 'numbers'],
-}
 
 function rekni(text: string) {
   if (typeof window === 'undefined' || !('speechSynthesis' in window)) return
@@ -68,10 +61,10 @@ const Uloha: FC<{ slovicko: EnglishPhrase } & PolozkaOvladani> = ({ slovicko: s,
 }
 
 export const Slovicka: FC<{ lekceId: string; onZavrit: () => void }> = ({ lekceId, onZavrit }) => {
-  const okruhy = SLOVICKA_OKRUHY[lekceId] ?? []
+  const okruhy = SLOVICKA_OKRUHY[lekceId]
   const polozky = useMemo(
-    () => ENGLISH_PHRASES.filter((p) => okruhy.includes(p.category)),
-    [lekceId],
+    () => ENGLISH_PHRASES.filter((p) => okruhy?.includes(p.category)),
+    [okruhy],
   )
   return (
     <Lekce id={lekceId} zadani="Poslechni si slovo a vyber český překlad" polozky={polozky} onZavrit={onZavrit}>

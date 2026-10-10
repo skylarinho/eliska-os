@@ -61,6 +61,7 @@ export const ProfilSheet: FC<ProfilSheetProps> = ({ open, onOpenChange }) => {
                 key={p.id}
                 type="button"
                 aria-pressed={vybrany}
+                autoFocus={vybrany}
                 onClick={() => vybrat(p.id)}
                 className={`mb-2 flex min-h-[60px] w-full items-center gap-3 rounded-s border-2 bg-papir px-3 py-2.5 text-left font-semibold ${
                   vybrany ? 'border-inkoust' : 'border-inkoust-3'

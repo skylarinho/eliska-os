@@ -1,6 +1,7 @@
 import { useState, type ReactNode } from 'react'
 import { X } from 'lucide-react'
 import { Progress } from '@/components/arc/progress/progress'
+import { lekcePodleId } from '../data/lekce'
 import { cz } from '../lib/typo'
 import { playCorrectSound, playFanfareSound, playWrongSound } from '../utils/audio'
 import { useProfileStore } from '../store/useProfileStore'
@@ -79,6 +80,7 @@ export function Lekce<T>({ id, zadani, polozky, onZavrit, children }: LekceProps
 
   return (
     <div className="pr-5 pt-12 pb-20 min-[700px]:pr-12 min-[700px]:pt-10">
+      <h1 className="sr-only">{lekcePodleId(id)?.nazev}</h1>
       <div className="mb-9 flex items-center gap-3.5">
         <button
           type="button"

@@ -1,19 +1,12 @@
 import { useMemo, useState, type FC } from 'react'
 import { CZECH_EXERCISES } from '../../data/czechData'
-import type { CzechExercise, LetterGroup } from '../../types/learning'
+import type { CzechExercise } from '../../types/learning'
 import { cz } from '../../lib/typo'
 import { Dopsano } from '../Dopsano'
 import { Lekce } from '../Lekce'
+import { VYJMENOVANA_SKUPINY } from '../skupiny'
 import { OdpovedTlacitko } from '../OdpovedTlacitko'
 import type { PolozkaOvladani } from '../typy'
-
-/** Které skupiny písmen patří do které lekce. */
-export const VYJMENOVANA_SKUPINY: Record<string, LetterGroup[]> = {
-  'cestina-vyjmenovana-b': ['B'],
-  'cestina-vyjmenovana-l-m': ['L', 'M'],
-  'cestina-vyjmenovana-p-s': ['P', 'S'],
-  'cestina-vyjmenovana-v-z': ['V', 'Z'],
-}
 
 const MOZNOSTI: { pismeno: CzechExercise['correctAnswer']; popisek: string }[] = [
   { pismeno: 'i', popisek: 'měkké' },
@@ -100,10 +93,10 @@ interface VyjmenovanaProps {
 }
 
 export const Vyjmenovana: FC<VyjmenovanaProps> = ({ lekceId, onZavrit }) => {
-  const skupiny = VYJMENOVANA_SKUPINY[lekceId] ?? []
+  const skupiny = VYJMENOVANA_SKUPINY[lekceId]
   const cviceni = useMemo(
-    () => CZECH_EXERCISES.filter((c) => skupiny.includes(c.letterGroup)),
-    [lekceId],
+    () => CZECH_EXERCISES.filter((c) => skupiny?.includes(c.letterGroup)),
+    [skupiny],
   )
 
   return (
