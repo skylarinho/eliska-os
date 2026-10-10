@@ -11,7 +11,6 @@ import {
 } from '../../../utils/audio'
 import { FeedbackModal } from '../../common/FeedbackModal'
 import { Check } from 'lucide-react'
-import confetti from 'canvas-confetti'
 
 interface MathLabProps {
   onBack: () => void
@@ -102,7 +101,6 @@ export const MathLab: FC<MathLabProps> = ({ onProgressChange }) => {
       setDecompIndex((prev) => prev + 1)
     } else {
       playFanfareSound()
-      confetti({ particleCount: 70, spread: 60 })
       setDecompIndex(0)
     }
   }
@@ -141,7 +139,6 @@ export const MathLab: FC<MathLabProps> = ({ onProgressChange }) => {
       setMultIndex((prev) => prev + 1)
     } else {
       playFanfareSound()
-      confetti({ particleCount: 70, spread: 60 })
       setMultIndex(0)
     }
   }
@@ -183,7 +180,7 @@ export const MathLab: FC<MathLabProps> = ({ onProgressChange }) => {
         <div className="my-auto py-2 space-y-3">
           {/* Main Equation Box */}
           <div className="bg-[#fcfaf6] rounded-3xl p-5 border-2 border-[#ebdccb] shadow-xs text-center space-y-3">
-            <span className="text-[11px] font-black uppercase tracking-wider text-[#7a5c43] block">
+            <span className="text-[11px] font-black tracking-wider text-[#7a5c43] block">
               Příklad {decompIndex + 1} / {DECOMPOSITION_EXERCISES.length}
             </span>
 
@@ -271,7 +268,7 @@ export const MathLab: FC<MathLabProps> = ({ onProgressChange }) => {
         <div className="my-auto py-2 space-y-3">
           {/* Card with dot grid visualizer */}
           <div className="bg-[#fcfaf6] rounded-3xl p-5 border-2 border-[#ebdccb] shadow-xs text-center space-y-3">
-            <span className="text-[11px] font-black uppercase tracking-wider text-[#7a5c43] block">
+            <span className="text-[11px] font-black tracking-wider text-[#7a5c43] block">
               Násobilkový duel {multIndex + 1} / {MULTIPLICATION_DUELS.length}
             </span>
 

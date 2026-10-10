@@ -11,10 +11,10 @@ interface ProfileSelectorModalProps {
 }
 
 const AVATAR_OPTIONS: { type: AvatarType; label: string; icon: string }[] = [
-  { type: 'vombat', label: 'Vombat', icon: '🐾' },
-  { type: 'liska', label: 'Liška', icon: '🦊' },
-  { type: 'sovka', label: 'Sovička', icon: '🦉' },
-  { type: 'medvidek', label: 'Medvídek', icon: '🐻' },
+  { type: 'vombat', label: 'Vombat', icon: '' },
+  { type: 'liska', label: 'Liška', icon: '' },
+  { type: 'sovka', label: 'Sovička', icon: '' },
+  { type: 'medvidek', label: 'Medvídek', icon: '' },
 ]
 
 export const ProfileSelectorModal: FC<ProfileSelectorModalProps> = ({ isOpen, onClose }) => {
@@ -76,7 +76,7 @@ export const ProfileSelectorModal: FC<ProfileSelectorModalProps> = ({ isOpen, on
           {!isAddingNew && (
             <div className="space-y-4">
               <div className="text-center">
-                <h3 className="text-lg sm:text-xl font-black text-[#3e2723]">Kdo se bude dnes učit? 🐾</h3>
+                <h3 className="text-lg sm:text-xl font-black text-[#3e2723]">Kdo se bude dnes učit? </h3>
                 <p className="text-xs text-[#7a5c43] mt-0.5">
                   Vyber svůj profil nebo přidej sourozence a kamaráda
                 </p>
@@ -86,7 +86,7 @@ export const ProfileSelectorModal: FC<ProfileSelectorModalProps> = ({ isOpen, on
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 max-h-[48vh] overflow-y-auto p-1">
                 {profiles.map((p) => {
                   const isSelected = p.id === activeProfileId
-                  const avatarIcon = AVATAR_OPTIONS.find((a) => a.type === p.avatar)?.icon || '🐾'
+                  const avatarIcon = AVATAR_OPTIONS.find((a) => a.type === p.avatar)?.icon || ''
 
                   return (
                     <motion.button
@@ -110,7 +110,7 @@ export const ProfileSelectorModal: FC<ProfileSelectorModalProps> = ({ isOpen, on
                           {isSelected && <Check className="w-4 h-4 text-emerald-600 shrink-0" />}
                         </div>
                         <span className="text-xs font-black text-emerald-800 block">
-                          {p.xp} XP ⭐
+                          {p.xp} XP 
                         </span>
                       </div>
                     </motion.button>
@@ -138,7 +138,7 @@ export const ProfileSelectorModal: FC<ProfileSelectorModalProps> = ({ isOpen, on
           {isAddingNew && (
             <form onSubmit={handleCreateNewChild} className="space-y-3">
               <div className="text-center">
-                <h3 className="text-base sm:text-lg font-black text-[#3e2723]">Přidat nového školáka 🎒</h3>
+                <h3 className="text-base sm:text-lg font-black text-[#3e2723]">Přidat nového školáka </h3>
                 <p className="text-xs text-[#7a5c43]">Vyplň jméno a vyber zvířátko</p>
               </div>
 
@@ -189,7 +189,7 @@ export const ProfileSelectorModal: FC<ProfileSelectorModalProps> = ({ isOpen, on
                   type="submit"
                   className="flex-1 min-h-[44px] py-2 rounded-xl bg-[#059669] hover:bg-[#047857] text-white font-bold text-xs shadow-md"
                 >
-                  Uložit profil 🐾
+                  Uložit profil 
                 </button>
               </div>
             </form>

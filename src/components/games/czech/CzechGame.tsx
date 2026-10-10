@@ -85,7 +85,7 @@ export const CzechGame: FC<CzechGameProps> = ({ onProgressChange }) => {
     <div className="w-full max-w-md mx-auto px-3.5 py-3 min-h-[calc(100dvh-130px)] flex flex-col justify-between">
       {/* Letter Group Selector Tabs (B, L, M, P, S, V, Z) */}
       <div className="space-y-1">
-          <span className="text-[10px] font-black uppercase tracking-wider text-[#7a5c43] block mb-1 px-1">
+          <span className="text-[10px] font-black tracking-wider text-[#7a5c43] block mb-1 px-1">
             Zvol si písmeno ze školy:
           </span>
           <div className="flex items-center gap-1.5 overflow-x-auto pb-1">

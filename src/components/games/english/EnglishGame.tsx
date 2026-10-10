@@ -95,7 +95,7 @@ export const EnglishGame: FC<EnglishGameProps> = ({ onProgressChange }) => {
     <div className="w-full max-w-md mx-auto px-3.5 py-3 min-h-[calc(100dvh-130px)] flex flex-col justify-between">
       {/* Category Tabs */}
       <div className="space-y-1">
-        <span className="text-[10px] font-black uppercase tracking-wider text-[#7a5c43] block mb-1 px-1">
+        <span className="text-[10px] font-black tracking-wider text-[#7a5c43] block mb-1 px-1">
           Vyber si téma slovíček:
         </span>
           <div className="flex items-center gap-1.5 overflow-x-auto pb-1">

@@ -1,0 +1,20 @@
+/* E-liška – design tokeny (sešit) */
+:root{
+  --papir:#FFFFFF;
+  --stul:#EDF1F6;          /* pozadí za listem na desktopu */
+  --linka:#E2E9F3;         /* čtverečkování */
+  --okraj:#E46B5A;         /* červený okraj sešitu – jen dekor */
+  --inkoust:#1D3170;       /* hlavní text, modré pero */
+  --inkoust-2:#55628F;     /* sekundární text */
+  --inkoust-3:#C9D2E6;     /* obrysy tlačítek */
+  --zvyraznovac:#FFE45C;   /* dnešní úkol, hvězdy */
+  --spravne:#1F8A55;  --spravne-bg:#E6F4EC;
+  --oprava:#D2402F;   --oprava-bg:#FCEBE8;  /* červené pero učitelky */
+  /* pastelky – jen proužek u předmětu */
+  --cestina:#7A4FC4; --matematika:#2F6FDB; --anglictina:#0F8A8A;
+  --vlastiveda:#D9731C; --informatika:#3E9B4F;
+  --ctverec:20px;
+  --r-s:10px; --r-m:16px; --r-l:22px;
+  --font:"Lexend",system-ui,sans-serif;
+  --font-ruka:"Caveat",cursive;
+}

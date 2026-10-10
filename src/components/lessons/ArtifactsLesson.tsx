@@ -5,7 +5,6 @@ import { useProfileStore, getVocativeName } from '../../store/useProfileStore'
 import { playCorrectSound, playWrongSound, playFanfareSound, playClickSound } from '../../utils/audio'
 import { FeedbackModal } from '../common/FeedbackModal'
 import { RotateCcw, CheckCircle, ChevronRight } from 'lucide-react'
-import confetti from 'canvas-confetti'
 
 interface ArtifactsLessonProps {
   onBack: () => void
@@ -78,7 +77,6 @@ export const ArtifactsLesson: FC<ArtifactsLessonProps> = ({ onBack, onProgressCh
       // Completed lesson!
       setLessonFinished(true)
       playFanfareSound()
-      confetti({ particleCount: 80, spread: 70, origin: { y: 0.6 } })
       completeLesson('lesson-artifacts', 60)
     }
   }
@@ -125,7 +123,7 @@ export const ArtifactsLesson: FC<ArtifactsLessonProps> = ({ onBack, onProgressCh
 
           {/* Epoch Action Buttons */}
           <div className="space-y-2 pt-1">
-            <span className="text-[11px] font-black uppercase tracking-wider text-[#7a5c43] px-1 flex items-center gap-1">
+            <span className="text-[11px] font-black tracking-wider text-[#7a5c43] px-1 flex items-center gap-1">
               👇 Zvol správné období dějin:
             </span>
             {TIMELINE_EPOCHS.map((epoch) => (

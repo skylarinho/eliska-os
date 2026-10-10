@@ -51,21 +51,21 @@ export const WombatPeeker: FC<WombatPeekerProps> = ({
             transition={{ repeat: Infinity, duration: 1.6 }}
             className="absolute -top-2 left-2 text-amber-400 text-lg sm:text-xl drop-shadow"
           >
-            ✨
+            
           </motion.span>
           <motion.span
             animate={{ scale: [1, 1.4, 1], rotate: [0, -20, 0], opacity: [0.8, 1, 0.8] }}
             transition={{ repeat: Infinity, duration: 1.4, delay: 0.3 }}
             className="absolute -top-4 right-3 text-amber-400 text-lg sm:text-xl drop-shadow"
           >
-            ⭐
+            
           </motion.span>
           <motion.span
             animate={{ scale: [0.7, 1.2, 0.7], opacity: [0.6, 1, 0.6] }}
             transition={{ repeat: Infinity, duration: 1.8, delay: 0.6 }}
             className="absolute top-2 -right-4 text-emerald-500 text-sm drop-shadow"
           >
-            🌟
+            
           </motion.span>
         </div>
       )}

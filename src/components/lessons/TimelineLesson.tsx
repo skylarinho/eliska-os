@@ -5,7 +5,6 @@ import { useProfileStore } from '../../store/useProfileStore'
 import { playCorrectSound, playWrongSound, playFanfareSound, playClickSound } from '../../utils/audio'
 import { FeedbackModal } from '../common/FeedbackModal'
 import { RotateCcw, Undo2, Check } from 'lucide-react'
-import confetti from 'canvas-confetti'
 
 interface TimelineLessonProps {
   onBack: () => void
@@ -104,7 +103,6 @@ export const TimelineLesson: FC<TimelineLessonProps> = ({ onBack, onProgressChan
     if (isCorrect) {
       playCorrectSound()
       playFanfareSound()
-      confetti({ particleCount: 100, spread: 80, origin: { y: 0.55 } })
       addXp(50)
       completeLesson('lesson-timeline', 50)
       setIsCompleted(true)
@@ -252,7 +250,7 @@ export const TimelineLesson: FC<TimelineLessonProps> = ({ onBack, onProgressChan
       {/* Drawer / Pool of Available Epochs */}
       <div className="space-y-2">
         <div className="flex items-center justify-between px-1">
-          <span className="text-xs font-extrabold text-[#7a5c43] uppercase tracking-wider">
+          <span className="text-xs font-extrabold text-[#7a5c43] tracking-wider">
             Osudí s epochami ({availableEpochs.length} zbývá):
           </span>
           {availableEpochs.length === 0 && !isCompleted && (

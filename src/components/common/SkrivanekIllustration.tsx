@@ -18,7 +18,7 @@ export const SkrivanekIllustration: FC<SkrivanekIllustrationProps> = ({
         transition={{ repeat: Infinity, duration: 2, ease: 'easeInOut' }}
         className="absolute -top-1 -right-2 text-amber-600 text-xs font-bold select-none pointer-events-none"
       >
-        🎵
+        
       </motion.span>
 
       <svg

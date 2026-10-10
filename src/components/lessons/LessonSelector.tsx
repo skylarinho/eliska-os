@@ -25,19 +25,19 @@ const LEARNING_ZONE_GAMES: NewGameMeta[] = [
   {
     id: 'game-shop',
     title: 'Vombatův obchůdek & Slovní úlohy',
-    shortTitle: 'Vombatův obchůdek 🛒',
+    shortTitle: 'Vombatův obchůdek ',
     subject: 'Matematika & Finance',
-    icon: '🛒',
+    icon: '',
     description: 'Nákupní lístek, skládání do košíku a přesné vracení mincí!',
     rewardXp: 45,
-    badge: 'Eliščin nejoblíbenější ⭐',
+    badge: 'Eliščin nejoblíbenější ',
   },
   {
     id: 'game-math',
     title: 'Matematická laboratoř',
-    shortTitle: 'Matematická laboratoř 🧪',
+    shortTitle: 'Matematická laboratoř ',
     subject: 'Matematika',
-    icon: '🧪',
+    icon: '',
     description: 'Rozklad na desítky/jednotky (48+35) a vizuální násobilková stezka.',
     rewardXp: 35,
     badge: 'Počítání s vombatem',
@@ -45,9 +45,9 @@ const LEARNING_ZONE_GAMES: NewGameMeta[] = [
   {
     id: 'game-czech',
     title: 'Vyjmenovaná slova s Vombatem',
-    shortTitle: 'Vyjmenovaná slova B–Z ✍️',
+    shortTitle: 'Vyjmenovaná slova B–Z ',
     subject: 'Český jazyk',
-    icon: '✍️',
+    icon: '',
     description: 'Doplňovačka I/Y s výběrem písmen B až Z a vombatím rozborem chytáků.',
     rewardXp: 30,
     badge: 'Rébusy a kořeny slov',
@@ -55,10 +55,10 @@ const LEARNING_ZONE_GAMES: NewGameMeta[] = [
   {
     id: 'game-english',
     title: 'Angličtina pro radost',
-    shortTitle: 'Angličtina s poslechem 🇬🇧',
+    shortTitle: 'Angličtina s poslechem ',
     subject: 'Anglický jazyk',
-    icon: '🇬🇧',
-    description: 'Slovíčka s českým fonetickým přepisem a hlasovým poslechem 🔊.',
+    icon: '',
+    description: 'Slovíčka s českým fonetickým přepisem a hlasovým poslechem .',
     rewardXp: 30,
     badge: 'Hlasová výslovnost',
   },
@@ -72,9 +72,9 @@ export const LessonSelector: FC<LessonSelectorProps> = ({ onSelectLesson }) => {
   // Clean vocative greeting for Czech
   const getGreeting = () => {
     const name = activeProfile?.name?.trim() || 'Eliška'
-    if (name.toLowerCase() === 'eliška') return 'Ahoj Eliško! 👋'
-    if (name.toLowerCase().endsWith('a')) return `Ahoj ${name.slice(0, -1)}o! 👋`
-    return `Ahoj ${name}! 👋`
+    if (name.toLowerCase() === 'eliška') return 'Ahoj Eliško! '
+    if (name.toLowerCase().endsWith('a')) return `Ahoj ${name.slice(0, -1)}o! `
+    return `Ahoj ${name}! `
   }
 
   return (
@@ -85,15 +85,15 @@ export const LessonSelector: FC<LessonSelectorProps> = ({ onSelectLesson }) => {
           <WombatPeeker expression="happy" size="md" />
         </div>
 
-        <span className="inline-block text-xs font-black px-2.5 py-0.5 rounded-full bg-[#7a5c43] text-[#f7f5f0] uppercase tracking-wider mb-1">
-          Školačka {activeProfile?.name || 'Eliška'} 🎒
+        <span className="inline-block text-xs font-black px-2.5 py-0.5 rounded-full bg-[#7a5c43] text-[#f7f5f0] tracking-wider mb-1">
+          Školačka {activeProfile?.name || 'Eliška'} 
         </span>
 
         <h1 className="text-2xl sm:text-3xl font-black text-[#3e2723] tracking-tight">
           {getGreeting()}
         </h1>
         <p className="text-xs sm:text-sm text-[#7a5c43] font-bold mt-0.5">
-          „S vombatem se naučíme všechno hravě! 🐾“
+          „S vombatem se naučíme všechno hravě! “
         </p>
       </div>
 
@@ -110,7 +110,7 @@ export const LessonSelector: FC<LessonSelectorProps> = ({ onSelectLesson }) => {
               : 'text-[#7a5c43] hover:bg-white/50'
           }`}
         >
-          Vše 🌟
+          Vše 
         </button>
         <button
           onClick={() => {
@@ -123,7 +123,7 @@ export const LessonSelector: FC<LessonSelectorProps> = ({ onSelectLesson }) => {
               : 'text-[#7a5c43] hover:bg-white/50'
           }`}
         >
-          Doučování 🛒
+          Doučování 
         </button>
         <button
           onClick={() => {
@@ -144,8 +144,8 @@ export const LessonSelector: FC<LessonSelectorProps> = ({ onSelectLesson }) => {
       {(activeTab === 'all' || activeTab === 'doucovani') && (
         <div className="space-y-2">
           <div className="flex items-center justify-between px-1">
-            <h2 className="text-xs font-black uppercase tracking-wider text-[#7a5c43] flex items-center gap-1.5">
-              <span>🛒 Hravá doučovací zóna</span>
+            <h2 className="text-xs font-black tracking-wider text-[#7a5c43] flex items-center gap-1.5">
+              <span>Hravá doučovací zóna</span>
               <span className="bg-amber-100 text-amber-900 text-[10px] px-2 py-0.2 rounded-full border border-amber-300 font-bold">
                 Doporučeno
               </span>
@@ -204,8 +204,8 @@ export const LessonSelector: FC<LessonSelectorProps> = ({ onSelectLesson }) => {
       {(activeTab === 'all' || activeTab === 'historie') && (
         <div className="space-y-2 pt-1">
           <div className="flex items-center justify-between px-1">
-            <h2 className="text-xs font-black uppercase tracking-wider text-[#7a5c43]">
-              🏛️ Vlastivěda & Informatika:
+            <h2 className="text-xs font-black tracking-wider text-[#7a5c43]">
+              Vlastivěda & Informatika:
             </h2>
             <span className="text-xs font-bold text-[#3e2723]">
               Splněno: {completedLessons.length} / {LESSONS_META.length}

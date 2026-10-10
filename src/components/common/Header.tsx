@@ -11,10 +11,10 @@ interface HeaderProps {
 }
 
 const avatarIcons: Record<AvatarType, string> = {
-  vombat: '🐾',
-  liska: '🦊',
-  sovka: '🦉',
-  medvidek: '🐻',
+  vombat: '',
+  liska: '',
+  sovka: '',
+  medvidek: '',
 }
 
 export const Header: FC<HeaderProps> = ({

@@ -29,7 +29,7 @@ export const Footer: FC<FooterProps> = ({ onOpenProfileSelector }) => {
         {/* Loving Father dedication */}
         <div className="space-y-0.5">
           <p className="text-sm sm:text-base font-bold text-[#3e2723]">
-            Aplikaci vytvořil s láskou tatínek ❤️
+            Aplikaci vytvořil s láskou tatínek 
           </p>
           <p className="text-xs text-[#7a5c43] font-medium">
             Pro nejchytřejší a nejšikovnější školačku Elišku
@@ -66,7 +66,7 @@ export const Footer: FC<FooterProps> = ({ onOpenProfileSelector }) => {
               className="flex items-center gap-1.5 px-3 py-2 rounded-xl bg-white/80 hover:bg-white text-xs font-semibold text-[#7a5c43] border border-[#d8c3ad] shadow-xs active:scale-95 transition-all touch-target"
             >
               <RotateCcw className="w-3.5 h-3.5" />
-              <span>Vynulovat výsledky 🔄</span>
+              <span>Vynulovat výsledky </span>
             </button>
           )}
 
@@ -78,7 +78,7 @@ export const Footer: FC<FooterProps> = ({ onOpenProfileSelector }) => {
             className="flex items-center gap-1.5 px-3 py-2 rounded-xl bg-white/80 hover:bg-white text-xs font-semibold text-[#3e2723] border border-[#d8c3ad] shadow-xs active:scale-95 transition-all touch-target"
           >
             <UserCheck className="w-3.5 h-3.5 text-emerald-700" />
-            <span>Odhlásit / Změnit žáka 🔒</span>
+            <span>Odhlásit / Změnit žáka </span>
           </button>
         </div>
 

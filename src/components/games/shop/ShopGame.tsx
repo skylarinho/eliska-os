@@ -247,7 +247,7 @@ export const ShopGame: FC<ShopGameProps> = ({ onBack, onProgressChange }) => {
           {/* Shop Shelf with Items to Tap */}
           <div>
             <div className="flex items-center justify-between px-1 mb-1.5">
-              <span className="text-xs font-black uppercase tracking-wider text-[#7a5c43]">
+              <span className="text-xs font-black tracking-wider text-[#7a5c43]">
                 Regál s dobrotami (klepni pro přidání):
               </span>
               <span className="text-xs font-black text-emerald-800 bg-emerald-50 px-2 py-0.5 rounded-lg border border-emerald-200">
@@ -332,7 +332,7 @@ export const ShopGame: FC<ShopGameProps> = ({ onBack, onProgressChange }) => {
         <div className="my-auto py-2 space-y-3">
           {/* Bill & Banknote Info Card */}
           <div className="bg-[#fcfaf6] rounded-3xl p-4 border-2 border-[#ebdccb] shadow-xs text-center space-y-2">
-            <span className="text-[11px] font-black uppercase tracking-wider text-[#7a5c43] block">
+            <span className="text-[11px] font-black tracking-wider text-[#7a5c43] block">
               Placení u pokladny 🛒
             </span>
 
@@ -361,7 +361,7 @@ export const ShopGame: FC<ShopGameProps> = ({ onBack, onProgressChange }) => {
           {/* Returned Coins Tray */}
           <div className="bg-white rounded-2xl p-3 border-2 border-[#ebdccb] shadow-inner space-y-2">
             <div className="flex items-center justify-between">
-              <span className="text-xs font-black uppercase text-[#7a5c43]">
+              <span className="text-xs font-black text-[#7a5c43]">
                 Peníze na pultu k vrácení:
               </span>
               <div className="flex items-center gap-2">
@@ -404,7 +404,7 @@ export const ShopGame: FC<ShopGameProps> = ({ onBack, onProgressChange }) => {
 
           {/* Clickable Coins Drawer (Tactile min 48x48px touch target) */}
           <div>
-            <span className="text-xs font-black uppercase tracking-wider text-[#7a5c43] block px-1 mb-1.5">
+            <span className="text-xs font-black tracking-wider text-[#7a5c43] block px-1 mb-1.5">
               Klikací mince v pokladně:
             </span>
             <div className="grid grid-cols-6 gap-1.5">

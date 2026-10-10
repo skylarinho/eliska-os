@@ -23,7 +23,7 @@ export const FeedbackModal: FC<FeedbackModalProps> = ({
   hint,
   xpEarned = 0,
   onNext,
-  buttonText = 'Další otázka ➡️',
+  buttonText = 'Další otázka ',
 }) => {
   if (!isOpen) return null
 
@@ -54,7 +54,7 @@ export const FeedbackModal: FC<FeedbackModalProps> = ({
 
           {/* Status Badge */}
           <div
-            className={`inline-flex items-center gap-2 px-4 py-1.5 rounded-full text-sm sm:text-base font-bold tracking-wide uppercase shadow-xs mb-3 ${
+            className={`inline-flex items-center gap-2 px-4 py-1.5 rounded-full text-sm sm:text-base font-bold tracking-wide shadow-xs mb-3 ${
               isCorrect
                 ? 'bg-emerald-100 text-emerald-800 border border-emerald-300'
                 : 'bg-amber-100 text-amber-900 border border-amber-300'
@@ -63,12 +63,12 @@ export const FeedbackModal: FC<FeedbackModalProps> = ({
             {isCorrect ? (
               <>
                 <CheckCircle2 className="w-5 h-5 text-emerald-600" />
-                {title || '✅ SPRÁVNĚ! VÝBORNĚ!'}
+                {title || 'SPRÁVNĚ! VÝBORNĚ!'}
               </>
             ) : (
               <>
                 <AlertCircle className="w-5 h-5 text-amber-600" />
-                {title || '❌ CHYBIČKA! NEVADÍ!'}
+                {title || 'CHYBIČKA! NEVADÍ!'}
               </>
             )}
           </div>
@@ -80,7 +80,7 @@ export const FeedbackModal: FC<FeedbackModalProps> = ({
               animate={{ scale: 1 }}
               className="mb-2 text-xs sm:text-sm font-extrabold text-amber-600 bg-amber-50 rounded-full px-3 py-0.5 inline-block"
             >
-              +{xpEarned} XP do vombatího batůžku! 🎒
+              +{xpEarned} XP do vombatího batůžku! 
             </motion.div>
           )}
 

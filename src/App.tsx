@@ -11,7 +11,7 @@ import { CzechGame } from './components/games/czech/CzechGame'
 import { EnglishGame } from './components/games/english/EnglishGame'
 import { ProfileSelectorModal } from './components/profile/ProfileSelectorModal'
 import { useProfileStore } from './store/useProfileStore'
-import { Smartphone, Monitor } from 'lucide-react'
+import { Sesit } from './components/Sesit'
 
 type AppView =
   | 'dashboard'
@@ -27,8 +27,6 @@ export function App() {
   const [currentView, setCurrentView] = useState<AppView>('dashboard')
   const [isProfileModalOpen, setIsProfileModalOpen] = useState(false)
 
-  // Desktop helper: preview as iPhone 12 mini (375x812) or responsive width
-  const [isPhoneFrame, setIsPhoneFrame] = useState(false)
 
   const checkAndRecordActivity = useProfileStore((state) => state.checkAndRecordActivity)
 
@@ -37,42 +35,8 @@ export function App() {
   }, [checkAndRecordActivity])
 
   return (
-    <div
-      className={`min-h-[100dvh] w-full bg-[#f7f5f0] text-[#3e2723] flex flex-col items-center selection:bg-[#ebdccb] ${
-        isPhoneFrame ? 'py-4 sm:py-8 bg-stone-300' : ''
-      }`}
-    >
-      {/* Optional Desktop Preview Bar (visible on wider screens) */}
-      <div className="hidden md:flex items-center gap-2 mb-3 bg-white/90 border border-[#d8c3ad] px-3 py-1.5 rounded-full shadow-xs text-xs font-semibold text-[#7a5c43]">
-        <span>Pohled:</span>
-        <button
-          onClick={() => setIsPhoneFrame(false)}
-          className={`flex items-center gap-1 px-2.5 py-1 rounded-xl transition-all ${
-            !isPhoneFrame ? 'bg-[#7a5c43] text-white' : 'hover:bg-stone-100 text-[#3e2723]'
-          }`}
-        >
-          <Monitor className="w-3.5 h-3.5" />
-          <span>Responzivní</span>
-        </button>
-        <button
-          onClick={() => setIsPhoneFrame(true)}
-          className={`flex items-center gap-1 px-2.5 py-1 rounded-xl transition-all ${
-            isPhoneFrame ? 'bg-[#7a5c43] text-white' : 'hover:bg-stone-100 text-[#3e2723]'
-          }`}
-        >
-          <Smartphone className="w-3.5 h-3.5" />
-          <span>iPhone 12 mini (375 × 812)</span>
-        </button>
-      </div>
-
-      {/* Main Container: Tuned strictly for iPhone 12 mini (375px width base) */}
-      <div
-        className={`w-full bg-[#f7f5f0] flex flex-col justify-between transition-all ${
-          isPhoneFrame
-            ? 'max-w-[375px] min-h-[812px] h-[812px] rounded-[44px] shadow-2xl border-8 border-stone-800 overflow-y-auto relative'
-            : 'max-w-md min-h-[100dvh]'
-        }`}
-      >
+    <Sesit>
+      <div className="flex min-h-[100dvh] flex-col justify-between">
         {/* Header */}
         <Header
           onOpenProfile={() => setIsProfileModalOpen(true)}
@@ -144,7 +108,7 @@ export function App() {
         />
 
       </div>
-    </div>
+    </Sesit>
   )
 }
 

@@ -6,7 +6,6 @@ import { playCorrectSound, playWrongSound, playFanfareSound, playClickSound } fr
 import { FeedbackModal } from '../common/FeedbackModal'
 import { HardwareIcon } from './HardwareIcon'
 import { RotateCcw, CheckCircle, ChevronRight } from 'lucide-react'
-import confetti from 'canvas-confetti'
 
 interface HardwareLessonProps {
   onBack: () => void
@@ -89,7 +88,6 @@ export const HardwareLesson: FC<HardwareLessonProps> = ({ onBack, onProgressChan
       // Finished entire lesson!
       setLessonFinished(true)
       playFanfareSound()
-      confetti({ particleCount: 80, spread: 70, origin: { y: 0.6 } })
       completeLesson('lesson-hw', 50)
     }
   }
@@ -134,7 +132,7 @@ export const HardwareLesson: FC<HardwareLessonProps> = ({ onBack, onProgressChan
 
           {/* Answer Action Buttons */}
           <div className="space-y-2.5 pt-1">
-            <span className="text-[11px] font-black uppercase tracking-wider text-[#7a5c43] px-1 flex items-center gap-1">
+            <span className="text-[11px] font-black tracking-wider text-[#7a5c43] px-1 flex items-center gap-1">
               👇 Klepni na správnou odpověď:
             </span>
             {choices.map((choice, idx) => {
