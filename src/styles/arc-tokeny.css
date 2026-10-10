@@ -1,0 +1,43 @@
+/* Přebarvení Arc komponent (button, bottom-sheet) na tokeny sešitu.
+   Arc moduly čtou tyto proměnné; foundation.css záměrně neimportujeme. */
+:root {
+  --background: var(--papir);
+  --surface: var(--papir);
+  --surface-raised: var(--papir);
+  --surface-muted: var(--linka);
+  --foreground: var(--inkoust);
+  --text-secondary: var(--inkoust-2);
+  --text-muted: var(--inkoust-2);
+  --border: var(--inkoust-3);
+  --border-strong: var(--inkoust-2);
+  --danger: var(--oprava);
+
+  --shadow-resting: none;
+  --shadow-floating: 0 -8px 30px rgb(29 49 112 / 0.12);
+
+  --space-1: 0.25rem;
+  --space-2: 0.5rem;
+  --space-3: 0.75rem;
+  --space-4: 1rem;
+  --space-5: 1.25rem;
+  --space-6: 1.5rem;
+
+  --radius-control: var(--r-m);
+  --radius-surface: var(--r-l);
+  --radius-pill: 9999px;
+
+  --control-height-sm: 3rem;
+  --control-height-md: 3.25rem;
+  --control-height-lg: 3.5rem;
+
+  --font-body: var(--font);
+  --tracking-body: 0;
+  --leading-body: 1.5;
+
+  --arc-text: 1rem;
+  --arc-text-lg: 1.5rem;
+
+  --ease-standard: cubic-bezier(0.22, 1, 0.36, 1);
+  --duration-instant: 120ms;
+  --duration-fast: 160ms;
+}

@@ -1,7 +1,7 @@
 import { useState } from 'react'
-import { Header } from './components/common/Header'
-import { Footer } from './components/common/Footer'
-import { LessonSelector } from './components/lessons/LessonSelector'
+import { X } from 'lucide-react'
+import { Sesit } from './components/Sesit'
+import { Prehled } from './screens/Prehled'
 import { HardwareLesson } from './components/lessons/HardwareLesson'
 import { TimelineLesson } from './components/lessons/TimelineLesson'
 import { ArtifactsLesson } from './components/lessons/ArtifactsLesson'
@@ -9,99 +9,35 @@ import { ShopGame } from './components/games/shop/ShopGame'
 import { MathLab } from './components/games/math/MathLab'
 import { CzechGame } from './components/games/czech/CzechGame'
 import { EnglishGame } from './components/games/english/EnglishGame'
-import { ProfileSelectorModal } from './components/profile/ProfileSelectorModal'
-import { Sesit } from './components/Sesit'
-
-type AppView =
-  | 'dashboard'
-  | 'lesson-hw'
-  | 'lesson-timeline'
-  | 'lesson-artifacts'
-  | 'game-shop'
-  | 'game-math'
-  | 'game-czech'
-  | 'game-english'
 
 export function App() {
-  const [currentView, setCurrentView] = useState<AppView>('dashboard')
-  const [isProfileModalOpen, setIsProfileModalOpen] = useState(false)
-
-
+  const [lekceId, setLekceId] = useState<string | null>(null)
+  const domu = () => setLekceId(null)
 
   return (
     <Sesit>
-      <div className="flex min-h-[100dvh] flex-col justify-between">
-        {/* Header */}
-        <Header
-          onOpenProfile={() => setIsProfileModalOpen(true)}
-          currentView={currentView}
-          onBackToDashboard={() => setCurrentView('dashboard')}
-          viewProgress={
-            currentView === 'lesson-hw'
-              ? 'Hardware'
-              : currentView === 'lesson-timeline'
-              ? 'Časová osa'
-              : currentView === 'lesson-artifacts'
-              ? 'Artefakty'
-              : currentView === 'game-shop'
-              ? 'Obchůdek'
-              : currentView === 'game-math'
-              ? 'Matematika'
-              : currentView === 'game-czech'
-              ? 'Čeština'
-              : currentView === 'game-english'
-              ? 'Angličtina'
-              : undefined
-          }
-        />
-
-        {/* View Routing */}
-        <main className="flex-1 flex flex-col justify-start">
-          {currentView === 'dashboard' && (
-            <LessonSelector onSelectLesson={(id) => setCurrentView(id as AppView)} />
-          )}
-
-          {/* 1. Etapa: Informatika & Vlastivěda */}
-          {currentView === 'lesson-hw' && (
-            <HardwareLesson onBack={() => setCurrentView('dashboard')} />
-          )}
-
-          {currentView === 'lesson-timeline' && (
-            <TimelineLesson onBack={() => setCurrentView('dashboard')} />
-          )}
-
-          {currentView === 'lesson-artifacts' && (
-            <ArtifactsLesson onBack={() => setCurrentView('dashboard')} />
-          )}
-
-          {/* 2. Etapa: Hravá doučovací zóna */}
-          {currentView === 'game-shop' && (
-            <ShopGame onBack={() => setCurrentView('dashboard')} />
-          )}
-
-          {currentView === 'game-math' && (
-            <MathLab onBack={() => setCurrentView('dashboard')} />
-          )}
-
-          {currentView === 'game-czech' && (
-            <CzechGame onBack={() => setCurrentView('dashboard')} />
-          )}
-
-          {currentView === 'game-english' && (
-            <EnglishGame onBack={() => setCurrentView('dashboard')} />
-          )}
-        </main>
-
-        {/* Personal Footer */}
-        <Footer onOpenProfileSelector={() => setIsProfileModalOpen(true)} />
-
-        {/* Modals */}
-        <ProfileSelectorModal
-          isOpen={isProfileModalOpen}
-          onClose={() => setIsProfileModalOpen(false)}
-        />
-
-      </div>
+      {lekceId === null ? (
+        <Prehled onStart={setLekceId} />
+      ) : (
+        <div className="pr-5 pt-12 pb-20 min-[700px]:pr-12 min-[700px]:pt-10">
+          {/* Dočasná lišta, než vznikne společná kostra lekce (krok 5). */}
+          <button
+            type="button"
+            onClick={domu}
+            aria-label="Ukončit lekci"
+            className="mb-6 grid h-12 w-12 place-items-center rounded-full border-2 border-inkoust-3 bg-papir"
+          >
+            <X className="h-[18px] w-[18px]" strokeWidth={2.6} aria-hidden="true" />
+          </button>
+          {lekceId === 'lesson-hw' && <HardwareLesson onBack={domu} />}
+          {lekceId === 'lesson-timeline' && <TimelineLesson onBack={domu} />}
+          {lekceId === 'lesson-artifacts' && <ArtifactsLesson onBack={domu} />}
+          {lekceId === 'game-shop' && <ShopGame onBack={domu} />}
+          {lekceId === 'game-math' && <MathLab onBack={domu} />}
+          {lekceId === 'game-czech' && <CzechGame onBack={domu} />}
+          {lekceId === 'game-english' && <EnglishGame onBack={domu} />}
+        </div>
+      )}
     </Sesit>
   )
 }

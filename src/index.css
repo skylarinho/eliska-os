@@ -10,6 +10,7 @@
 @import "@fontsource/caveat/latin-ext-700.css";
 @import "tailwindcss";
 @import "./styles/tokens.css";
+@import "./styles/arc-tokeny.css";
 
 @theme {
   --color-papir: var(--papir);
