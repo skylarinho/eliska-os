@@ -1,0 +1,293 @@
+<!doctype html>
+<html lang="cs">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#FFFFFF">
+<title>E-liška – mockup</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Lexend:wght@400;500;600;700&family=Caveat:wght@600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --papir:#FFFFFF; --stul:#EDF1F6; --linka:#E2E9F3; --okraj:#E46B5A;
+  --inkoust:#1D3170; --inkoust-2:#55628F; --inkoust-3:#C9D2E6;
+  --zvyraznovac:#FFE45C;
+  --spravne:#1F8A55; --spravne-bg:#E6F4EC; --oprava:#D2402F; --oprava-bg:#FCEBE8;
+  --cestina:#7A4FC4; --matematika:#2F6FDB; --anglictina:#0F8A8A; --vlastiveda:#D9731C; --informatika:#3E9B4F;
+  --ctverec:20px; --r-s:10px; --r-m:16px; --r-l:22px;
+  --font:"Lexend",system-ui,sans-serif; --font-ruka:"Caveat",cursive;
+}
+*,*::before,*::after{box-sizing:border-box}
+html,body{margin:0;height:100%}
+body{font-family:var(--font);color:var(--inkoust);background:var(--stul);-webkit-font-smoothing:antialiased;font-size:17px;line-height:1.5}
+button{font:inherit;color:inherit;cursor:pointer;-webkit-tap-highlight-color:transparent}
+:focus-visible{outline:3px solid var(--matematika);outline-offset:3px;border-radius:8px}
+
+/* mockup štítek */
+.mock{position:fixed;left:50%;transform:translateX(-50%);top:calc(6px + env(safe-area-inset-top));z-index:50;background:#2B2B2B;color:#fff;font-size:12px;padding:6px 12px;border-radius:999px;opacity:.85;pointer-events:none;white-space:nowrap}
+
+/* list sešitu */
+.list{position:relative;max-width:620px;min-height:100dvh;margin:0 auto;background-color:var(--papir);
+  background-image:linear-gradient(var(--linka) 1px,transparent 1px),linear-gradient(90deg,var(--linka) 1px,transparent 1px);
+  background-size:var(--ctverec) var(--ctverec);background-position:-1px -1px;
+  padding:calc(48px + env(safe-area-inset-top)) 20px calc(80px + env(safe-area-inset-bottom)) 40px}
+.list::before{content:"";position:absolute;top:0;bottom:0;left:24px;width:2px;background:var(--okraj);opacity:.55}
+@media (min-width:700px){
+  body{padding:40px 0}
+  .list{min-height:calc(100dvh - 80px);border:1px solid #D5DDEA;border-radius:6px;padding:40px 48px 96px 72px;
+    box-shadow:6px 6px 0 -1px var(--papir),6px 6px 0 0 #D5DDEA}
+  .list::before{left:44px}
+}
+.obrazovka{display:none}
+.obrazovka.aktivni{display:block}
+
+/* hlavička */
+.hlava{display:flex;align-items:flex-start;justify-content:space-between;gap:12px;margin-bottom:28px}
+h1{font-size:30px;line-height:1.15;font-weight:700;margin:0;letter-spacing:-.01em}
+.stav{display:flex;gap:16px;margin-top:8px;color:var(--inkoust-2);font-size:15px}
+.stav span{display:inline-flex;align-items:center;gap:6px}
+.stav svg{width:18px;height:18px}
+.profil{width:44px;height:44px;border-radius:50%;border:2px solid var(--inkoust);background:var(--papir);font-weight:700;font-size:18px;flex:none}
+
+/* dnešní úkol */
+.dnes{position:relative;background:var(--papir);border:2px solid var(--inkoust);border-radius:var(--r-l);padding:20px 20px 22px;margin:52px 0 40px}
+.dnes .co{font-size:15px;color:var(--inkoust-2);margin:0 0 6px}
+.dnes h2{font-size:26px;line-height:1.2;margin:0 0 6px;font-weight:700;display:inline;
+  background:linear-gradient(100deg,transparent .2em,var(--zvyraznovac) .2em,var(--zvyraznovac) calc(100% - .3em),transparent calc(100% - .1em)) 0 70%/100% 55% no-repeat;
+  -webkit-box-decoration-break:clone;box-decoration-break:clone;padding:0 .15em}
+.dnes .meta{margin:10px 0 18px;color:var(--inkoust-2);font-size:15px}
+.dnes .plan{font-size:14px}
+.dnes .vombat{position:absolute;right:18px;top:-51px;width:76px;height:61px}
+.btn{display:flex;width:100%;min-height:56px;align-items:center;justify-content:center;gap:10px;border:0;border-radius:var(--r-m);background:var(--inkoust);color:#fff;font-size:18px;font-weight:600;transition:transform .08s}
+.btn:active{transform:translateY(2px)}
+.btn.vedlejsi{background:transparent;color:var(--inkoust);border:2px solid var(--inkoust-3)}
+
+/* seznam */
+.predmet{margin:0 0 26px}
+.predmet h3{font-size:15px;font-weight:600;color:var(--inkoust-2);margin:0 0 8px;display:flex;align-items:center;gap:8px}
+.predmet h3 i{width:22px;height:6px;border-radius:3px;background:var(--b)}
+.radek{display:flex;align-items:center;gap:12px;width:100%;min-height:60px;padding:12px 14px;margin:0 0 8px;text-align:left;background:var(--papir);border:2px solid var(--inkoust-3);border-left:6px solid var(--b);border-radius:var(--r-s)}
+.radek:active{border-color:var(--inkoust);border-left-color:var(--b)}
+.radek .t{flex:1;min-width:0}
+.radek b{display:block;font-weight:600;font-size:17px;line-height:1.25}
+.radek small{display:block;color:var(--inkoust-2);font-size:14px;margin-top:2px}
+.hvezdy{display:inline-flex;gap:2px;flex:none}
+.hvezdy svg{width:18px;height:18px}
+
+/* lekce */
+.lista{display:flex;align-items:center;gap:14px;margin-bottom:36px}
+.zavrit{width:44px;height:44px;border-radius:50%;border:2px solid var(--inkoust-3);background:var(--papir);display:grid;place-items:center;flex:none}
+.zavrit svg{width:18px;height:18px}
+.postup{flex:1;display:flex;gap:6px}
+.postup span{flex:1;height:8px;border-radius:4px;background:var(--inkoust-3)}
+.postup span.hotovo{background:var(--inkoust)}
+.postup span.ted{background:var(--zvyraznovac);outline:2px solid var(--inkoust);outline-offset:-2px}
+.zadani{color:var(--inkoust-2);font-size:16px;margin:0 0 14px}
+.veta{font-size:28px;line-height:1.45;font-weight:500;margin:0 0 12px;min-height:3em;text-wrap:pretty}
+.slovo{white-space:nowrap}
+.mezera{display:inline-block;min-width:.95em;border-bottom:3px solid var(--inkoust);text-align:center;font-family:var(--font-ruka);font-weight:700;font-size:1.35em;line-height:.9;color:var(--inkoust)}
+.mezera.ok{color:var(--spravne);border-color:var(--spravne)}
+.mezera.spatne{color:var(--oprava);border-color:var(--oprava)}
+.mezera s{opacity:.7;margin-right:.1em}
+.chytak[hidden]{display:none}
+.chytak{display:inline-block;font-size:14px;color:var(--oprava);border:1.5px solid var(--oprava);border-radius:999px;padding:1px 10px;margin-bottom:16px}
+.moznosti{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-top:28px}
+.pismeno{min-height:76px;border-radius:var(--r-m);border:2px solid var(--inkoust-3);border-bottom-width:5px;background:var(--papir);display:flex;flex-direction:column;align-items:center;justify-content:center;font-size:30px;font-weight:600;line-height:1}
+.pismeno small{font-size:12px;font-weight:400;color:var(--inkoust-2);margin-top:6px}
+.pismeno:active{transform:translateY(3px);border-bottom-width:2px}
+.pismeno[disabled]{opacity:.45}
+.pismeno.ok{opacity:1;background:var(--spravne-bg);border-color:var(--spravne);color:var(--spravne)}
+.pismeno.spatne{opacity:1;background:var(--oprava-bg);border-color:var(--oprava);color:var(--oprava)}
+
+/* zpětná vazba */
+.sheet{position:fixed;left:0;right:0;bottom:0;z-index:20;display:flex;justify-content:center;transform:translateY(105%);visibility:hidden;transition:transform .25s cubic-bezier(.2,.8,.2,1),visibility 0s .25s}
+.sheet.otevreny{transform:none;visibility:visible;transition-delay:0s}
+.sheet .in{width:100%;max-width:620px;background:var(--papir);border-top:3px solid var(--b,var(--inkoust));border-radius:var(--r-l) var(--r-l) 0 0;padding:22px 20px calc(22px + env(safe-area-inset-bottom));box-shadow:0 -8px 30px rgba(29,49,112,.12)}
+.sheet h4{margin:0 0 6px;font-size:24px;font-weight:700}
+.sheet.ok .in{--b:var(--spravne)} .sheet.ok h4{color:var(--spravne)}
+.sheet.spatne .in{--b:var(--oprava)} .sheet.spatne h4{color:var(--oprava)}
+.sheet p{margin:0 0 18px;font-size:17px;line-height:1.55}
+.sheet .koren{display:block;color:var(--inkoust-2);font-size:15px;margin-top:6px}
+
+/* výsledek */
+.vysledek{text-align:center;padding-top:40px}
+.vysledek .vombat{width:130px;margin:0 auto 10px;display:block}
+.vysledek h2{font-size:32px;margin:0 0 6px}
+.vysledek .skore{color:var(--inkoust-2);margin:0 0 26px}
+.velke-hvezdy{display:flex;justify-content:center;gap:12px;margin:0 0 30px}
+.velke-hvezdy svg{width:58px;height:58px}
+.velke-hvezdy svg.zap{animation:hv .45s cubic-bezier(.3,1.6,.5,1) both}
+.velke-hvezdy svg:nth-child(2){animation-delay:.18s}.velke-hvezdy svg:nth-child(3){animation-delay:.36s}
+@keyframes hv{from{transform:scale(.3) rotate(-25deg);opacity:0}}
+.vysledek .btn+.btn{margin-top:10px}
+.vysledek .serie{margin:22px 0 0;color:var(--inkoust-2);font-size:15px}
+
+/* profil */
+.zavoj{position:fixed;inset:0;background:rgba(29,49,112,.25);z-index:15;opacity:0;pointer-events:none;transition:opacity .2s}
+.zavoj.vid{opacity:1;pointer-events:auto}
+.prof{display:flex;align-items:center;gap:12px;width:100%;min-height:60px;padding:10px 12px;border:2px solid var(--inkoust-3);border-radius:var(--r-s);background:var(--papir);margin-bottom:8px;text-align:left;font-weight:600}
+.prof.vybrany{border-color:var(--inkoust)}
+.prof .av{width:40px;height:40px;border-radius:50%;border:2px solid var(--inkoust);display:grid;place-items:center}
+.prof.pridat{border-style:dashed;color:var(--inkoust-2);font-weight:500}
+
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style>
+</head>
+<body>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="hv" viewBox="0 0 24 24"><path d="M12 2.8l2.7 5.8 6.3.7-4.7 4.3 1.3 6.2L12 16.6l-5.6 3.2 1.3-6.2L3 9.3l6.3-.7z" stroke="#1D3170" stroke-width="1.8" stroke-linejoin="round"/></symbol>
+  <symbol id="vombat" viewBox="0 0 120 96"><g fill="none" stroke="#1D3170" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M14 78c-4-22 8-46 34-52 8-2 18-2 26 1 22 7 34 26 32 51" fill="#fff"/><path d="M10 80h100"/><path d="M30 34c-6-8-4-16 2-17 5-1 9 5 10 11"/><path d="M92 36c5-8 3-15-2-16-5-1-9 4-10 10"/><ellipse cx="61" cy="56" rx="11" ry="8" fill="#1D3170"/><circle cx="44" cy="46" r="2.6" fill="#1D3170" stroke="none"/><circle cx="78" cy="46" r="2.6" fill="#1D3170" stroke="none"/><path d="M54 68c4 3 10 3 14 0"/><path d="M28 80c0-6 4-9 9-9M84 80c0-6 4-9 9-9"/></g></symbol>
+  <symbol id="vombat-radost" viewBox="0 0 120 96"><g fill="none" stroke="#1D3170" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M14 78c-4-22 8-46 34-52 8-2 18-2 26 1 22 7 34 26 32 51" fill="#fff"/><path d="M10 80h100"/><path d="M30 34c-6-8-4-16 2-17 5-1 9 5 10 11"/><path d="M92 36c5-8 3-15-2-16-5-1-9 4-10 10"/><ellipse cx="61" cy="56" rx="11" ry="8" fill="#1D3170"/><path d="M40 47c2-3 6-3 8 0M74 47c2-3 6-3 8 0"/><path d="M52 67c5 5 13 5 18 0"/><path d="M8 44l-6-3M10 34l-5-6M112 44l6-3M110 34l5-6" stroke="#E0A800"/><path d="M28 80c0-6 4-9 9-9M84 80c0-6 4-9 9-9"/></g></symbol>
+</svg>
+
+<main class="list">
+
+  <!-- PŘEHLED -->
+  <section class="obrazovka aktivni" id="prehled" aria-label="Přehled">
+    <header class="hlava">
+      <div>
+        <h1>Ahoj, Eliško</h1>
+        <div class="stav">
+          <span><svg viewBox="0 0 24 24" fill="none" stroke="#D9731C" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21c4 0 7-2.7 7-6.6 0-3.4-2.4-5.6-4-8.4-.9 2-2 3-3.4 3.2C12.3 6.8 11.5 4.5 9 3c.4 3.5-4 6-4 11.3C5 18.3 8 21 12 21z"/></svg>3&nbsp;dny v&nbsp;řadě</span>
+          <span><svg viewBox="0 0 24 24"><use href="#hv" fill="#FFE45C"/></svg>14&nbsp;hvězd</span>
+        </div>
+      </div>
+      <button class="profil" id="btnProfil" aria-label="Změnit profil">E</button>
+    </header>
+
+    <section class="dnes" aria-labelledby="dnesNadpis">
+      <svg class="vombat" aria-hidden="true"><use href="#vombat"/></svg>
+      <p class="co">Dnešní úkol</p>
+      <h2 id="dnesNadpis">Vyjmenovaná slova po&nbsp;B</h2>
+      <p class="meta">4&nbsp;věty, asi 3&nbsp;minuty<br><span class="plan">Plán na týden: 1&nbsp;ze 4&nbsp;hotovo</span></p>
+      <button class="btn" data-start>Začít</button>
+    </section>
+
+    <section class="predmet" style="--b:var(--cestina)">
+      <h3><i></i>Čeština</h3>
+      <button class="radek" data-start><span class="t"><b>Vyjmenovaná slova</b><small>B, L, M, P, S, V, Z</small></span><span class="hvezdy" data-h="2"></span></button>
+    </section>
+    <section class="predmet" style="--b:var(--matematika)">
+      <h3><i></i>Matematika</h3>
+      <button class="radek" data-start><span class="t"><b>Obchůdek</b><small>Nákup a&nbsp;vracení peněz</small></span><span class="hvezdy" data-h="3"></span></button>
+      <button class="radek" data-start><span class="t"><b>Rozklad na desítky</b><small>Sčítání do 100</small></span><span class="hvezdy" data-h="1"></span></button>
+      <button class="radek" data-start><span class="t"><b>Násobilka</b><small>Vyber správný výsledek</small></span><span class="hvezdy" data-h="0"></span></button>
+    </section>
+    <section class="predmet" style="--b:var(--anglictina)">
+      <h3><i></i>Angličtina</h3>
+      <button class="radek" data-start><span class="t"><b>Slovíčka s&nbsp;poslechem</b><small>Pozdravy, zvířátka, jídlo a&nbsp;další</small></span><span class="hvezdy" data-h="2"></span></button>
+    </section>
+    <section class="predmet" style="--b:var(--vlastiveda)">
+      <h3><i></i>Vlastivěda</h3>
+      <button class="radek" data-start><span class="t"><b>Časová osa dějin</b><small>Seřaď 5&nbsp;epoch</small></span><span class="hvezdy" data-h="3"></span></button>
+      <button class="radek" data-start><span class="t"><b>Předměty a&nbsp;epochy</b><small>Kam patří pěstní klín?</small></span><span class="hvezdy" data-h="0"></span></button>
+    </section>
+    <section class="predmet" style="--b:var(--informatika)">
+      <h3><i></i>Informatika</h3>
+      <button class="radek" data-start><span class="t"><b>Co je na obrázku?</b><small>Části počítače</small></span><span class="hvezdy" data-h="1"></span></button>
+    </section>
+  </section>
+
+  <!-- LEKCE -->
+  <section class="obrazovka" id="lekce" aria-label="Lekce">
+    <div class="lista">
+      <button class="zavrit" data-domu aria-label="Ukončit lekci"><svg viewBox="0 0 24 24" fill="none" stroke="#1D3170" stroke-width="2.6" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg></button>
+      <div class="postup" id="postup" role="progressbar" aria-valuemin="0" aria-valuemax="4" aria-valuenow="1"></div>
+    </div>
+    <p class="zadani">Doplň i, í, y, nebo ý</p>
+    <span class="chytak" id="chytak" hidden>Pozor, chyták</span>
+    <p class="veta" id="veta"></p>
+    <div class="moznosti" id="moznosti"></div>
+  </section>
+
+  <!-- VÝSLEDEK -->
+  <section class="obrazovka" id="vysledek" aria-label="Výsledek">
+    <div class="vysledek">
+      <svg class="vombat" aria-hidden="true" viewBox="0 0 120 96"><use href="#vombat-radost"/></svg>
+      <h2>Hotovo, Eliško</h2>
+      <p class="skore" id="skore"></p>
+      <div class="velke-hvezdy" id="velkeHv"></div>
+      <button class="btn" data-domu>Zpět na přehled</button>
+      <button class="btn vedlejsi" data-start>Zkusit znovu</button>
+      <p class="serie">Série: 4&nbsp;dny v&nbsp;řadě</p>
+    </div>
+  </section>
+</main>
+
+<div class="sheet" id="sheet" role="dialog" aria-live="polite">
+  <div class="in"><h4 id="sTitul"></h4><p id="sText"></p><button class="btn" id="sDal">Další věta</button></div>
+</div>
+
+<div class="zavoj" id="zavoj"></div>
+<div class="sheet" id="profily" role="dialog" aria-label="Kdo se dnes učí?">
+  <div class="in">
+    <h4>Kdo se dnes učí?</h4>
+    <button class="prof vybrany"><span class="av">E</span>Eliška</button>
+    <button class="prof pridat"><span class="av">+</span>Přidat profil</button>
+  </div>
+</div>
+
+<div class="mock">Mockup · ukázková data: hvězdy, série, týdenní plán</div>
+
+<script>
+const VETY=[
+ {pred:"Na louce kvetla léčivá b",po:"linka.",ok:"y",chytak:false,
+  vysv:"Slovo <b>bylinka</b> je příbuzné k&nbsp;vyjmenovanému slovu <b>bylina</b>, proto tvrdé&nbsp;y.",koren:"bylina"},
+ {pred:"Na stole ležela tlustá pohádková b",po:"chle.",ok:"i",chytak:true,
+  vysv:"<b>Bichle</b> (tlustá kniha) není vyjmenované ani příbuzné slovo, proto měkké&nbsp;i.",koren:"bichle"},
+ {pred:"Musíme b",po:"t v&nbsp;divadle potichu.",ok:"ý",chytak:true,
+  vysv:"<b>Být</b> (existovat, nacházet se) je vyjmenované slovo, proto tvrdé&nbsp;ý. Pozor: <b>bít</b> (tlouct) píšeme s&nbsp;í.",koren:"být"},
+ {pred:"Hodiny na věži začaly b",po:"t poledne.",ok:"í",chytak:true,
+  vysv:"<b>Bít</b> (tlouct, odbíjet) píšeme s&nbsp;měkkým í. Nejde o&nbsp;vyjmenované slovo být.",koren:"bít"}
+];
+const PISMENA=[["i","měkké"],["í","měkké"],["y","tvrdé"],["ý","tvrdé"]];
+let i=0,spravne=0;
+const $=s=>document.querySelector(s);
+const hvezda=on=>`<svg viewBox="0 0 24 24"${on?' class="zap"':''}><use href="#hv" fill="${on?'#FFE45C':'#fff'}"/></svg>`;
+document.querySelectorAll('.hvezdy').forEach(el=>{const n=+el.dataset.h;el.innerHTML=[0,1,2].map(k=>hvezda(k<n)).join('');el.setAttribute('aria-label',`${n} ze 3 hvězd`)});
+
+function ukaz(id){document.querySelectorAll('.obrazovka').forEach(s=>s.classList.toggle('aktivni',s.id===id));window.scrollTo(0,0)}
+function start(){i=0;spravne=0;ukaz('lekce');vykresli()}
+function vykresli(){
+  const v=VETY[i];
+  $('#postup').innerHTML=VETY.map((_,k)=>`<span class="${k<i?'hotovo':k===i?'ted':''}"></span>`).join('');
+  $('#postup').setAttribute('aria-valuenow',i+1);
+  $('#chytak').hidden=!v.chytak;
+  const a=v.pred.lastIndexOf(' ')+1, m=v.po.search(/[ \u00a0&]/), b=m<0?v.po.length:m;
+  $('#veta').innerHTML=`${v.pred.slice(0,a)}<span class="slovo">${v.pred.slice(a)}<span class="mezera" id="mezera">&nbsp;</span>${v.po.slice(0,b)}</span>${v.po.slice(b)}`;
+  $('#moznosti').innerHTML=PISMENA.map(([p,t])=>`<button class="pismeno" data-p="${p}">${p}<small>${t}</small></button>`).join('');
+  $('#moznosti').querySelectorAll('button').forEach(b=>b.onclick=()=>odpoved(b));
+}
+function odpoved(b){
+  const v=VETY[i],p=b.dataset.p,ok=p===v.ok;
+  if(ok)spravne++;
+  $('#moznosti').querySelectorAll('button').forEach(x=>{x.disabled=true;if(x.dataset.p===v.ok)x.classList.add('ok')});
+  if(!ok)b.classList.add('spatne');
+  const m=$('#mezera');m.className='mezera '+(ok?'ok':'spatne');m.innerHTML=ok?p:`<s>${p}</s>${v.ok}`;
+  const s=$('#sheet');s.className='sheet otevreny '+(ok?'ok':'spatne');
+  $('#sTitul').textContent=ok?'Správně':`Správně je ${v.ok}`;
+  $('#sText').innerHTML=v.vysv+`<span class="koren">Kořen: ${v.koren}</span>`;
+  $('#sDal').textContent=i<VETY.length-1?'Další věta':'Dokončit';
+  $('#sDal').focus({preventScroll:true});
+}
+$('#sDal').onclick=()=>{
+  $('#sheet').className='sheet';
+  if(i<VETY.length-1){i++;vykresli();return}
+  const h=spravne===4?3:spravne===3?2:1;
+  $('#skore').textContent=`${spravne} ze 4 správně`;
+  $('#velkeHv').innerHTML=[0,1,2].map(k=>hvezda(k<h)).join('');
+  $('#velkeHv').setAttribute('aria-label',`${h} ze 3 hvězd`);
+  ukaz('vysledek');
+};
+document.addEventListener('click',e=>{
+  if(e.target.closest('[data-start]'))start();
+  if(e.target.closest('[data-domu]')){$('#sheet').className='sheet';ukaz('prehled')}
+});
+const zavrit=()=>{$('#profily').classList.remove('otevreny');$('#zavoj').classList.remove('vid')};
+$('#btnProfil').onclick=()=>{$('#profily').classList.add('otevreny');$('#zavoj').classList.add('vid')};
+$('#zavoj').onclick=zavrit;$('#profily').querySelector('.vybrany').onclick=zavrit;
+</script>
+</body>
+</html>

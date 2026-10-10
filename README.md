@@ -29,10 +29,14 @@ Po uložení změny na GitHubu Cloudflare Pages appku sám znovu sestaví a nasa
    - Framework preset: **Vite** (nebo None)
    - Build command: `npm run build`
    - Build output directory: `dist`
-   - Proměnná prostředí `NODE_VERSION` = `22`
+   - Verzi Node určuje soubor `.node-version` (22), nic dalšího nastavovat nemusíš
 4. **Save and Deploy**. Appka poběží na adrese `<projekt>.pages.dev`.
 5. Každý push do `main` spustí nové nasazení, ostatní větve dostanou náhledovou adresu.
 6. SPA fallback zajišťuje `public/_redirects` (`/*  /index.html  200`), takže přímé odkazy fungují.
+
+### Soukromí a vyhledávače
+
+Appka není určená pro vyhledávače: `index.html` má `noindex`, `public/robots.txt` zakazuje procházení a `public/_headers` posílá `X-Robots-Tag: noindex`. Kdo zná adresu, appku otevře, ale Google ji nenabídne. Postup dítěte se ukládá jen v jeho prohlížeči (localStorage), na server nic neodchází.
 
 ### Vlastní doména
 
