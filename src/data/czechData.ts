@@ -65,7 +65,7 @@ export const CZECH_EXERCISES: CzechExercise[] = [
   {
     id: 'cz-l-2',
     letterGroup: 'L',
-    sentence: 'V lese za Lošticemi tiše běží zrzavá l__ška.',
+    sentence: 'V lese za vesnicí tiše běží zrzavá l__ška.',
     missingWord: 'liška',
     correctAnswer: 'i',
     rootWord: 'liška',

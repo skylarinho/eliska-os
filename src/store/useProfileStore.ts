@@ -3,24 +3,23 @@ import { persist } from 'zustand/middleware'
 
 export type AvatarType = 'vombat' | 'liska' | 'sovka' | 'medvidek'
 
+export const getVocativeName = (name?: string): string => {
+  if (!name) return 'Eliško'
+  const trimmed = name.trim()
+  if (trimmed.toLowerCase() === 'eliška') return 'Eliško'
+  if (trimmed.toLowerCase().endsWith('a')) return `${trimmed.slice(0, -1)}o`
+  return trimmed
+}
+
 export interface ChildProfile {
   id: string
   name: string
-  schoolEmail?: string
+  vokativ: string
   avatar: AvatarType
   xp: number
   streakDays: number
   lastActiveDate: string // YYYY-MM-DD
   completedLessons: string[]
-}
-
-export interface BotRival {
-  id: string
-  name: string
-  avatar: AvatarType
-  xp: number
-  isBot: true
-  badge: string
 }
 
 export type LeagueTier = {
@@ -32,15 +31,9 @@ export type LeagueTier = {
 
 export const LEAGUE_TIERS: LeagueTier[] = [
   { name: 'Bronzová tlapka', icon: '🥉', minXp: 0, description: 'Začínáme naše vombatí dobrodružství!' },
-  { name: 'Stříbrná nora', icon: '🥈', minXp: 150, description: 'Už se zavrtáváme hlouběji do znalostí!' },
-  { name: 'Zlatý skřivánek', icon: '🥇', minXp: 350, description: 'Zpíváme radostí jako skřivánek z Loštic!' },
-  { name: 'Diamantový vombat', icon: '💎', minXp: 600, description: 'Pravý mistr a král všech nor!' },
-]
-
-export const TRAINING_BOTS: BotRival[] = [
-  { id: 'bot-stepan', name: 'Vombat Štěpán', avatar: 'vombat', xp: 180, isBot: true, badge: 'Pilný kopáč ⛏️' },
-  { id: 'bot-bara', name: 'Sovička Bára', avatar: 'sovka', xp: 120, isBot: true, badge: 'Noční čtenářka 📖' },
-  { id: 'bot-kuba', name: 'Lišák Kuba', avatar: 'liska', xp: 75, isBot: true, badge: 'Rychlý běžec 🐾' },
+  { name: 'Stříbrná hvězdička', icon: '🥈', minXp: 150, description: 'Už se dostáváme hlouběji do znalostí!' },
+  { name: 'Zlatý skřivánek', icon: '🥇', minXp: 350, description: 'Zpíváme radostí jako skřivánek!' },
+  { name: 'Diamantový vombat', icon: '💎', minXp: 600, description: 'Pravý mistr všech znalostí!' },
 ]
 
 interface ProfileStoreState {
@@ -54,7 +47,7 @@ interface ProfileStoreState {
   
   // Actions
   setActiveProfileId: (id: string) => void
-  createProfile: (profileData: { name: string; schoolEmail?: string; avatar: AvatarType }) => string
+  createProfile: (profileData: { name: string; avatar: AvatarType }) => string
   updateProfile: (id: string, updates: Partial<Omit<ChildProfile, 'id'>>) => void
   deleteProfile: (id: string) => void
   addXp: (amount: number) => void
@@ -73,7 +66,7 @@ const initialProfiles: ChildProfile[] = [
   {
     id: 'eliska-default',
     name: 'Eliška',
-    schoolEmail: 'eliska.skrivankova@zslostice.cz',
+    vokativ: 'Eliško',
     avatar: 'vombat',
     xp: 40,
     streakDays: 3,
@@ -110,12 +103,12 @@ export const useProfileStore = create<ProfileStoreState>()(
         get().checkAndRecordActivity()
       },
 
-      createProfile: ({ name, schoolEmail, avatar }) => {
+      createProfile: ({ name, avatar }) => {
         const newId = 'child-' + Date.now().toString(36) + '-' + Math.random().toString(36).substring(2, 6)
         const newProfile: ChildProfile = {
           id: newId,
           name: name.trim() || 'Malý objevitel',
-          schoolEmail: schoolEmail?.trim() || '',
+          vokativ: getVocativeName(name),
           avatar,
           xp: 0,
           streakDays: 1,
@@ -243,6 +236,17 @@ export const useProfileStore = create<ProfileStoreState>()(
     }),
     {
       name: 'e-liska-os-state',
+      version: 1,
+      // v1: odstraněn školní e-mail (osobní údaj), doplněn vokativ
+      migrate: (persisted) => {
+        const state = persisted as { profiles?: Array<Record<string, unknown>> }
+        state.profiles = (state.profiles ?? []).map((p) => {
+          const { schoolEmail: _removed, ...rest } = p
+          const name = typeof rest.name === 'string' ? rest.name : ''
+          return { ...rest, vokativ: (rest.vokativ as string) || getVocativeName(name) }
+        })
+        return state as unknown as ProfileStoreState
+      },
     }
   )
 )

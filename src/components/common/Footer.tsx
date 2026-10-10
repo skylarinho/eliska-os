@@ -84,7 +84,7 @@ export const Footer: FC<FooterProps> = ({ onOpenProfileSelector }) => {
 
         {/* Tech Credits */}
         <div className="pt-2 text-[11px] text-[#7a5c43]/80 leading-relaxed max-w-xs">
-          <p>Postaveno na GitHubu • Běží na Vercelu • S láskou a kódem pomohla Gemini ✨</p>
+          <p>Postaveno na GitHubu • S láskou a kódem</p>
         </div>
       </div>
     </footer>
