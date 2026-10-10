@@ -35,7 +35,7 @@ export const TimelineLesson: FC<TimelineLessonProps> = ({ onBack, onProgressChan
   })
   const [isCompleted, setIsCompleted] = useState(false)
 
-  const { addXp, completeLesson } = useProfileStore()
+  const { dokonciLekci } = useProfileStore()
   const placedCount = placedEpochs.filter(Boolean).length
 
   useEffect(() => {
@@ -103,8 +103,7 @@ export const TimelineLesson: FC<TimelineLessonProps> = ({ onBack, onProgressChan
     if (isCorrect) {
       playCorrectSound()
       playFanfareSound()
-      addXp(50)
-      completeLesson('lesson-timeline', 50)
+      dokonciLekci('lesson-timeline', 0)
       setIsCompleted(true)
       setFeedback({
         isOpen: true,

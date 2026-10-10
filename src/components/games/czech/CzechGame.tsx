@@ -34,8 +34,7 @@ export const CzechGame: FC<CzechGameProps> = ({ onProgressChange }) => {
     xpEarned: 0,
   })
 
-  const { addXp } = useProfileStore()
-  const activeProfile = useProfileStore((state) => state.getActiveProfile())
+    const activeProfile = useProfileStore((state) => state.getActiveProfile())
 
   // Filter exercises by chosen letter
   const currentLetterExercises = useMemo(() => {
@@ -55,7 +54,6 @@ export const CzechGame: FC<CzechGameProps> = ({ onProgressChange }) => {
 
     if (isCorrect) {
       playCorrectSound()
-      addXp(20)
     } else {
       playWrongSound()
     }

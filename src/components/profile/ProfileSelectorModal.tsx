@@ -3,6 +3,7 @@ import { motion, AnimatePresence } from 'framer-motion'
 import { useProfileStore, type AvatarType } from '../../store/useProfileStore'
 import { WombatPeeker } from '../common/WombatPeeker'
 import { X, UserPlus, Check } from 'lucide-react'
+import { pocet } from '../../lib/typo'
 import { playClickSound, playCorrectSound } from '../../utils/audio'
 
 interface ProfileSelectorModalProps {
@@ -110,7 +111,7 @@ export const ProfileSelectorModal: FC<ProfileSelectorModalProps> = ({ isOpen, on
                           {isSelected && <Check className="w-4 h-4 text-emerald-600 shrink-0" />}
                         </div>
                         <span className="text-xs font-black text-emerald-800 block">
-                          {p.xp} XP 
+                          {pocet(Object.values(p.hvezdy).reduce((a, b) => a + b, 0), ['hvězda', 'hvězdy', 'hvězd'])} 
                         </span>
                       </div>
                     </motion.button>

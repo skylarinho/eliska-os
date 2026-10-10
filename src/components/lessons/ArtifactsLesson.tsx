@@ -31,7 +31,7 @@ export const ArtifactsLesson: FC<ArtifactsLessonProps> = ({ onBack, onProgressCh
   const [lessonFinished, setLessonFinished] = useState(false)
   const [correctCount, setCorrectCount] = useState(0)
 
-  const { addXp, completeLesson } = useProfileStore()
+  const { dokonciLekci } = useProfileStore()
   const activeProfile = useProfileStore((state) => state.getActiveProfile())
   const currentArtifact: HistoryArtifact = HISTORY_ARTIFACTS[currentIndex]
 
@@ -49,7 +49,6 @@ export const ArtifactsLesson: FC<ArtifactsLessonProps> = ({ onBack, onProgressCh
 
     if (isCorrect) {
       playCorrectSound()
-      addXp(20)
       setCorrectCount((prev) => prev + 1)
     } else {
       playWrongSound()
@@ -77,7 +76,7 @@ export const ArtifactsLesson: FC<ArtifactsLessonProps> = ({ onBack, onProgressCh
       // Completed lesson!
       setLessonFinished(true)
       playFanfareSound()
-      completeLesson('lesson-artifacts', 60)
+      dokonciLekci('lesson-artifacts', 0)
     }
   }
 

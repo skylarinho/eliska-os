@@ -1,5 +1,8 @@
 import { create } from 'zustand'
 import { persist } from 'zustand/middleware'
+import { dnesISO } from '../lib/datum'
+import { spocitejHvezdy, zapisDokonceni, type Hvezdy } from '../lib/postup'
+import { migrujProfily, type UlozenyProfil } from './migrace'
 
 export type AvatarType = 'vombat' | 'liska' | 'sovka' | 'medvidek'
 
@@ -11,56 +14,29 @@ export const getVocativeName = (name?: string): string => {
   return trimmed
 }
 
-export interface ChildProfile {
-  id: string
-  name: string
-  vokativ: string
+export interface ChildProfile extends Omit<UlozenyProfil, 'avatar'> {
   avatar: AvatarType
-  xp: number
-  streakDays: number
-  lastActiveDate: string // YYYY-MM-DD
-  completedLessons: string[]
 }
-
-export type LeagueTier = {
-  name: string
-  icon: string
-  minXp: number
-  description: string
-}
-
-export const LEAGUE_TIERS: LeagueTier[] = [
-  { name: 'Bronzová tlapka', icon: '🥉', minXp: 0, description: 'Začínáme naše vombatí dobrodružství!' },
-  { name: 'Stříbrná hvězdička', icon: '🥈', minXp: 150, description: 'Už se dostáváme hlouběji do znalostí!' },
-  { name: 'Zlatý skřivánek', icon: '🥇', minXp: 350, description: 'Zpíváme radostí jako skřivánek!' },
-  { name: 'Diamantový vombat', icon: '💎', minXp: 600, description: 'Pravý mistr všech znalostí!' },
-]
 
 interface ProfileStoreState {
   profiles: ChildProfile[]
   activeProfileId: string
   soundEnabled: boolean
-  
-  // Getters
+
   getActiveProfile: () => ChildProfile | undefined
-  getCurrentLeague: () => LeagueTier
-  
-  // Actions
+
   setActiveProfileId: (id: string) => void
   createProfile: (profileData: { name: string; avatar: AvatarType }) => string
   updateProfile: (id: string, updates: Partial<Omit<ChildProfile, 'id'>>) => void
   deleteProfile: (id: string) => void
-  addXp: (amount: number) => void
-  completeLesson: (lessonId: string, bonusXp?: number) => void
+  /** Zapíše dokončenou lekci: nejlepší výsledek, datum a sérii. Vrací získané hvězdy. */
+  dokonciLekci: (lessonId: string, chyby: number) => Hvezdy
   resetActiveProfileProgress: () => void
   toggleSound: () => void
   setSoundEnabled: (enabled: boolean) => void
-  checkAndRecordActivity: () => void
 }
 
-const getTodayDateString = (): string => {
-  return new Date().toISOString().split('T')[0]
-}
+const prazdnaSerie = { pocet: 0, posledni: '' }
 
 const initialProfiles: ChildProfile[] = [
   {
@@ -68,12 +44,18 @@ const initialProfiles: ChildProfile[] = [
     name: 'Eliška',
     vokativ: 'Eliško',
     avatar: 'vombat',
-    xp: 40,
-    streakDays: 3,
-    lastActiveDate: getTodayDateString(),
-    completedLessons: [],
+    hvezdy: {},
+    dokonceno: {},
+    serie: prazdnaSerie,
   },
 ]
+
+/** Změní profil právě aktivního dítěte. */
+const upravAktivni =
+  (fn: (p: ChildProfile) => ChildProfile) =>
+  (state: ProfileStoreState): Partial<ProfileStoreState> => ({
+    profiles: state.profiles.map((p) => (p.id === state.activeProfileId ? fn(p) : p)),
+  })
 
 export const useProfileStore = create<ProfileStoreState>()(
   persist(
@@ -87,33 +69,21 @@ export const useProfileStore = create<ProfileStoreState>()(
         return state.profiles.find((p) => p.id === state.activeProfileId) || state.profiles[0]
       },
 
-      getCurrentLeague: () => {
-        const active = get().getActiveProfile()
-        const xp = active?.xp || 0
-        for (let i = LEAGUE_TIERS.length - 1; i >= 0; i--) {
-          if (xp >= LEAGUE_TIERS[i].minXp) {
-            return LEAGUE_TIERS[i]
-          }
-        }
-        return LEAGUE_TIERS[0]
-      },
-
       setActiveProfileId: (id: string) => {
         set({ activeProfileId: id })
-        get().checkAndRecordActivity()
       },
 
       createProfile: ({ name, avatar }) => {
         const newId = 'child-' + Date.now().toString(36) + '-' + Math.random().toString(36).substring(2, 6)
+        const jmeno = name.trim() || 'Malý objevitel'
         const newProfile: ChildProfile = {
           id: newId,
-          name: name.trim() || 'Malý objevitel',
-          vokativ: getVocativeName(name),
+          name: jmeno,
+          vokativ: getVocativeName(jmeno),
           avatar,
-          xp: 0,
-          streakDays: 1,
-          lastActiveDate: getTodayDateString(),
-          completedLessons: [],
+          hvezdy: {},
+          dokonceno: {},
+          serie: prazdnaSerie,
         }
 
         set((state) => ({
@@ -141,60 +111,22 @@ export const useProfileStore = create<ProfileStoreState>()(
         })
       },
 
-      addXp: (amount: number) => {
-        set((state) => {
-          const activeId = state.activeProfileId
-          return {
-            profiles: state.profiles.map((p) => {
-              if (p.id === activeId) {
-                return { ...p, xp: Math.max(0, p.xp + amount) }
-              }
-              return p
-            }),
-          }
-        })
-        get().checkAndRecordActivity()
-      },
-
-      completeLesson: (lessonId: string, bonusXp = 50) => {
-        set((state) => {
-          const activeId = state.activeProfileId
-          return {
-            profiles: state.profiles.map((p) => {
-              if (p.id === activeId) {
-                const alreadyDone = p.completedLessons.includes(lessonId)
-                const newCompleted = alreadyDone ? p.completedLessons : [...p.completedLessons, lessonId]
-                return {
-                  ...p,
-                  xp: p.xp + (alreadyDone ? Math.round(bonusXp / 2) : bonusXp),
-                  completedLessons: newCompleted,
-                }
-              }
-              return p
-            }),
-          }
-        })
-        get().checkAndRecordActivity()
+      dokonciLekci: (lessonId, chyby) => {
+        const dnes = dnesISO()
+        const ziskane = spocitejHvezdy(chyby)
+        set(
+          upravAktivni((p) => ({
+            ...p,
+            hvezdy: { ...p.hvezdy, [lessonId]: Math.max(p.hvezdy[lessonId] ?? 0, ziskane) },
+            dokonceno: { ...p.dokonceno, [lessonId]: dnes },
+            serie: zapisDokonceni(p.serie, dnes),
+          })),
+        )
+        return ziskane
       },
 
       resetActiveProfileProgress: () => {
-        set((state) => {
-          const activeId = state.activeProfileId
-          return {
-            profiles: state.profiles.map((p) => {
-              if (p.id === activeId) {
-                return {
-                  ...p,
-                  xp: 0,
-                  streakDays: 1,
-                  completedLessons: [],
-                  lastActiveDate: getTodayDateString(),
-                }
-              }
-              return p
-            }),
-          }
-        })
+        set(upravAktivni((p) => ({ ...p, hvezdy: {}, dokonceno: {}, serie: prazdnaSerie })))
       },
 
       toggleSound: () => {
@@ -204,49 +136,19 @@ export const useProfileStore = create<ProfileStoreState>()(
       setSoundEnabled: (enabled: boolean) => {
         set({ soundEnabled: enabled })
       },
-
-      checkAndRecordActivity: () => {
-        const today = getTodayDateString()
-        set((state) => {
-          const activeId = state.activeProfileId
-          return {
-            profiles: state.profiles.map((p) => {
-              if (p.id === activeId) {
-                if (p.lastActiveDate === today) {
-                  return p
-                }
-                // Check if last activity was yesterday
-                const lastDate = new Date(p.lastActiveDate)
-                const nowDate = new Date(today)
-                const diffTime = Math.abs(nowDate.getTime() - lastDate.getTime())
-                const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24))
-
-                const newStreak = diffDays === 1 ? p.streakDays + 1 : 1
-                return {
-                  ...p,
-                  streakDays: newStreak,
-                  lastActiveDate: today,
-                }
-              }
-              return p
-            }),
-          }
-        })
-      },
     }),
     {
       name: 'e-liska-os-state',
-      version: 1,
-      // v1: odstraněn školní e-mail (osobní údaj), doplněn vokativ
+      version: 2,
+      // v1: odstraněn školní e-mail, doplněn vokativ
+      // v2: XP a úrovně pryč, hvězdy za lekci (0–3) a série dní
       migrate: (persisted) => {
-        const state = persisted as { profiles?: Array<Record<string, unknown>> }
-        state.profiles = (state.profiles ?? []).map((p) => {
-          const { schoolEmail: _removed, ...rest } = p
-          const name = typeof rest.name === 'string' ? rest.name : ''
-          return { ...rest, vokativ: (rest.vokativ as string) || getVocativeName(name) }
-        })
-        return state as unknown as ProfileStoreState
+        const stav = (persisted ?? {}) as Partial<ProfileStoreState>
+        return {
+          ...stav,
+          profiles: migrujProfily(stav.profiles, getVocativeName),
+        } as ProfileStoreState
       },
-    }
-  )
+    },
+  ),
 )

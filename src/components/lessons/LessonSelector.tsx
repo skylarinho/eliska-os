@@ -67,7 +67,7 @@ const LEARNING_ZONE_GAMES: NewGameMeta[] = [
 export const LessonSelector: FC<LessonSelectorProps> = ({ onSelectLesson }) => {
   const [activeTab, setActiveTab] = useState<'all' | 'doucovani' | 'historie'>('all')
   const activeProfile = useProfileStore((state) => state.getActiveProfile())
-  const completedLessons = activeProfile?.completedLessons || []
+  const completedLessons = Object.keys(activeProfile?.hvezdy ?? {}).filter((id) => activeProfile?.hvezdy[id])
 
   // Clean vocative greeting for Czech
   const getGreeting = () => {

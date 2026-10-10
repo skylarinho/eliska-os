@@ -33,8 +33,7 @@ export const EnglishGame: FC<EnglishGameProps> = ({ onProgressChange }) => {
     xpEarned: 0,
   })
 
-  const { addXp } = useProfileStore()
-  const activeProfile = useProfileStore((state) => state.getActiveProfile())
+    const activeProfile = useProfileStore((state) => state.getActiveProfile())
 
   // Filter phrases by category
   const categoryPhrases = useMemo(() => {
@@ -65,7 +64,6 @@ export const EnglishGame: FC<EnglishGameProps> = ({ onProgressChange }) => {
 
     if (isCorrect) {
       playCorrectSound()
-      addXp(20)
     } else {
       playWrongSound()
     }

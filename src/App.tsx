@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useState } from 'react'
 import { Header } from './components/common/Header'
 import { Footer } from './components/common/Footer'
 import { LessonSelector } from './components/lessons/LessonSelector'
@@ -10,7 +10,6 @@ import { MathLab } from './components/games/math/MathLab'
 import { CzechGame } from './components/games/czech/CzechGame'
 import { EnglishGame } from './components/games/english/EnglishGame'
 import { ProfileSelectorModal } from './components/profile/ProfileSelectorModal'
-import { useProfileStore } from './store/useProfileStore'
 import { Sesit } from './components/Sesit'
 
 type AppView =
@@ -28,11 +27,6 @@ export function App() {
   const [isProfileModalOpen, setIsProfileModalOpen] = useState(false)
 
 
-  const checkAndRecordActivity = useProfileStore((state) => state.checkAndRecordActivity)
-
-  useEffect(() => {
-    checkAndRecordActivity()
-  }, [checkAndRecordActivity])
 
   return (
     <Sesit>

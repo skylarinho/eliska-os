@@ -34,7 +34,7 @@ export const HardwareLesson: FC<HardwareLessonProps> = ({ onBack, onProgressChan
   const [lessonFinished, setLessonFinished] = useState(false)
   const [correctCount, setCorrectCount] = useState(0)
 
-  const { addXp, completeLesson } = useProfileStore()
+  const { dokonciLekci } = useProfileStore()
   const activeProfile = useProfileStore((state) => state.getActiveProfile())
   const currentItem: HardwareItem = HARDWARE_ITEMS[currentIndex]
 
@@ -60,7 +60,6 @@ export const HardwareLesson: FC<HardwareLessonProps> = ({ onBack, onProgressChan
 
     if (isCorrect) {
       playCorrectSound()
-      addXp(20)
       setCorrectCount((prev) => prev + 1)
     } else {
       playWrongSound()
@@ -88,7 +87,7 @@ export const HardwareLesson: FC<HardwareLessonProps> = ({ onBack, onProgressChan
       // Finished entire lesson!
       setLessonFinished(true)
       playFanfareSound()
-      completeLesson('lesson-hw', 50)
+      dokonciLekci('lesson-hw', 0)
     }
   }
 

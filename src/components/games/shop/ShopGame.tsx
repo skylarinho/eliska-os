@@ -49,8 +49,7 @@ export const ShopGame: FC<ShopGameProps> = ({ onBack, onProgressChange }) => {
     xpEarned: 0,
   })
 
-  const { addXp } = useProfileStore()
-  const activeProfile = useProfileStore((state) => state.getActiveProfile())
+    const activeProfile = useProfileStore((state) => state.getActiveProfile())
   const currentMission: ShopMission = SHOP_MISSIONS[missionIndex]
 
   useEffect(() => {
@@ -122,7 +121,6 @@ export const ShopGame: FC<ShopGameProps> = ({ onBack, onProgressChange }) => {
     if (isExactChange) {
       playCashRegisterSound()
       playCoinSound()
-      addXp(currentMission.xpReward)
 
       setFeedback({
         isOpen: true,

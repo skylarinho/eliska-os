@@ -46,8 +46,7 @@ export const MathLab: FC<MathLabProps> = ({ onProgressChange }) => {
     xpEarned: 0,
   })
 
-  const { addXp } = useProfileStore()
-  const activeProfile = useProfileStore((state) => state.getActiveProfile())
+    const activeProfile = useProfileStore((state) => state.getActiveProfile())
 
   const currentDecomp: DecompositionStep = DECOMPOSITION_EXERCISES[decompIndex]
   const currentMult: MultiplicationDuel = MULTIPLICATION_DUELS[multIndex]
@@ -70,7 +69,6 @@ export const MathLab: FC<MathLabProps> = ({ onProgressChange }) => {
 
     if (isAllCorrect) {
       playCorrectSound()
-      addXp(25)
       setFeedback({
         isOpen: true,
         isCorrect: true,
@@ -111,7 +109,6 @@ export const MathLab: FC<MathLabProps> = ({ onProgressChange }) => {
 
     if (isCorrect) {
       playCorrectSound()
-      addXp(20)
       setFeedback({
         isOpen: true,
         isCorrect: true,
