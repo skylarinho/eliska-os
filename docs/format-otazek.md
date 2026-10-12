@@ -30,6 +30,20 @@ moznosti: Pravěk, Starověk, Středověk, Novověk, Moderní doba
 > Parní stroj se rozšířil v 18. století, tedy v novověku.
 ```
 
+## Výklad a tipy (nepovinné)
+Před první otázku můžeš dát krátký výklad. Každý nadpis `# ` je jedna karta (obrazovka), appka je ukáže
+před procvičováním a dítě mezi nimi listuje tlačítky Další / Zpět. Doporučeno nejvýš 4 karty.
+
+```md
+# Násobení deseti: připiš jednu nulu
+Obyčejný řádek je odstavec textu.
+- Řádek s pomlčkou je tip.
+= 34 × 10 = 34[0]
+```
+
+- `= …` je ukázkový příklad velkým písmem; část v `[hranatých závorkách]` se vykreslí jako dopsaná perem.
+- Karta musí mít pod nadpisem aspoň jeden řádek. Výklad se ukáže jen při prvním průchodu, „Zkusit znovu“ jde rovnou na otázky.
+
 ## Typy otázek
 - **výběr** (výchozí, `typ` netřeba): seznam `- [ ]`, právě jedna `- [x]`, 2–4 možnosti.
 - **vice** (`typ: vice`): „vyber všechny správné“, aspoň jedna `- [x]`, max. 6 možností. Hvězda jen při úplně správné sadě.

@@ -1,7 +1,8 @@
-import type { FC } from 'react'
+import { useState, type FC } from 'react'
 import type { ObsahLekce, Otazka } from '../content/typy'
 import { cz } from '../lib/typo'
 import { Lekce } from './Lekce'
+import { Vyklad } from './Vyklad'
 import { AnoNe } from './mechaniky/AnoNe'
 import { Razeni } from './mechaniky/Razeni'
 import { Vice } from './mechaniky/Vice'
@@ -56,8 +57,15 @@ const Uloha: FC<{ otazka: Otazka } & PolozkaOvladani> = ({ otazka: o, odpovez, o
   </>
 )
 
-export const LekceZObsahu: FC<{ lekce: ObsahLekce; onZavrit: () => void }> = ({ lekce, onZavrit }) => (
-  <Lekce id={lekce.id} zadani={(o) => ZADANI[o.typ]} polozky={lekce.otazky} onZavrit={onZavrit}>
-    {(o, ovladani) => <Uloha otazka={o} {...ovladani} />}
-  </Lekce>
-)
+export const LekceZObsahu: FC<{ lekce: ObsahLekce; onZavrit: () => void }> = ({ lekce, onZavrit }) => {
+  // Výklad jen poprvé; „Zkusit znovu“ už rovnou začne otázkami.
+  const [vykladHotov, setVykladHotov] = useState(!lekce.vyklad)
+  if (!vykladHotov && lekce.vyklad) {
+    return <Vyklad karty={lekce.vyklad} onHotovo={() => setVykladHotov(true)} onZavrit={onZavrit} />
+  }
+  return (
+    <Lekce id={lekce.id} zadani={(o) => ZADANI[o.typ]} polozky={lekce.otazky} onZavrit={onZavrit}>
+      {(o, ovladani) => <Uloha otazka={o} {...ovladani} />}
+    </Lekce>
+  )
+}

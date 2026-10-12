@@ -128,6 +128,45 @@ moznosti: Pravěk, Starověk, Středověk
     const { lekce } = pokus('\n## A\nnapoveda: Zkus to\nchytak: ano\n- [x] a\n- [ ] b\n> Ok.\n')
     expect(lekce?.otazky[0]).toMatchObject({ napoveda: 'Zkus to', chytak: true })
   })
+
+  it('přečte výklad před otázkami: text, tipy a příklad s dopsanou částí', () => {
+    const { lekce, chyby } = pokus(`
+# Násobení deseti
+Připiš jednu nulu.
+- Deset má jednu nulu.
+- Sto má dvě.
+= 7 × 10 = 7[0]
+
+## Otázka?
+- [x] Ano
+- [ ] Ne
+> Vysvětlení.
+`)
+    expect(chyby).toEqual([])
+    expect(lekce?.vyklad).toEqual([
+      {
+        nadpis: 'Násobení deseti',
+        bloky: [
+          { typ: 'text', text: 'Připiš jednu nulu.' },
+          { typ: 'tipy', polozky: ['Deset má jednu nulu.', 'Sto má dvě.'] },
+          { typ: 'priklad', casti: [{ text: '7 × 10 = 7' }, { text: '0', dopsano: true }] },
+        ],
+      },
+    ])
+  })
+
+  it('prázdná karta výkladu je chyba, lekce bez výkladu ho nemá', () => {
+    const { chyby } = pokus(`
+# Prázdná
+
+## Otázka?
+- [x] Ano
+- [ ] Ne
+> Vysvětlení.
+`)
+    expect(chyby).toEqual(['obsah/otazky/test.md: karta výkladu 1 („Prázdná“): karta je prázdná, napiš pod nadpis aspoň jednu větu'])
+    expect(pokus('\n## Otázka?\n- [x] Ano\n- [ ] Ne\n> V.\n').lekce?.vyklad).toBeUndefined()
+  })
 })
 
 describe('zkontrolujPlan', () => {

@@ -42,10 +42,29 @@ export interface OtazkaPrirazeni extends OtazkaZaklad {
 
 export type Otazka = OtazkaVyber | OtazkaVice | OtazkaAnoNe | OtazkaRazeni | OtazkaPrirazeni
 
+/** Část ukázkového příkladu; `dopsano` se vykreslí jako dopsané perem (Caveat). */
+export interface CastPrikladu {
+  text: string
+  dopsano?: boolean
+}
+
+export type BlokVykladu =
+  | { typ: 'text'; text: string }
+  | { typ: 'tipy'; polozky: string[] }
+  | { typ: 'priklad'; casti: CastPrikladu[] }
+
+/** Jedna karta výkladu před otázkami (`# Nadpis` v markdownu). */
+export interface KartaVykladu {
+  nadpis: string
+  bloky: BlokVykladu[]
+}
+
 export interface ObsahLekce {
   id: string
   nazev: string
   popis: string
   predmet: PredmetId
+  /** Volitelný výklad a tipy, zobrazí se před první otázkou. */
+  vyklad?: KartaVykladu[]
   otazky: Otazka[]
 }

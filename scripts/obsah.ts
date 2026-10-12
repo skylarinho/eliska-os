@@ -11,7 +11,7 @@ import { join, relative } from 'node:path'
 import { fileURLToPath, pathToFileURL } from 'node:url'
 import { KATALOG } from '../src/data/katalog.ts'
 import { plural } from '../src/lib/typo.ts'
-import type { ObsahLekce, Otazka, PredmetId } from '../src/content/typy.ts'
+import type { BlokVykladu, CastPrikladu, KartaVykladu, ObsahLekce, Otazka, PredmetId } from '../src/content/typy.ts'
 
 const KOREN = fileURLToPath(new URL('..', import.meta.url))
 const SLOZKA_OTAZEK = join(KOREN, 'obsah', 'otazky')
@@ -57,15 +57,26 @@ export function parsujLekci(zdroj: string, cesta: string, hlaseni: Hlaseni): Obs
   if (!popis) chyba('v hlavičce chybí `popis`')
   if (!PREDMETY.includes(predmet)) chyba(`\`predmet\` musí být jedno z: ${PREDMETY.join(', ')} (je „${String(data.predmet ?? '')}“)`)
 
-  // Rozdělení na otázky podle `## `
+  // Výklad (karty `# Nadpis` před první otázkou) a rozdělení na otázky podle `## `
   const radky = fm.content.split(/\r?\n/)
+  const karty: { nadpis: string; radky: string[] }[] = []
   const bloky: { nadpis: string; radky: string[] }[] = []
   for (const radek of radky) {
     const h = /^##\s+(.+?)\s*$/.exec(radek)
+    const k = /^#\s+(.+?)\s*$/.exec(radek)
     if (h) bloky.push({ nadpis: h[1], radky: [] })
     else if (bloky.length > 0) bloky[bloky.length - 1].radky.push(radek)
-    else if (radek.trim() !== '') chyba(`text před první otázkou („${ukaz(radek.trim())}“); každá otázka začíná řádkem \`## \``)
+    else if (k) karty.push({ nadpis: k[1], radky: [] })
+    else if (karty.length > 0) karty[karty.length - 1].radky.push(radek)
+    else if (radek.trim() !== '') chyba(`text před první otázkou („${ukaz(radek.trim())}“); otázka začíná řádkem \`## \`, karta výkladu řádkem \`# \``)
   }
+
+  const vyklad: KartaVykladu[] = []
+  karty.forEach((karta, index) => {
+    const k = parsujKartu(karta.nadpis, karta.radky, (z) => chyba(`karta výkladu ${index + 1} („${ukaz(karta.nadpis)}“): ${z}`))
+    if (k) vyklad.push(k)
+  })
+  if (karty.length > 4) hlaseni.varovani.push(`${cesta}: výklad má ${karty.length} karet, doporučeno je nejvýš 4`)
   if (bloky.length === 0) chyba('lekce nemá žádnou otázku (otázka začíná řádkem `## `)')
 
   const otazky: Otazka[] = []
@@ -78,7 +89,60 @@ export function parsujLekci(zdroj: string, cesta: string, hlaseni: Hlaseni): Obs
   if (otazky.length > 8) hlaseni.varovani.push(`${cesta}: lekce má ${otazky.length} otázek, doporučeno je 4–6 (pro ano/ne stačí jedna otázka s více tvrzeními)`)
 
   if (hlaseni.chyby.length > pocatekChyb) return null
-  return { id, nazev, popis, predmet, otazky }
+  return { id, nazev, popis, predmet, ...(vyklad.length > 0 ? { vyklad } : {}), otazky }
+}
+
+/**
+ * Karta výkladu: odstavce textu, tipy `- …` a ukázkové příklady `= 34 × 10 = 34[0]`
+ * (část v hranatých závorkách se vykreslí jako dopsaná perem).
+ */
+function parsujKartu(nadpis: string, radky: string[], chyba: (zprava: string) => void): KartaVykladu | null {
+  const bloky: BlokVykladu[] = []
+  let odstavec: string[] = []
+  const uzavriOdstavec = () => {
+    if (odstavec.length > 0) bloky.push({ typ: 'text', text: odstavec.join(' ') })
+    odstavec = []
+  }
+  let ok = true
+  const selhani = (z: string) => {
+    ok = false
+    chyba(z)
+  }
+
+  for (const surovy of radky) {
+    const r = surovy.trim()
+    let m: RegExpExecArray | null
+    if (r === '') {
+      uzavriOdstavec()
+    } else if ((m = /^-\s+(.+)$/.exec(r))) {
+      uzavriOdstavec()
+      const posledni = bloky[bloky.length - 1]
+      if (posledni?.typ === 'tipy') posledni.polozky.push(m[1].trim())
+      else bloky.push({ typ: 'tipy', polozky: [m[1].trim()] })
+    } else if ((m = /^=\s+(.+)$/.exec(r))) {
+      uzavriOdstavec()
+      const casti: CastPrikladu[] = []
+      for (const kus of m[1].trim().split(/(\[[^\]]*\])/)) {
+        if (!kus) continue
+        if (kus.startsWith('[')) {
+          if (kus === '[]') selhani(`prázdné \`[]\` v příkladu „${ukaz(r)}“`)
+          casti.push({ text: kus.slice(1, -1), dopsano: true })
+        } else {
+          if (/[[\]]/.test(kus)) selhani(`v příkladu „${ukaz(r)}“ nesedí hranaté závorky`)
+          casti.push({ text: kus })
+        }
+      }
+      bloky.push({ typ: 'priklad', casti })
+    } else if (/^#{3,}\s/.test(r)) {
+      selhani(`nadpis „${ukaz(r)}“ tu nepatří; karta výkladu začíná \`# \`, otázka \`## \``)
+    } else {
+      odstavec.push(r)
+    }
+  }
+  uzavriOdstavec()
+
+  if (bloky.length === 0) selhani('karta je prázdná, napiš pod nadpis aspoň jednu větu')
+  return ok ? { nadpis, bloky } : null
 }
 
 function parsujOtazku(
