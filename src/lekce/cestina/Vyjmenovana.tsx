@@ -1,6 +1,7 @@
 import { useMemo, useState, type FC } from 'react'
 import { CZECH_EXERCISES } from '../../data/czechData'
 import type { CzechExercise } from '../../types/learning'
+import { michej } from '../../lib/michej'
 import { cz } from '../../lib/typo'
 import { Dopsano } from '../Dopsano'
 import { Lekce } from '../Lekce'
@@ -8,7 +9,10 @@ import { VYJMENOVANA_SKUPINY } from '../skupiny'
 import { OdpovedTlacitko } from '../OdpovedTlacitko'
 import type { PolozkaOvladani } from '../typy'
 
-const MOZNOSTI: { pismeno: CzechExercise['correctAnswer']; popisek: string }[] = [
+/** Kolik vět se v jedné lekci procvičí. */
+const VET_V_LEKCI = 8
+
+const MOZNOSTI:{ pismeno: CzechExercise['correctAnswer']; popisek: string }[] = [
   { pismeno: 'i', popisek: 'měkké' },
   { pismeno: 'í', popisek: 'měkké' },
   { pismeno: 'y', popisek: 'tvrdé' },
@@ -94,8 +98,9 @@ interface VyjmenovanaProps {
 
 export const Vyjmenovana: FC<VyjmenovanaProps> = ({ lekceId, onZavrit }) => {
   const skupiny = VYJMENOVANA_SKUPINY[lekceId]
+  // Každé otevření lekce vybere jiných 8 vět, ať se procvičování neopakuje.
   const cviceni = useMemo(
-    () => CZECH_EXERCISES.filter((c) => skupiny?.includes(c.letterGroup)),
+    () => michej(CZECH_EXERCISES.filter((c) => skupiny?.includes(c.letterGroup))).slice(0, VET_V_LEKCI),
     [skupiny],
   )
 

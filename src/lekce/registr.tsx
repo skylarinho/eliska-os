@@ -3,7 +3,8 @@ import { obsahPodleId } from '../content/obsah'
 import { LekceZObsahu } from './LekceZObsahu'
 import { Vyjmenovana } from './cestina/Vyjmenovana'
 import { Slovicka } from './anglictina/Slovicka'
-import { SLOVICKA_OKRUHY, VYJMENOVANA_SKUPINY } from './skupiny'
+import { NapisSlovo } from './cestina/NapisSlovo'
+import { SLOVICKA_OKRUHY, VYJMENOVANA_PSANI, VYJMENOVANA_SKUPINY } from './skupiny'
 import { Hardware } from './informatika/Hardware'
 import { Obchudek } from './matematika/Obchudek'
 import { CasovaOsa } from './vlastiveda/CasovaOsa'
@@ -14,6 +15,7 @@ import { Rozklad } from './matematika/Rozklad'
 /** Vrátí lekci v kostře podle id z katalogu, nebo null, když taková lekce není. */
 export function vykresliLekci(id: string, onZavrit: () => void): ReactNode | null {
   if (id in VYJMENOVANA_SKUPINY) return <Vyjmenovana lekceId={id} onZavrit={onZavrit} />
+  if (id in VYJMENOVANA_PSANI) return <NapisSlovo lekceId={id} onZavrit={onZavrit} />
   if (id === 'matematika-nasobilka') return <Nasobilka lekceId={id} onZavrit={onZavrit} />
   if (id === 'matematika-rozklad') return <Rozklad lekceId={id} onZavrit={onZavrit} />
   if (id === 'matematika-obchudek') return <Obchudek lekceId={id} onZavrit={onZavrit} />

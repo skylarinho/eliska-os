@@ -8,6 +8,14 @@ export const VYJMENOVANA_SKUPINY: Record<string, LetterGroup[]> = {
   'cestina-vyjmenovana-v-z': ['V', 'Z'],
 }
 
+/** Které skupiny vyjmenovaných slov se píšou celým slovem v které lekci. */
+export const VYJMENOVANA_PSANI: Record<string, LetterGroup[]> = {
+  'cestina-napis-b': ['B'],
+  'cestina-napis-l-m': ['L', 'M'],
+  'cestina-napis-p-s': ['P', 'S'],
+  'cestina-napis-v-z': ['V', 'Z'],
+}
+
 /** Které okruhy anglických slovíček patří do které lekce. */
 export const SLOVICKA_OKRUHY: Record<string, EnglishCategory[]> = {
   'anglictina-pozdravy': ['greetings'],

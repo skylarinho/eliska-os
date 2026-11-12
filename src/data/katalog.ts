@@ -21,10 +21,14 @@ export const PREDMETY: { id: Predmet; nazev: string }[] = [
  * Lekce, které appka právě umí. Po zavedení obsahu z markdownu (krok 6b) se k nim přidají lekce z obsah/otazky.
  */
 export const KATALOG: Lekce[] = [
-  { id: 'cestina-vyjmenovana-b', nazev: 'Vyjmenovaná slova po B', popis: '4 věty', predmet: 'cestina', meta: '4 věty, asi 3 minuty' },
-  { id: 'cestina-vyjmenovana-l-m', nazev: 'Vyjmenovaná slova po L a M', popis: '4 věty', predmet: 'cestina', meta: '4 věty, asi 3 minuty' },
-  { id: 'cestina-vyjmenovana-p-s', nazev: 'Vyjmenovaná slova po P a S', popis: '4 věty', predmet: 'cestina', meta: '4 věty, asi 3 minuty' },
-  { id: 'cestina-vyjmenovana-v-z', nazev: 'Vyjmenovaná slova po V a Z', popis: '5 vět', predmet: 'cestina', meta: '5 vět, asi 4 minuty' },
+  { id: 'cestina-vyjmenovana-b', nazev: 'Vyjmenovaná slova po B', popis: 'Doplň i, nebo y', predmet: 'cestina', meta: '8 vět, asi 5 minut' },
+  { id: 'cestina-vyjmenovana-l-m', nazev: 'Vyjmenovaná slova po L a M', popis: 'Doplň i, nebo y', predmet: 'cestina', meta: '8 vět, asi 5 minut' },
+  { id: 'cestina-vyjmenovana-p-s', nazev: 'Vyjmenovaná slova po P a S', popis: 'Doplň i, nebo y', predmet: 'cestina', meta: '8 vět, asi 5 minut' },
+  { id: 'cestina-vyjmenovana-v-z', nazev: 'Vyjmenovaná slova po V a Z', popis: 'Doplň i, nebo y', predmet: 'cestina', meta: '8 vět, asi 5 minut' },
+  { id: 'cestina-napis-b', nazev: 'Napiš slova po B', popis: 'Celá vyjmenovaná slova', predmet: 'cestina', meta: '6 slov, asi 4 minuty' },
+  { id: 'cestina-napis-l-m', nazev: 'Napiš slova po L a M', popis: 'Celá vyjmenovaná slova', predmet: 'cestina', meta: '6 slov, asi 4 minuty' },
+  { id: 'cestina-napis-p-s', nazev: 'Napiš slova po P a S', popis: 'Celá vyjmenovaná slova', predmet: 'cestina', meta: '6 slov, asi 4 minuty' },
+  { id: 'cestina-napis-v-z', nazev: 'Napiš slova po V a Z', popis: 'Celá vyjmenovaná slova', predmet: 'cestina', meta: '6 slov, asi 4 minuty' },
   { id: 'matematika-obchudek', nazev: 'Obchůdek', popis: 'Nákup a vracení peněz', predmet: 'matematika', meta: '4 nákupy, asi 8 minut' },
   { id: 'matematika-rozklad', nazev: 'Rozklad na desítky', popis: 'Sčítání do 100', predmet: 'matematika', meta: '4 příklady, asi 4 minuty' },
   { id: 'matematika-nasobilka', nazev: 'Násobilka', popis: 'Vyber správný výsledek', predmet: 'matematika', meta: '8 příkladů, asi 4 minuty' },
