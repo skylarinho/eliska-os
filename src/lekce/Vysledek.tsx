@@ -6,6 +6,7 @@ import { dnesISO } from '../lib/datum'
 import { aktualniSerie } from '../lib/postup'
 import { cz, pocet } from '../lib/typo'
 import { useProfileStore } from '../store/useProfileStore'
+import { useNavigaceLekce } from './navigace'
 
 interface VysledekProps {
   spravne: number
@@ -19,6 +20,7 @@ interface VysledekProps {
 export const Vysledek: FC<VysledekProps> = ({ spravne, celkem, hvezdy, onDomu, onZnovu }) => {
   const profil = useProfileStore((s) => s.getActiveProfile())
   const serie = profil ? aktualniSerie(profil.serie, dnesISO()) : 0
+  const navigace = useNavigaceLekce()
 
   return (
     <div className="pt-10 text-center">
@@ -35,12 +37,23 @@ export const Vysledek: FC<VysledekProps> = ({ spravne, celkem, hvezdy, onDomu, o
         ))}
       </div>
       <div className="flex flex-col gap-2.5">
-        <Button size="lg" className="w-full !text-[18px]" onClick={onDomu}>
-          Zpět na přehled
-        </Button>
+        {navigace?.dalsi && (
+          <Button size="lg" className="w-full !text-[18px]" onClick={navigace.onDalsi} autoFocus>
+            {cz(`Další lekce: ${navigace.dalsi.nazev}`)}
+          </Button>
+        )}
         <Button size="lg" variant="secondary" className="w-full !text-[18px]" onClick={onZnovu}>
           Zkusit znovu
         </Button>
+        {navigace ? (
+          <Button size="lg" variant="secondary" className="w-full !text-[18px]" onClick={navigace.onJinyPredmet}>
+            Jiný předmět
+          </Button>
+        ) : (
+          <Button size="lg" variant="secondary" className="w-full !text-[18px]" onClick={onDomu}>
+            Zpět na přehled
+          </Button>
+        )}
       </div>
       {serie > 0 && (
         <p className="mt-[22px] text-[15px] text-inkoust-2">

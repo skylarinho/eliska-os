@@ -1,10 +1,9 @@
 import { useRef, useState, type FC } from 'react'
 import { Flame, Star } from 'lucide-react'
 import { Button } from '@/components/arc/button/button'
-import { Hvezdy } from '../components/Hvezdy'
 import { ProfilSheet } from '../components/ProfilSheet'
 import { Vombat } from '../components/Vombat'
-import { PREDMETY } from '../data/katalog'
+import { PREDMETY, type Predmet as PredmetId } from '../data/katalog'
 import { VSECHNY_LEKCE, lekcePodleId } from '../data/lekce'
 import { PLAN } from '../data/plan'
 import { dnesISO } from '../lib/datum'
@@ -15,13 +14,14 @@ import { useProfileStore } from '../store/useProfileStore'
 
 interface PrehledProps {
   onStart: (lekceId: string) => void
+  onPredmet: (predmet: PredmetId) => void
 }
 
 const zvyraznene =
   'inline px-[0.15em] font-bold [box-decoration-break:clone] [-webkit-box-decoration-break:clone] ' +
   '[background:linear-gradient(100deg,transparent_0.2em,var(--zvyraznovac)_0.2em,var(--zvyraznovac)_calc(100%-0.3em),transparent_calc(100%-0.1em))_0_70%/100%_55%_no-repeat]'
 
-export const Prehled: FC<PrehledProps> = ({ onStart }) => {
+export const Prehled: FC<PrehledProps> = ({ onStart, onPredmet }) => {
   const profil = useProfileStore((s) => s.getActiveProfile())
   const [profilOtevren, setProfilOtevren] = useState(false)
   const tlacitkoProfilu = useRef<HTMLButtonElement>(null)
@@ -128,40 +128,41 @@ export const Prehled: FC<PrehledProps> = ({ onStart }) => {
         )}
       </section>
 
-      {PREDMETY.map((predmet) => {
-        const lekce = VSECHNY_LEKCE.filter((l) => l.predmet === predmet.id)
-        if (lekce.length === 0) return null
-        return (
-          <section
-            key={predmet.id}
-            aria-labelledby={`predmet-${predmet.id}`}
-            className="mb-[26px]"
-            style={{ ['--b' as string]: `var(--${predmet.id})` }}
-          >
-            <h3
-              id={`predmet-${predmet.id}`}
-              className="mb-2 flex items-center gap-2 text-[15px] font-semibold text-inkoust-2"
-            >
-              <i className="h-1.5 w-[22px] rounded-[3px] bg-[var(--b)]" aria-hidden="true" />
-              {predmet.nazev}
-            </h3>
-            {lekce.map((l) => (
+      <section aria-labelledby="predmety-nadpis">
+        <h2 id="predmety-nadpis" className="mb-3 text-[15px] font-semibold text-inkoust-2">
+          Předměty
+        </h2>
+        <div className="grid grid-cols-2 gap-3">
+          {PREDMETY.map((predmet) => {
+            const lekce = VSECHNY_LEKCE.filter((l) => l.predmet === predmet.id)
+            if (lekce.length === 0) return null
+            const ziskano = lekce.reduce((s, l) => s + (hvezdy[l.id] ?? 0), 0)
+            const mozno = lekce.length * 3
+            return (
               <button
-                key={l.id}
+                key={predmet.id}
                 type="button"
-                onClick={() => onStart(l.id)}
-                className="mb-2 flex min-h-[60px] w-full items-center gap-3 rounded-s border-2 border-l-[6px] border-inkoust-3 border-l-[var(--b)] bg-papir px-3.5 py-3 text-left active:border-inkoust active:border-l-[var(--b)]"
+                onClick={() => onPredmet(predmet.id)}
+                style={{ ['--b' as string]: `var(--${predmet.id})` }}
+                className="flex min-h-[120px] flex-col items-start rounded-m border-2 border-b-[5px] border-inkoust-3 bg-papir px-4 pt-4 pb-3.5 text-left active:translate-y-[3px] active:border-b-2"
               >
-                <span className="min-w-0 flex-1">
-                  <b className="block text-[17px] leading-tight font-semibold">{cz(l.nazev)}</b>
-                  <small className="mt-0.5 block text-[14px] text-inkoust-2">{cz(l.popis)}</small>
+                <i className="mb-3 block h-1.5 w-[28px] rounded-[3px] bg-[var(--b)]" aria-hidden="true" />
+                <b className="block text-[19px] leading-tight font-semibold">{predmet.nazev}</b>
+                <small className="mt-1 block text-[14px] text-inkoust-2">
+                  {pocet(lekce.length, ['lekce', 'lekce', 'lekcí'])}
+                </small>
+                <span className="mt-auto inline-flex items-center gap-1.5 pt-2 text-[14px] text-inkoust-2">
+                  <Star className="h-4 w-4 fill-zvyraznovac text-inkoust" strokeWidth={2} aria-hidden="true" />
+                  <span aria-hidden="true">
+                    {ziskano} / {mozno}
+                  </span>
+                  <span className="sr-only">{`, ${pocet(ziskano, ['hvězda', 'hvězdy', 'hvězd'])} z ${mozno}`}</span>
                 </span>
-                <Hvezdy pocet={hvezdy[l.id] ?? 0} />
               </button>
-            ))}
-          </section>
-        )
-      })}
+            )
+          })}
+        </div>
+      </section>
 
       <ProfilSheet open={profilOtevren} onOpenChange={zmenProfilSheet} />
     </div>
