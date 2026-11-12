@@ -1,0 +1,33 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 360 220" width="360" height="220" fill="none" stroke="#1D3170" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+  <!-- dlouhý dům z kůlů, proutí a hlíny -->
+  <path d="M24 110H164V180H24Z" fill="#E2E9F3"/>
+  <path d="M10 114L94 50L178 114Z" fill="#C9D2E6"/>
+  <path d="M40 104l20-16M70 104l24-20M104 104l20-16M134 104l18-14M60 80l14-10" stroke-width="1.5"/>
+  <path d="M44 112V180M76 112V180M112 112V180M144 112V180" stroke-width="2"/>
+  <path d="M84 180V146a10 10 0 0 1 20 0V180" fill="#FFFFFF"/>
+  <path d="M28 132c4 4 10 4 14 0M52 132c4 4 10 4 14 0M120 132c4 4 10 4 14 0M150 132c3 3 7 3 10 0" stroke-width="1.5"/>
+  <!-- políčko s obilím -->
+  <path d="M186 182L352 182M192 194L352 194M200 206L352 206" stroke-width="2"/>
+  <g stroke-width="2">
+    <path d="M200 180V150M214 180V146M228 180V152M242 180V146M256 180V150M270 180V148"/>
+    <path d="M200 150l-3-6 3-6 3 6ZM214 146l-3-6 3-6 3 6ZM228 152l-3-6 3-6 3 6ZM242 146l-3-6 3-6 3 6ZM256 150l-3-6 3-6 3 6ZM270 148l-3-6 3-6 3 6Z" fill="#E2E9F3"/>
+  </g>
+  <!-- zemědělec s motykou -->
+  <circle cx="314" cy="112" r="10" fill="#FFFFFF"/>
+  <path d="M306 124l-8 36h32l-8-36Z" fill="#E2E9F3"/>
+  <path d="M302 160l-4 20M324 160l4 20"/>
+  <path d="M308 134l-16 16M320 134l-12 20"/>
+  <path d="M276 126L304 172"/>
+  <path d="M276 126l-8 10" stroke-width="3.5"/>
+  <!-- hliněné nádoby -->
+  <path d="M30 214c-10-6-12-20-6-26h28c6 6 4 20-6 26Z" fill="#E2E9F3"/>
+  <path d="M26 196c6 4 20 4 26 0" stroke-width="1.5"/>
+  <path d="M27 202l5 4 5-4 5 4 5-4 5 4" stroke-width="1.5"/>
+  <path d="M74 214c-12-6-14-26-4-32v-6h22v6c10 6 8 26-4 32Z" fill="#E2E9F3"/>
+  <path d="M72 194c8 6 14-6 22 0" stroke-width="1.5"/>
+  <path d="M70 202c6 6 12-4 18 0" stroke-width="1.5"/>
+  <path d="M10 214H120"/>
+  <!-- slunce -->
+  <circle cx="300" cy="40" r="12"/>
+  <path d="M300 18v-6M300 62v6M278 40h-6M322 40h6M284 24l-4-4M316 24l4-4M284 56l-4 4M316 56l4 4" stroke-width="2"/>
+</svg>

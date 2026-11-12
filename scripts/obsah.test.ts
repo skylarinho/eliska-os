@@ -167,6 +167,16 @@ Připiš jednu nulu.
     expect(chyby).toEqual(['obsah/otazky/test.md: karta výkladu 1 („Prázdná“): karta je prázdná, napiš pod nadpis aspoň jednu větu'])
     expect(pokus('\n## Otázka?\n- [x] Ano\n- [ ] Ne\n> V.\n').lekce?.vyklad).toBeUndefined()
   })
+
+  it('přečte obrázek ve výkladu a hlídá popis i název souboru', () => {
+    const otazka = '\n## Otázka?\n- [x] Ano\n- [ ] Ne\n> V.\n'
+    const ok = pokus(`\n# Jeskyně\n![Lidé u ohně](pravek-jeskyne.svg)\nText.\n${otazka}`)
+    expect(ok.chyby).toEqual([])
+    expect(ok.lekce?.vyklad?.[0].bloky[0]).toEqual({ typ: 'obrazek', soubor: 'pravek-jeskyne.svg', popis: 'Lidé u ohně' })
+
+    expect(pokus(`\n# A\n![](a.svg)\n${otazka}`).chyby[0]).toContain('nemá popis')
+    expect(pokus(`\n# A\n![Popis](Jeskyně.svg)\n${otazka}`).chyby[0]).toContain('smí mít jen malá písmena')
+  })
 })
 
 describe('zkontrolujPlan', () => {

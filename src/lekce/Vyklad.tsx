@@ -13,6 +13,14 @@ interface VykladProps {
 
 const Blok: FC<{ blok: BlokVykladu }> = ({ blok }) => {
   if (blok.typ === 'text') return <p className="mb-4 text-[17px] leading-[1.6] text-pretty">{cz(blok.text)}</p>
+  if (blok.typ === 'obrazek')
+    return (
+      <img
+        src={`/obrazky/${blok.soubor}`}
+        alt={cz(blok.popis)}
+        className="mb-5 block h-auto w-full rounded-m border-2 border-inkoust-3 bg-papir"
+      />
+    )
   if (blok.typ === 'tipy')
     return (
       <ul className="mb-5 flex flex-col gap-2.5">

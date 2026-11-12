@@ -17,6 +17,7 @@ const KOREN = fileURLToPath(new URL('..', import.meta.url))
 const SLOZKA_OTAZEK = join(KOREN, 'obsah', 'otazky')
 const SOUBOR_PLANU = join(KOREN, 'obsah', 'plan.json')
 const VYSTUP = join(KOREN, 'src', 'content', 'generated')
+const SLOZKA_OBRAZKU = join(KOREN, 'public', 'obrazky')
 
 const PREDMETY: PredmetId[] = ['cestina', 'matematika', 'anglictina', 'vlastiveda', 'informatika']
 const TYPY = ['vyber', 'vice', 'ano-ne', 'razeni', 'prirazeni'] as const
@@ -133,6 +134,14 @@ function parsujKartu(nadpis: string, radky: string[], chyba: (zprava: string) =>
         }
       }
       bloky.push({ typ: 'priklad', casti })
+    } else if (r.startsWith('![')) {
+      uzavriOdstavec()
+      m = /^!\[([^\]]*)\]\(([^)\s]*)\)$/.exec(r)
+      if (!m) selhani(`obrázek „${ukaz(r)}“ zapiš jako \`![co je na obrázku](soubor.svg)\``)
+      else if (!m[1].trim()) selhani(`obrázek ${m[2]} nemá popis; do hranatých závorek napiš, co je na něm (pro čtečku)`)
+      else if (!/^[a-z0-9-]+\.(svg|png|jpg|webp)$/.test(m[2]))
+        selhani(`název obrázku „${ukaz(m[2])}“ smí mít jen malá písmena bez diakritiky, čísla a pomlčky a končit .svg, .png, .jpg nebo .webp`)
+      else bloky.push({ typ: 'obrazek', soubor: m[2], popis: m[1].trim() })
     } else if (/^#{3,}\s/.test(r)) {
       selhani(`nadpis „${ukaz(r)}“ tu nepatří; karta výkladu začíná \`# \`, otázka \`## \``)
     } else {
@@ -345,6 +354,14 @@ export function sestavObsah(): Hlaseni & { lekce: ObsahLekce[] } {
     const jiny = videno.get(l.id)
     if (jiny) hlaseni.chyby.push(`${cestyLekci[i]}: id „${l.id}“ už má soubor ${jiny}; id musí být unikátní`)
     videno.set(l.id, cestyLekci[i])
+  })
+
+  // Obrázky ve výkladu musí existovat v public/obrazky
+  lekce.forEach((l, i) => {
+    for (const karta of l.vyklad ?? [])
+      for (const b of karta.bloky)
+        if (b.typ === 'obrazek' && !existsSync(join(SLOZKA_OBRAZKU, b.soubor)))
+          hlaseni.chyby.push(`${cestyLekci[i]}: karta „${ukaz(karta.nadpis)}“: obrázek ${b.soubor} chybí ve složce public/obrazky`)
   })
 
   const vsechnaId = [...KATALOG.map((l) => l.id), ...lekce.map((l) => l.id)]

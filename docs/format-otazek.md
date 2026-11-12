@@ -41,6 +41,9 @@ Obyčejný řádek je odstavec textu.
 = 34 × 10 = 34[0]
 ```
 
+- `![co je na obrázku](soubor.svg)` je kresba. Soubor patří do `public/obrazky/` (malá písmena bez diakritiky, pomlčky;
+  .svg, .png, .jpg nebo .webp). Text v hranatých závorkách je povinný popis pro čtečku. Build spadne, když soubor chybí.
+  Kresby pravěku (`pravek-*.svg`) jsou „modrým perem“: tah `#1D3170`, výplně `#E2E9F3` a `#C9D2E6`, plátno 360 × 220.
 - `= …` je ukázkový příklad velkým písmem; část v `[hranatých závorkách]` se vykreslí jako dopsaná perem.
 - Karta musí mít pod nadpisem aspoň jeden řádek. Výklad se ukáže jen při prvním průchodu, „Zkusit znovu“ jde rovnou na otázky.
 

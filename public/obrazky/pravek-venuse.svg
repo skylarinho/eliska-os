@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 360 220" width="360" height="220" fill="none" stroke="#1D3170" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+  <!-- soška Věstonické venuše z pálené hlíny -->
+  <ellipse cx="180" cy="32" rx="13" ry="17" fill="#C9D2E6"/>
+  <path d="M174 26l4 6M186 26l-4 6" stroke-width="2"/>
+  <path d="M180 49C164 49 150 56 146 70 140 90 150 102 156 110 142 122 140 146 152 160 160 170 166 184 171 200H189C194 184 200 170 208 160 220 146 218 122 204 110 210 102 220 90 214 70 210 56 196 49 180 49Z" fill="#C9D2E6"/>
+  <path d="M166 74c-8 14-4 28 8 30M194 74c8 14 4 28-8 30"/>
+  <path d="M156 114c14 7 34 7 48 0M158 122c14 6 30 6 44 0" stroke-width="2"/>
+  <circle cx="180" cy="134" r="2.5"/>
+  <path d="M180 150V200"/>
+  <g stroke-width="1.5" stroke="#55628F">
+    <path d="M160 92h.1M200 140h.1M164 150h.1M196 92h.1M172 176h.1M190 168h.1M152 136h.1"/>
+  </g>
+  <path d="M140 204H220"/>
+  <!-- ohniště, ve kterém se hlína vypálila -->
+  <path d="M272 200l34-12M272 188l34 12" stroke-width="3"/>
+  <path d="M280 194c-8-12 2-20-2-32 10 6 14 14 12 20 4-4 6-10 4-16 12 12 10 24 2 28Z" fill="#FFFFFF"/>
+  <path d="M250 204H330"/>
+  <!-- hrouda hlíny -->
+  <path d="M48 200c-6-12 4-24 18-24 14-2 26 6 26 16 0 6-4 8-8 8Z" fill="#E2E9F3"/>
+  <path d="M30 204H110"/>
+</svg>

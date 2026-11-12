@@ -5,6 +5,13 @@ popis: První zemědělci
 predmet: vlastiveda
 ---
 
+# První vesnice
+![Vesnice z mladší doby kamenné: dlouhý dům z kůlů s doškovou střechou, hliněné nádoby a políčko s obilím, na kterém pracuje zemědělec s motykou.](pravek-vesnice.svg)
+Lidé se usadili na jednom místě. Postavili si dlouhé domy z kůlů, proutí a hlíny a kolem nich obdělávali políčka.
+- Pěstovali obilí a chovali krávy, ovce a kozy.
+- Z hlíny vyráběli nádoby a uchovávali v nich zrní a vodu.
+- Kamenné nástroje už brousili do hladka.
+
 ## Jaká velká změna nastala v životě lidí v mladší době kamenné?
 - [ ] Lidé začali létat do vesmíru
 - [x] Usadili se v trvalých sídlech, začali pěstovat plodiny a chovat zvířata

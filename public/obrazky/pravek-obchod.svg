@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 360 220" width="360" height="220" fill="none" stroke="#1D3170" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+  <!-- vzdálené hory, kde se těží cín -->
+  <path d="M220 70l26-40 18 24 14-18 30 34Z" fill="#C9D2E6"/>
+  <path d="M240 40l6-10 6 8" stroke-width="2"/>
+  <path d="M250 70V62h10v8" stroke-width="2"/>
+  <!-- dlouhá cesta -->
+  <path d="M262 74c-20 16 30 24 10 40-18 14-80 4-96 26-12 16 6 28-10 40" stroke-dasharray="2 9" stroke-width="3"/>
+  <!-- řeka -->
+  <path d="M330 90c-20 20 10 40-10 60s0 40-10 60" stroke-width="2"/>
+  <path d="M344 96c-20 20 10 40-10 60s0 40-10 54" stroke-width="2"/>
+  <!-- obchodník s nákladem na zádech -->
+  <circle cx="120" cy="120" r="10" fill="#FFFFFF"/>
+  <path d="M112 132l-10 38h32l-8-38Z" fill="#E2E9F3"/>
+  <path d="M106 170l-8 30M128 170l10 30"/>
+  <path d="M130 140l14 10M112 142l-6 18"/>
+  <path d="M144 150V96" stroke-width="2.5"/>
+  <path d="M84 104h26v34H84Z" fill="#C9D2E6"/>
+  <path d="M84 116h26M97 104v34" stroke-width="1.5"/>
+  <!-- osada, kam cín nese -->
+  <path d="M22 160h44v34H22Z" fill="#E2E9F3"/>
+  <path d="M14 162l30-26 30 26Z" fill="#C9D2E6"/>
+  <path d="M38 194v-16h12v16" fill="#FFFFFF"/>
+  <!-- hřivny: kovové kruhy na výměnu -->
+  <path d="M168 202a12 6 0 1 0 24 0a12 6 0 1 0 -24 0" fill="#FFFFFF"/>
+  <path d="M174 196a12 6 0 1 0 24 0a12 6 0 1 0 -24 0"/>
+  <path d="M8 206H220"/>
+</svg>

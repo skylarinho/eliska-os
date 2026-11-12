@@ -5,6 +5,18 @@ popis: Kovolitci a obchodníci
 predmet: vlastiveda
 ---
 
+# Kovolitci odlévají bronz
+![Kovolitec lije z kelímku tekutý bronz do kamenné formy. Vedle leží hotová sekera, srp, náramek a spona.](pravek-bronz.svg)
+Kovolitci roztavili v ohni měď a cín. Tekutý bronz nalili do kamenné formy, a když vychladl, měli hotovou sekeru, srp nebo šperk.
+- Bronz je tvrdší než samotná měď.
+- Do formy se dá odlévat znovu a znovu, výrobky jsou pak všechny stejné.
+
+# Cín přichází zdaleka
+![Obchodník nese na zádech náklad. Za ním se vine dlouhá cesta až k horám, kde se těží cín. Na zemi leží kovové kruhy na výměnu.](pravek-obchod.svg)
+Měď a hlavně cín se nedaly najít všude. Obchodníci je nosili po dlouhých cestách přes hory a řeky a měnili je za jiné zboží.
+- Lidé se tak víc setkávali a obchodovali.
+- Platilo se hřivnami, tedy kovovými kruhy nebo pruty.
+
 ## Ze kterých dvou kovů se smícháním vyrábí bronz?
 - [ ] Zlato a stříbro
 - [x] Měď a cín

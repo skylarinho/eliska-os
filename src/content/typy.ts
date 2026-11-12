@@ -52,6 +52,8 @@ export type BlokVykladu =
   | { typ: 'text'; text: string }
   | { typ: 'tipy'; polozky: string[] }
   | { typ: 'priklad'; casti: CastPrikladu[] }
+  /** Kresba z public/obrazky; `popis` je alternativní text pro čtečku. */
+  | { typ: 'obrazek'; soubor: string; popis: string }
 
 /** Jedna karta výkladu před otázkami (`# Nadpis` v markdownu). */
 export interface KartaVykladu {

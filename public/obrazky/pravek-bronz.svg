@@ -1,0 +1,31 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 360 220" width="360" height="220" fill="none" stroke="#1D3170" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+  <!-- oheň -->
+  <path d="M36 202l40-14M36 188l40 14" stroke-width="3"/>
+  <path d="M44 194c-10-14 2-22-2-36 12 8 16 16 14 24 6-6 8-12 6-20 14 14 12 28 4 32Z" fill="#FFFFFF"/>
+  <!-- kovolitec -->
+  <circle cx="118" cy="96" r="10" fill="#FFFFFF"/>
+  <path d="M110 108l-10 40h34l-8-40Z" fill="#E2E9F3"/>
+  <path d="M104 148l-8 24h12M128 148l8 24h-12"/>
+  <path d="M114 120l26 6M124 116l18 2"/>
+  <!-- kleště a kelímek s tekutým bronzem -->
+  <path d="M140 126l26-6M142 118l24 2" stroke-width="2"/>
+  <path d="M164 108l18 2-4 16-14-2Z" fill="#C9D2E6"/>
+  <path d="M180 124c4 8 4 16 2 26" stroke-width="3"/>
+  <path d="M186 132l3-4M176 140l-4-2" stroke-width="2"/>
+  <!-- kamenná forma -->
+  <path d="M150 152H218V200H150Z" fill="#C9D2E6"/>
+  <path d="M184 152V200" stroke-width="1.5"/>
+  <path d="M176 152h12l-4 10Z" fill="#FFFFFF"/>
+  <path d="M14 204H230"/>
+  <!-- hotové výrobky -->
+  <g transform="translate(262 24)">
+    <path d="M6 74L42 10" stroke-width="4"/>
+    <path d="M34 4L58 -6C66 8 64 26 56 34L40 20Z" fill="#E2E9F3"/>
+  </g>
+  <path d="M260 120c10-24 46-28 64-12-18-6-42-2-54 18Z" fill="#E2E9F3"/>
+  <path d="M260 120l-10 10" stroke-width="3.5"/>
+  <circle cx="274" cy="170" r="16"/>
+  <circle cx="274" cy="170" r="11" stroke-width="1.5"/>
+  <path d="M320 156c-8 0-12 6-10 12 2 6 10 6 12 0 1-4-2-6-4-5M326 186c8 0 12-6 10-12-2-6-10-6-12 0-1 4 2 6 4 5M322 168l2 6" stroke-width="2"/>
+  <path d="M240 204H350"/>
+</svg>
