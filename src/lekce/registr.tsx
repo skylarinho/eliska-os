@@ -6,6 +6,7 @@ import { Slovicka } from './anglictina/Slovicka'
 import { NapisSlovo } from './cestina/NapisSlovo'
 import { SLOVICKA_OKRUHY, VYJMENOVANA_PSANI, VYJMENOVANA_SKUPINY } from './skupiny'
 import { Hardware } from './informatika/Hardware'
+import { StavbaHouby } from './prirodoveda/StavbaHouby'
 import { Obchudek } from './matematika/Obchudek'
 import { CasovaOsa } from './vlastiveda/CasovaOsa'
 import { Epochy } from './vlastiveda/Epochy'
@@ -22,6 +23,7 @@ export function vykresliLekci(id: string, onZavrit: () => void): ReactNode | nul
   if (id in SLOVICKA_OKRUHY) return <Slovicka lekceId={id} onZavrit={onZavrit} />
   if (id === 'vlastiveda-casova-osa') return <CasovaOsa lekceId={id} onZavrit={onZavrit} />
   if (id === 'vlastiveda-epochy') return <Epochy lekceId={id} onZavrit={onZavrit} />
+  if (id === 'prirodoveda-stavba-houby') return <StavbaHouby lekceId={id} onZavrit={onZavrit} />
   if (id === 'informatika-hardware') return <Hardware lekceId={id} onZavrit={onZavrit} />
   const zObsahu = obsahPodleId(id)
   if (zObsahu) return <LekceZObsahu lekce={zObsahu} onZavrit={onZavrit} />

@@ -19,7 +19,7 @@ const SOUBOR_PLANU = join(KOREN, 'obsah', 'plan.json')
 const VYSTUP = join(KOREN, 'src', 'content', 'generated')
 const SLOZKA_OBRAZKU = join(KOREN, 'public', 'obrazky')
 
-const PREDMETY: PredmetId[] = ['cestina', 'matematika', 'anglictina', 'vlastiveda', 'informatika']
+const PREDMETY: PredmetId[] = ['cestina', 'matematika', 'anglictina', 'vlastiveda', 'prirodoveda', 'informatika']
 const TYPY = ['vyber', 'vice', 'ano-ne', 'razeni', 'prirazeni'] as const
 type Typ = (typeof TYPY)[number]
 

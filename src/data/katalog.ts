@@ -1,4 +1,4 @@
-export type Predmet = 'cestina' | 'matematika' | 'anglictina' | 'vlastiveda' | 'informatika'
+export type Predmet = 'cestina' | 'matematika' | 'anglictina' | 'vlastiveda' | 'prirodoveda' | 'informatika'
 
 export interface Lekce {
   id: string
@@ -14,6 +14,7 @@ export const PREDMETY: { id: Predmet; nazev: string }[] = [
   { id: 'matematika', nazev: 'Matematika' },
   { id: 'anglictina', nazev: 'Angličtina' },
   { id: 'vlastiveda', nazev: 'Vlastivěda' },
+  { id: 'prirodoveda', nazev: 'Přírodověda' },
   { id: 'informatika', nazev: 'Informatika' },
 ]
 
@@ -38,5 +39,6 @@ export const KATALOG: Lekce[] = [
   { id: 'anglictina-barvy-cisla', nazev: 'Slovíčka: barvy a čísla', popis: 'Red, green, ten', predmet: 'anglictina', meta: '5 slovíček, asi 4 minuty' },
   { id: 'vlastiveda-casova-osa', nazev: 'Časová osa dějin', popis: 'Seřaď 5 epoch', predmet: 'vlastiveda', meta: 'Seřazení 5 epoch, asi 2 minuty' },
   { id: 'vlastiveda-epochy', nazev: 'Předměty a epochy', popis: 'Kam patří pěstní klín?', predmet: 'vlastiveda', meta: '7 předmětů, asi 5 minut' },
+  { id: 'prirodoveda-stavba-houby', nazev: 'Stavba houby', popis: 'Klobouk, třeň, výtrusy a podhoubí', predmet: 'prirodoveda', meta: 'Průzkum houby a 8 úkolů, asi 6 minut' },
   { id: 'informatika-hardware', nazev: 'Co je na obrázku?', popis: 'Části počítače', predmet: 'informatika', meta: '8 zařízení, asi 5 minut' },
 ]

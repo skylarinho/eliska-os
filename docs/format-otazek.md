@@ -7,7 +7,7 @@ Jeden soubor = jedna lekce. Ukládej do `obsah/otazky/<predmet>-<tema>.md`.
 id: vlastiveda-pravek          # unikátní, malá písmena, pomlčky
 nazev: Pravěk                  # zobrazí se v seznamu
 popis: Lovci mamutů a první zemědělci   # podtitulek v seznamu
-predmet: vlastiveda            # cestina | matematika | anglictina | vlastiveda | informatika
+predmet: vlastiveda            # cestina | matematika | anglictina | vlastiveda | prirodoveda | informatika
 ---
 
 ## Čím lovili pravěcí lidé mamuty?

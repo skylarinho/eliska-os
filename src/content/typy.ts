@@ -1,6 +1,6 @@
 /** Tvar lekce, který z markdownu vytvoří scripts/obsah.ts (src/content/generated/*.json). */
 
-export type PredmetId = 'cestina' | 'matematika' | 'anglictina' | 'vlastiveda' | 'informatika'
+export type PredmetId = 'cestina' | 'matematika' | 'anglictina' | 'vlastiveda' | 'prirodoveda' | 'informatika'
 
 export interface OtazkaZaklad {
   /** Text otázky (nadpis `## …`). */

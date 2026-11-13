@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 360 220" width="360" height="220" fill="none" stroke="#1D3170" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+  <!-- zem -->
+  <path d="M20 170H340V214H20Z" fill="#E2E9F3" stroke="none"/>
+  <path d="M20 170H340"/>
+  <path d="M60 170l-4-12M64 170l2-14M68 170l6-10M290 170l-3-10M294 170l3-12M298 170l5-9" stroke-width="2"/>
+  <!-- třeň -->
+  <path d="M170 76C168 106 166 136 164 166H196C194 136 192 106 190 76Z" fill="#FFFFFF"/>
+  <path d="M172 124l6 4M182 140l6 4M172 152l6 4" stroke-width="1.5"/>
+  <!-- hlíza -->
+  <path d="M166 158C150 164 146 188 158 198C170 207 190 207 202 198C214 188 210 164 194 158Z" fill="#FFFFFF"/>
+  <!-- pochva: blanitý kalíšek kolem hlízy -->
+  <path d="M148 172C146 196 162 210 180 210C198 210 214 196 212 172C206 178 202 170 196 178C190 170 186 180 180 172C174 180 170 170 164 178C158 170 154 178 148 172Z" fill="#FFFFFF"/>
+  <!-- prsten -->
+  <path d="M168 88C152 94 148 106 152 112C162 108 198 108 208 112C212 106 208 94 192 88Q180 92 168 88Z" fill="#FFFFFF"/>
+  <path d="M160 100l-2 8M173 100v9M187 100v9M200 100l2 8" stroke-width="1.5"/>
+  <!-- klobouk a lupeny -->
+  <path d="M84 72C88 38 132 20 180 20C228 20 272 38 276 72Q180 64 84 72Z" fill="#C9D2E6"/>
+  <path d="M84 72Q180 64 276 72C268 82 236 86 180 86C124 86 92 82 84 72Z" fill="#FFFFFF"/>
+  <path d="M104 76l8 6M124 74l6 8M144 73l4 10M164 73l2 11M196 73l-2 11M216 73l-4 10M236 74l-6 8M256 76l-8 6" stroke-width="1.5"/>
+  <path d="M140 36c10-4 22-6 32-6M210 34c8 2 16 6 22 10" stroke-width="1.8"/>
+</svg>

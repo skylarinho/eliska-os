@@ -4,7 +4,7 @@ import type { Predmet } from '../data/katalog'
 /** Kde v appce jsme: přehled s dlaždicemi, seznam lekcí předmětu, nebo lekce. */
 export type Trasa = { typ: 'domu' } | { typ: 'predmet'; predmet: Predmet } | { typ: 'lekce'; id: string }
 
-const PREDMETY: readonly string[] = ['cestina', 'matematika', 'anglictina', 'vlastiveda', 'informatika']
+const PREDMETY: readonly string[] = ['cestina', 'matematika', 'anglictina', 'vlastiveda', 'prirodoveda', 'informatika']
 
 /** `#/predmet/cestina` → trasa. Neznámý tvar vede na přehled. */
 export function zHashe(hash: string): Trasa {

@@ -17,7 +17,7 @@ Vzor vzhledu: `mockup/e-liska-mockup.html`. Zadání a rozhodnutí: `docs/brief.
 ## Design – pravidla
 - Koncept: **školní sešit**. Čtverečkovaný papír (20 px), červený okraj vlevo, text „modrým perem“.
 - Jediný výrazný prvek: **žlutý zvýrazňovač** (dnešní úkol, hvězdy). Nikde jinde.
-- Tokeny: `src/styles/tokens.css` (kopie `assets/tokens.css`), napojit do `tailwind.config` jako barvy `papir, inkoust, inkoust-2, inkoust-3, linka, okraj, zvyraznovac, spravne, oprava` + předměty `cestina, matematika, anglictina, vlastiveda, informatika`.
+- Tokeny: `src/styles/tokens.css` (kopie `assets/tokens.css`), napojit do `tailwind.config` jako barvy `papir, inkoust, inkoust-2, inkoust-3, linka, okraj, zvyraznovac, spravne, oprava` + předměty `cestina, matematika, anglictina, vlastiveda, prirodoveda, informatika`.
 - Písmo: Lexend 400/500/600/700 (UI i obsah), Caveat 700 jen pro dopsané písmeno/číslo v úloze. Self-host přes `@fontsource/lexend` a `@fontsource/caveat` (latin-ext).
 - Velikosti: tělo 17 px, úloha 28 px, nadpis 30 px. Nic pod 14 px.
 - Dotykové cíle ≥ 48 px, odpovědi ≥ 72 px.
